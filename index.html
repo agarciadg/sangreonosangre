@@ -4,28 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Prata&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
   :root {
-    /* Paleta extraída de la imagen provista */
-    --color-teal: #546961;
-    --color-maroon: #8A2F30;
-    --color-brown: #3D0D26;
-    --color-lavender: #D2D0E4;
-    --color-dark: #2C1412;
-    --color-berry: #A13054;
-    --color-grey: #5A5A5A;
-    --color-plum: #F6F7E9;
+    /* Paleta extraída de las nuevas imágenes fotográficas */
+    --color-black-brown: #0a0706; /* Fondo principal casi negro/marrón muy oscuro (Imgs 7, 8, 9) */
+    --color-dark-box: #1c1310; /* Cajas de texto oscuras (Imgs 2, 3, 4) */
+    --color-cream: #f4efe9; /* Texto claro principal */
+    --color-muted-beige: #bbaea4; /* Texto secundario apagado */
+    --color-gold: #d4b595; /* Acentos dorados/beige de los nombres (Imgs 8, 9) */
+    --color-earth-red: #5e2424; /* Tono rojizo oscuro profundo */
+    --color-border: #2e211d;
 
     /* Asignación funcional */
-    --bg-main: var(--color-dark);
-    --bg-alt: var(--color-plum);
-    --text-main: var(--color-lavender);
-    --text-muted: #b8b6c8; /* Lavender ligeramente oscurecido para contraste */
-    --accent-primary: var(--color-berry);
-    --accent-secondary: var(--color-brown);
-    --accent-dark: var(--color-maroon);
-    --border-color: var(--color-grey);
+    --bg-main: var(--color-black-brown);
+    --bg-alt: var(--color-dark-box);
+    --text-main: var(--color-cream);
+    --text-muted: var(--color-muted-beige);
+    --accent-primary: var(--color-gold);
+    --accent-secondary: var(--color-muted-beige);
+    --accent-dark: var(--color-earth-red);
+    --border-color: var(--color-border);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,16 +34,18 @@
   body {
     background: var(--bg-main);
     color: var(--text-main);
-    font-family: 'Lato', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
     overflow-x: hidden;
   }
 
   h1, h2, h3, .serif, .logo, .pillar-num, .test-quote-mark, .slogan-marquee {
-    font-family: 'Prata', serif;
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
   }
 
   .script {
-    font-family: 'Prata', serif;
+    font-family: 'Playfair Display', serif;
     font-style: italic;
   }
 
@@ -59,39 +60,40 @@
     justify-content: space-between;
     align-items: center;
     padding: 22px 6%;
-    background: linear-gradient(to bottom, rgba(44, 20, 18, 0.9), transparent);
+    background: linear-gradient(to bottom, rgba(10, 7, 6, 0.95), transparent);
     backdrop-filter: blur(4px);
     transition: background 0.3s ease;
   }
   nav.scrolled {
-    background: rgba(44, 20, 18, 0.95);
-    box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    background: rgba(10, 7, 6, 0.98);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.6);
   }
   .logo {
     font-size: 1.4rem;
-    letter-spacing: 0.08em;
-    color: var(--accent-secondary);
+    letter-spacing: 0.05em;
+    color: var(--text-main);
   }
-  .logo span { color: var(--accent-primary); }
+  .logo span { color: var(--accent-primary); font-style: italic; }
   .nav-links {
     display: flex;
     gap: 34px;
-    font-size: 0.8rem;
-    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 400;
   }
   .nav-links a {
     position: relative;
     padding-bottom: 4px;
     transition: color 0.3s;
+    color: var(--text-main);
   }
-  .nav-links a:hover { color: var(--accent-secondary); }
+  .nav-links a:hover { color: var(--accent-primary); }
   .nav-links a::after {
     content: '';
     position: absolute;
     bottom: 0; left: 0;
-    width: 0; height: 1.5px;
+    width: 0; height: 1px;
     background: var(--accent-primary);
     transition: width 0.3s ease;
   }
@@ -123,8 +125,8 @@
   }
   .mobile-menu.open { display: flex; }
   .mobile-menu a {
-    font-family: 'Prata', serif;
-    font-size: 1.6rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
     color: var(--text-main);
   }
   .mobile-close {
@@ -145,11 +147,11 @@
   /* ---------- BORDER RADIUS MAX (BOTONES) ---------- */
   .btn, .submit-btn {
     padding: 16px 38px;
-    font-size: 0.8rem;
-    letter-spacing: 0.15em;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    font-weight: 700;
-    border-radius: 0px; /* RADIO MÁXIMO */
+    font-weight: 600;
+    border-radius: 0px; /* Estilo bloque/limpio como las imágenes */
     cursor: pointer;
     transition: all 0.35s ease;
     border: 1px solid transparent;
@@ -157,19 +159,18 @@
   }
   .btn-primary, .submit-btn {
     background: var(--accent-primary);
-    color: #fff;
+    color: var(--bg-main);
   }
   .btn-primary:hover, .submit-btn:hover {
-    background: var(--accent-dark);
-    box-shadow: 0 0 20px rgba(161, 48, 84, 0.4);
+    background: var(--text-main);
     transform: translateY(-2px);
   }
   .btn-outline {
-    border-color: var(--accent-secondary);
-    color: var(--accent-secondary);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
   }
   .btn-outline:hover {
-    background: var(--accent-secondary);
+    background: var(--accent-primary);
     color: var(--bg-main);
   }
 
@@ -189,7 +190,7 @@
     background-image: url('https://github.com/agarciadg/sangreonosangre/blob/main/14fd73dedf3fcb8218f7a174c61f16e4.jpg?raw=true');
     background-size: cover;
     background-position: center 30%;
-    filter: grayscale(0.2) brightness(0.4) contrast(1.1);
+    filter: brightness(0.6) contrast(1.1);
     transform: scale(1.05);
     animation: heroZoom 18s ease-in-out infinite alternate;
   }
@@ -200,9 +201,7 @@
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(ellipse at 50% 100%, rgba(138, 47, 48, 0.35), transparent 60%),
-      linear-gradient(180deg, rgba(44, 20, 18, 0.5) 0%, rgba(44, 20, 18, 0.3) 40%, rgba(44, 20, 18, 0.95) 100%);
+    background: linear-gradient(180deg, rgba(10, 7, 6, 0.4) 0%, rgba(10, 7, 6, 0.2) 40%, rgba(10, 7, 6, 0.95) 100%);
   }
   .hero-content {
     position: relative;
@@ -219,25 +218,24 @@
     font-size: 0.8rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--accent-secondary);
+    color: var(--accent-primary);
     margin-bottom: 22px;
     display: inline-block;
-    font-weight: 700;
+    font-weight: 400;
   }
   .hero h1 {
     font-size: clamp(2.6rem, 7vw, 5.5rem);
     line-height: 1.05;
     color: var(--text-main);
     letter-spacing: 0.01em;
-    text-shadow: 0 4px 30px rgba(0,0,0,0.6);
+    text-shadow: 0 4px 30px rgba(0,0,0,0.8);
   }
   .hero h1 em {
     font-style: italic;
     color: var(--accent-primary);
   }
   .hero-sub {
-    font-style: italic;
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-size: clamp(1rem, 2vw, 1.2rem);
     color: var(--text-muted);
     margin-top: 22px;
     max-width: 640px;
@@ -268,7 +266,7 @@
   }
   .scroll-line {
     width: 1px; height: 40px;
-    background: linear-gradient(to bottom, var(--accent-secondary), transparent);
+    background: linear-gradient(to bottom, var(--accent-primary), transparent);
     animation: scrollPulse 2s ease-in-out infinite;
   }
   @keyframes scrollPulse {
@@ -282,8 +280,8 @@
     font-size: 0.75rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--color-teal);
-    font-weight: 700;
+    color: var(--accent-primary);
+    font-weight: 600;
     margin-bottom: 18px;
     display: block;
   }
@@ -295,7 +293,7 @@
   }
   .divider {
     width: 70px; height: 1px;
-    background: var(--accent-secondary);
+    background: var(--accent-primary);
     margin: 28px 0;
   }
   .reveal {
@@ -324,43 +322,42 @@
     content: '';
     position: absolute;
     inset: 0;
-    border: 2px solid var(--accent-secondary);
+    border: 1px solid var(--border-color);
     margin: 18px -18px -18px 18px;
     z-index: -1;
-    border-radius: 0px; /* RADIO MÁXIMO Borde */
+    border-radius: 0px;
   }
   .about-img-wrap {
     position: relative;
     aspect-ratio: 3/4;
     overflow: hidden;
-    border-radius: 0px; /* RADIO MÁXIMO Imagen */
-    border: 4px solid var(--bg-main);
+    border-radius: 0px;
   }
   .about-img-wrap img {
     width: 100%; height: 100%;
     object-fit: cover;
-    filter: grayscale(0.2) contrast(1.1) brightness(0.9);
+    filter: brightness(0.85) contrast(1.05);
     transition: transform 1.2s ease, filter 1.2s ease;
     border-radius: 0px;
   }
   .about-img-wrap:hover img {
-    transform: scale(1.06);
-    filter: grayscale(0) contrast(1.1) brightness(1);
+    transform: scale(1.03);
+    filter: brightness(1) contrast(1.1);
   }
 
   .about-text .script {
     font-size: 1.6rem;
-    color: var(--accent-secondary);
-    line-height: 1.6;
+    color: var(--accent-primary);
+    line-height: 1.5;
     margin-bottom: 26px;
   }
   .about-text p {
     color: var(--text-muted);
     line-height: 1.9;
     margin-bottom: 20px;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
-  .about-text strong { color: var(--text-main); font-weight: 700; }
+  .about-text strong { color: var(--text-main); font-weight: 600; }
 
   .pillars {
     display: grid;
@@ -373,20 +370,21 @@
     padding-top: 20px;
   }
   .pillar-num {
-    font-size: 2rem;
-    color: var(--accent-primary);
+    font-size: 1.8rem;
+    color: var(--text-main);
     display: block;
     margin-bottom: 10px;
   }
   .pillar-title {
-    font-size: 1rem;
+    font-size: 0.9rem;
     letter-spacing: 0.05em;
-    color: var(--text-main);
+    color: var(--accent-primary);
     margin-bottom: 10px;
-    font-weight: 700;
+    font-weight: 600;
+    text-transform: uppercase;
   }
   .pillar-text {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
     line-height: 1.7;
   }
@@ -398,9 +396,9 @@
 
   /* ---------- SLOGAN BAND ---------- */
   .slogan-band {
-    background: var(--accent-dark);
+    background: var(--bg-alt);
     background-image:
-      linear-gradient(120deg, rgba(138, 47, 48, 0.95), rgba(161, 48, 84, 0.85)),
+      linear-gradient(120deg, rgba(28, 19, 16, 0.95), rgba(28, 19, 16, 0.85)),
       url('https://github.com/agarciadg/sangreonosangre/blob/main/a8bd5c2cf919c85913535c5f9e07fd71.jpg?raw=true');
     background-size: cover;
     background-blend-mode: multiply;
@@ -409,6 +407,8 @@
     text-align: center;
     overflow: hidden;
     position: relative;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
   }
   .slogan-marquee {
     display: flex;
@@ -416,27 +416,26 @@
     animation: marquee 32s linear infinite;
     font-style: italic;
     font-size: clamp(1.5rem, 3vw, 2.5rem);
-    color: var(--text-main);
+    color: var(--accent-primary);
     gap: 60px;
   }
   .slogan-marquee span { margin-right: 60px; }
-  .slogan-marquee .sep { color: var(--accent-secondary); font-style: normal; }
+  .slogan-marquee .sep { color: var(--text-muted); font-style: normal; }
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
 
   /* ---------- RETIROS ---------- */
-  .retiros { background: var(--bg-alt); }
+  .retiros { background: var(--bg-main); }
   .retiro-card {
     margin-top: 60px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background: var(--bg-main);
-    border: 1px solid var(--border-color);
-    border-radius: 0px; /* RADIO MÁXIMO CONTENEDOR */
+    background: var(--bg-alt);
+    border: none;
+    border-radius: 0px; 
     overflow: hidden;
-    padding: 20px; /* Para darle espacio interno a la imagen pill */
   }
   .retiro-img {
     position: relative;
@@ -444,39 +443,38 @@
     background-image: url('https://images.unsplash.com/photo-1518621736915-f3b3c1b1cbc1?q=80&w=1400&auto=format&fit=crop');
     background-size: cover;
     background-position: center;
-    border-radius: 0px; /* RADIO MÁXIMO IMAGEN */
+    border-radius: 0px; 
     overflow: hidden;
   }
   .retiro-img::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(161, 48, 84, 0.4), rgba(44, 20, 18, 0.6));
+    background: linear-gradient(135deg, rgba(28, 19, 16, 0.4), rgba(10, 7, 6, 0.7));
   }
   .retiro-date-badge {
     position: absolute;
-    top: 40px; right: 50%;
-    transform: translateX(50%); /* Centrado para que se vea bien en forma pill */
-    background: var(--accent-primary);
-    color: #fff;
-    padding: 25px;
-    border-radius: 10%; /* Insignia redonda */
+    top: 30px; left: 30px;
+    background: var(--bg-main);
+    color: var(--text-main);
+    padding: 20px 25px;
+    border-radius: 0px;
     text-align: center;
     z-index: 2;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
   }
-  .retiro-date-badge .day { font-size: 1.8rem; font-family: 'Prata', serif; line-height: 1; }
-  .retiro-date-badge .month { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; font-weight: 700; }
+  .retiro-date-badge .day { font-size: 2rem; font-family: 'Playfair Display', serif; line-height: 1; color: var(--accent-primary); }
+  .retiro-date-badge .month { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 8px; font-weight: 400; }
   .retiro-info {
-    padding: 40px 60px;
+    padding: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
   .retiro-info .section-label { margin-bottom: 14px; }
   .retiro-info h3 {
-    font-size: clamp(1.8rem, 3vw, 2.5rem);
-    font-family: 'Prata', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-family: 'Playfair Display', serif;
     color: var(--text-main);
     margin-bottom: 18px;
     line-height: 1.2;
@@ -485,39 +483,39 @@
     color: var(--text-muted);
     line-height: 1.85;
     margin-bottom: 16px;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
   .retiro-meta {
     display: flex;
     flex-wrap: wrap;
     gap: 24px;
     margin: 24px 0 30px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
   .retiro-meta div {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--accent-secondary);
+    color: var(--text-muted);
   }
   .retiro-meta .icon { color: var(--accent-primary); font-size: 1.2rem; }
   .contacts-mini {
     display: flex;
     gap: 26px;
     margin-top: 15px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
     flex-wrap: wrap;
   }
 
   @media (max-width: 950px) {
-    .retiro-card { grid-template-columns: 1fr; border-radius: 0px; padding: 10px; }
-    .retiro-img { min-height: 350px; border-radius: 0px; }
-    .retiro-info { padding: 40px 20px; }
+    .retiro-card { grid-template-columns: 1fr; }
+    .retiro-img { min-height: 350px; }
+    .retiro-info { padding: 40px 30px; }
   }
 
   /* ---------- BLOG ---------- */
-  .blog { background: var(--bg-main); }
+  .blog { background: var(--bg-alt); }
   .blog-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -526,40 +524,43 @@
   }
   .blog-card {
     cursor: pointer;
-    text-align: center;
+    text-align: left;
+    background: var(--bg-main);
+    padding: 20px;
+    border: 1px solid var(--border-color);
   }
   .blog-img {
-    aspect-ratio: 1/1; /* Cuadrado para que el radio máximo lo haga círculo perfecto */
+    aspect-ratio: 4/3;
     background-size: cover;
     background-position: center;
-    border-radius: 0px; /* RADIO MÁXIMO / CÍRCULO */
-    filter: grayscale(0.3) brightness(0.9);
+    border-radius: 0px; 
+    filter: brightness(0.8);
     transition: transform 0.8s ease, filter 0.8s ease;
     margin-bottom: 22px;
+    overflow: hidden;
   }
   .blog-card:hover .blog-img {
-    transform: scale(1.05);
-    filter: grayscale(0) brightness(1.1);
+    filter: brightness(1);
   }
   .blog-tag {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--accent-primary);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     display: block;
-    font-weight: 700;
+    font-weight: 600;
   }
   .blog-card h4 {
-    font-family: 'Prata', serif;
-    font-size: 1.4rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
     color: var(--text-main);
     line-height: 1.4;
     margin-bottom: 12px;
   }
   .blog-card p {
     color: var(--text-muted);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1.7;
   }
   .blog-link {
@@ -567,24 +568,22 @@
     align-items: center;
     gap: 8px;
     margin-top: 14px;
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    color: var(--accent-secondary);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--text-main);
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 600;
   }
-  .blog-link .arrow { transition: transform 0.3s ease; }
+  .blog-link .arrow { transition: transform 0.3s ease; color: var(--accent-primary); }
   .blog-card:hover .arrow { transform: translateX(6px); }
 
   @media (max-width: 900px) {
     .blog-grid { grid-template-columns: 1fr; }
-    .blog-img { aspect-ratio: 4/3; border-radius: 1px; } /* Pill en móviles */
   }
 
   /* ---------- TESTIMONIOS ---------- */
   .testimonios {
-    background: var(--bg-alt);
-    background-image: radial-gradient(circle at 80% 20%, rgba(161, 48, 84, 0.15), transparent 50%);
+    background: var(--bg-main);
   }
   .test-track-wrap { margin-top: 60px; overflow: hidden; position: relative; }
   .test-track {
@@ -594,9 +593,9 @@
   }
   .test-card {
     flex: 0 0 calc(33.333% - 20px);
-    background: var(--bg-main);
+    background: var(--bg-alt);
     border: 1px solid var(--border-color);
-    border-radius: 10px; /* Bordes muy redondeados para tarjetas */
+    border-radius: 0px;
     padding: 42px 34px;
     position: relative;
   }
@@ -604,10 +603,10 @@
     font-size: 4rem;
     color: var(--accent-primary);
     line-height: 1;
-    opacity: 0.6;
+    opacity: 0.4;
   }
   .test-text {
-    font-family: 'Prata', serif;
+    font-family: 'Playfair Display', serif;
     font-style: italic;
     font-size: 1.15rem;
     color: var(--text-main);
@@ -620,18 +619,19 @@
     gap: 14px;
   }
   .test-avatar {
-    width: 50px; height: 50px;
-    border-radius: 10%;
-    background: var(--accent-dark);
+    width: 45px; height: 45px;
+    border-radius: 0px;
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Prata', serif;
-    color: var(--text-main);
-    font-size: 1.2rem;
+    font-family: 'Playfair Display', serif;
+    color: var(--accent-primary);
+    font-size: 1.1rem;
   }
-  .test-author-name { font-size: 1rem; color: var(--text-main); font-weight: 700; }
-  .test-author-role { font-size: 0.8rem; color: var(--text-muted); }
+  .test-author-name { font-size: 0.9rem; color: var(--text-main); font-weight: 600; }
+  .test-author-role { font-size: 0.75rem; color: var(--text-muted); }
 
   .test-controls {
     display: flex;
@@ -640,14 +640,14 @@
     margin-top: 44px;
   }
   .test-dot {
-    width: 10px; height: 10px;
-    border-radius: 10%;
+    width: 8px; height: 8px;
+    border-radius: 50%;
     background: var(--border-color);
     cursor: pointer;
     transition: background 0.3s;
     border: none;
   }
-  .test-dot.active { background: var(--accent-secondary); }
+  .test-dot.active { background: var(--accent-primary); }
 
   @media (max-width: 900px) {
     .test-card { flex: 0 0 100%; }
@@ -657,7 +657,7 @@
   .contact {
     background: var(--bg-main);
     background-image:
-      linear-gradient(180deg, var(--bg-main) 0%, rgba(44, 20, 18, 0.9) 100%),
+      linear-gradient(180deg, var(--bg-main) 0%, rgba(10, 7, 6, 0.8) 100%),
       url('https://github.com/agarciadg/sangreonosangre/blob/main/d2877b3cb0a12a637cb6a545c48988ff.jpg?raw=true');
     background-size: cover;
     background-position: center;
@@ -668,46 +668,49 @@
     grid-template-columns: 1fr 1fr;
     gap: 70px;
     align-items: start;
+    background: rgba(28, 19, 16, 0.85); /* Caja de fondo para dar contraste como en las imágenes */
+    padding: 60px;
+    border: 1px solid var(--border-color);
   }
   .contact-info p {
     color: var(--text-muted);
     line-height: 1.9;
     margin: 24px 0 36px;
     max-width: 420px;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
   }
   .contact-direct {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 22px;
   }
   .contact-direct-item {
     display: flex;
     align-items: center;
     gap: 14px;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
-  .contact-direct-item .label { color: var(--accent-secondary); min-width: 130px; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 700; }
-  .contact-direct-item .value { color: var(--text-main); }
+  .contact-direct-item .label { color: var(--accent-primary); min-width: 100px; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; }
+  .contact-direct-item .value { color: var(--text-main); font-family: 'Playfair Display', serif; font-size: 1.1rem; }
 
   form { display: flex; flex-direction: column; gap: 22px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
   .field { display: flex; flex-direction: column; gap: 8px; }
   .field label {
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--text-muted);
-    font-weight: 700;
+    font-weight: 600;
   }
   .field input, .field textarea {
     background: transparent;
     border: none;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     color: var(--text-main);
-    font-family: 'Lato', sans-serif;
-    font-size: 1rem;
-    padding: 10px 2px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    padding: 10px 0;
     outline: none;
     transition: border-color 0.3s;
   }
@@ -715,15 +718,15 @@
   .field textarea { resize: none; height: 90px; }
   
   .form-success {
-    color: var(--accent-secondary);
-    font-family: 'Prata', serif;
+    color: var(--accent-primary);
+    font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     margin-top: 10px;
   }
 
   @media (max-width: 860px) {
-    .contact-wrap { grid-template-columns: 1fr; gap: 50px; }
+    .contact-wrap { grid-template-columns: 1fr; gap: 50px; padding: 40px 20px; }
     .form-row { grid-template-columns: 1fr; }
   }
 
@@ -741,32 +744,32 @@
     gap: 40px;
   }
   .footer-logo {
-    font-family: 'Prata', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 1.8rem;
-    color: var(--accent-secondary);
+    color: var(--text-main);
   }
-  .footer-logo span { color: var(--accent-primary); }
+  .footer-logo span { color: var(--accent-primary); font-style: italic; }
   .footer-tag {
-    font-family: 'Prata', serif;
+    font-family: 'Playfair Display', serif;
     font-style: italic;
     color: var(--text-muted);
     margin-top: 10px;
     max-width: 280px;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
   .footer-cols { display: flex; gap: 70px; flex-wrap: wrap; }
   .footer-col h5 {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--accent-secondary);
+    color: var(--accent-primary);
     margin-bottom: 16px;
-    font-weight: 700;
+    font-weight: 600;
   }
   .footer-col a, .footer-col p {
     display: block;
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     margin-bottom: 10px;
     transition: color 0.3s;
   }
@@ -779,7 +782,7 @@
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 12px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
   }
 
@@ -788,15 +791,15 @@
     position: absolute;
     bottom: 20px; left: 50%;
     transform: translateX(-50%);
-    background: rgba(44, 20, 18, 0.8);
-    color: var(--accent-secondary);
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
+    background: rgba(10, 7, 6, 0.8);
+    color: var(--accent-primary);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     padding: 8px 15px;
     z-index: 3;
-    border: 1px solid var(--accent-secondary);
-    border-radius: 0px; /* Pill shape marker */
+    border: 1px solid var(--accent-primary);
+    border-radius: 0px; 
     white-space: nowrap;
   }
 </style>
@@ -920,14 +923,14 @@
       <p>Un retiro experiencial desde un espacio íntimo, ético y seguro, en el que nos atrevemos a transformar la narrativa sobre la menopausia, el erotismo y la vejez.</p>
       <p>No es un retiro de descanso. Es un espacio para bailar e integrar tu sombra, encender tu fuego y rugir junto a otras que, como tú, se niegan a ser lo que no son.</p>
       <div class="retiro-meta">
-        <div><span class="icon">📍</span> Casa Venus, Tepoztlán, Morelos</div>
+        <div><span class="icon">📍</span> Centro Werika, Tepoztlán, Morelos</div>
         <div><span class="icon">🗓</span> 22 al 25 de octubre, 2026</div>
         <div><span class="icon">◆</span> Cupos limitados</div>
       </div>
       <a href="#contacto" class="btn btn-primary" style="align-self: flex-start;">Reservar mi lugar</a>
       <div class="contacts-mini">
-        <span>📞 Andrea de Losada — +52 555 435 2377</span>
-        <span>📞 Gabriela Carretta — +52 552 702 6284</span>
+        <span>Andrea de Losada — +52 555 435 2377</span>
+        <span>Gabriela Carretta — +52 552 702 6284</span>
       </div>
     </div>
   </div>
@@ -1032,21 +1035,21 @@
   <div class="contact-wrap">
     <div class="contact-info reveal">
       <span class="section-label">Reserva tu lugar</span>
-      <h2 class="section-title">Es momento de priorizarte</h2>
-      <p>Cupos limitados para cuidar la intimidad del grupo. Escríbenos y te contamos todos los detalles del próximo encuentro en Tepoztlán.</p>
+      <h2 class="section-title">Contacto</h2>
+      <p>Para resolver cualquier duda o iniciar tu proceso de inscripción, comunícate con nosotras. Cupos limitados para cuidar la intimidad del grupo.</p>
 
       <div class="contact-direct">
         <div class="contact-direct-item">
-          <span class="label">Andrea</span>
-          <span class="value">+52 555 435 2377</span>
-        </div>
-        <div class="contact-direct-item">
-          <span class="label">Gabriela</span>
+          <span class="label">Gabriela Carretta</span>
           <span class="value">+52 552 702 6284</span>
         </div>
         <div class="contact-direct-item">
+          <span class="label">Andrea de Losada</span>
+          <span class="value">+52 555 435 2377</span>
+        </div>
+        <div class="contact-direct-item">
           <span class="label">Ubicación</span>
-          <span class="value">Casa Venus, Tepoztlán, Morelos</span>
+          <span class="value">Centro Werika<br>Tepoztlán, Morelos</span>
         </div>
       </div>
     </div>
@@ -1089,7 +1092,7 @@
   <div class="footer-top">
     <div>
       <div class="footer-logo">Sangre <span>o no</span> Sangre</div>
-      <p class="footer-tag">El rugido de la madurez. Un espacio para reencontrarte con tu soberanía y tu erotismo.</p>
+      <p class="footer-tag">Sangrar, o haber sangrado, no es sólo biología. Es memoria, lenguaje, territorio y transformación.</p>
     </div>
     <div class="footer-cols">
       <div class="footer-col">
