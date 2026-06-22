@@ -149,7 +149,7 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     font-weight: 700;
-    border-radius: 9999px; /* RADIO MÁXIMO */
+    border-radius: 0px; /* RADIO MÁXIMO */
     cursor: pointer;
     transition: all 0.35s ease;
     border: 1px solid transparent;
@@ -460,7 +460,7 @@
     background: var(--accent-primary);
     color: #fff;
     padding: 25px;
-    border-radius: 50%; /* Insignia redonda */
+    border-radius: 10%; /* Insignia redonda */
     text-align: center;
     z-index: 2;
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
@@ -578,7 +578,7 @@
 
   @media (max-width: 900px) {
     .blog-grid { grid-template-columns: 1fr; }
-    .blog-img { aspect-ratio: 4/3; border-radius: 9999px; } /* Pill en móviles */
+    .blog-img { aspect-ratio: 4/3; border-radius: 1px; } /* Pill en móviles */
   }
 
   /* ---------- TESTIMONIOS ---------- */
@@ -641,7 +641,7 @@
   }
   .test-dot {
     width: 10px; height: 10px;
-    border-radius: 50%;
+    border-radius: 10%;
     background: var(--border-color);
     cursor: pointer;
     transition: background 0.3s;
