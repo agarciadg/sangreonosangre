@@ -3,901 +3,330 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sangre o no Sangre</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 
   :root {
-    /* Paleta extraída de las nuevas imágenes fotográficas */
-    --color-black-brown: #141414; /* Fondo principal casi negro/marrón muy oscuro (Imgs 7, 8, 9) */
-    --color-dark-box: #1A0112; /* Cajas de texto oscuras (Imgs 2, 3, 4) */
-    --color-cream: #f4efe9; /* Texto claro principal */
-    --color-muted-beige: #bbaea4; /* Texto secundario apagado */
-    --color-gold: #d4b595; /* Acentos dorados/beige de los nombres (Imgs 8, 9) */
-    --color-earth-red: #0D0D0D; /* Tono rojizo oscuro profundo */
-    --color-border: #2e211d;
+    --bg-main: #141414;
+    --bg-alt: #1A0112;
+    --text-main: #f4efe9;
+    --text-muted: #bbaea4;
+    --accent: #d4b595;
+    --border: #2e211d;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg-main); color:var(--text-main); font-family:'Montserrat',sans-serif; font-weight:300; overflow-x:hidden; }
+  h1,h2,h3,.serif { font-family:'Playfair Display',serif; font-weight:400; }
+  .italic { font-style:italic; }
+  a { text-decoration:none; color:inherit; }
 
-    /* Asignación funcional */
-    --bg-main: var(--color-black-brown);
-    --bg-alt: var(--color-dark-box);
-    --text-main: var(--color-cream);
-    --text-muted: var(--color-muted-beige);
-    --accent-primary: var(--color-gold);
-    --accent-secondary: var(--color-muted-beige);
-    --accent-dark: var(--color-earth-red);
-    --border-color: var(--color-border);
-  }
+  /* NAV */
+  nav { position:fixed; top:0; left:0; right:0; z-index:1000; display:flex; justify-content:space-between; align-items:center; padding:22px 6%; background:linear-gradient(to bottom,rgba(10,7,6,.95),transparent); backdrop-filter:blur(4px); transition:background .3s; }
+  nav.scrolled { background:rgba(10,7,6,.98); box-shadow:0 2px 20px rgba(0,0,0,.6); }
+  .logo { font-family:'Playfair Display',serif; font-size:1.4rem; letter-spacing:.05em; color:var(--text-main); }
+  .logo span { color:var(--accent); font-style:italic; }
+  .nav-links { display:flex; gap:34px; font-size:.75rem; letter-spacing:.15em; text-transform:uppercase; font-weight:400; }
+  .nav-links a { position:relative; padding-bottom:4px; transition:color .3s; }
+  .nav-links a:hover { color:var(--accent); }
+  .nav-links a::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1px; background:var(--accent); transition:width .3s; }
+  .nav-links a:hover::after { width:100%; }
+  .nav-toggle { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; z-index:1001; }
+  .nav-toggle span { width:26px; height:1.5px; background:var(--text-main); display:block; }
+  .mob-menu { display:none; position:fixed; inset:0; background:var(--bg-main); z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:36px; }
+  .mob-menu.open { display:flex; }
+  .mob-menu a { font-family:'Playfair Display',serif; font-size:1.8rem; }
+  .mob-close { position:absolute; top:28px; right:6%; font-size:2rem; background:none; border:none; color:var(--text-main); cursor:pointer; }
+  @media(max-width:860px){ .nav-links{display:none;} .nav-toggle{display:flex;} }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* BUTTONS */
+  .btn { padding:14px 34px; font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; font-weight:600; cursor:pointer; transition:all .3s; border:1px solid transparent; display:inline-block; font-family:'Montserrat',sans-serif; }
+  .btn-primary { background:var(--accent); color:var(--bg-main); border-color:var(--accent); }
+  .btn-primary:hover { background:var(--text-main); border-color:var(--text-main); transform:translateY(-2px); }
+  .btn-outline { border-color:var(--accent); color:var(--accent); }
+  .btn-outline:hover { background:var(--accent); color:var(--bg-main); }
+  .btn-ghost { border-color:var(--border); color:var(--text-muted); font-size:.7rem; }
+  .btn-ghost:hover { border-color:var(--accent); color:var(--accent); }
 
-  html { scroll-behavior: smooth; }
+  /* REVEAL */
+  .reveal { opacity:0; transform:translateY(36px); transition:opacity .9s ease,transform .9s ease; }
+  .reveal.in-view { opacity:1; transform:translateY(0); }
 
-  body {
-    background: var(--bg-main);
-    color: var(--text-main);
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-  }
+  /* PAGE SWITCH */
+  #page-nosotras,#page-blog-1,#page-blog-2,#page-blog-3,#page-blog-4,#page-blog-5 { display:none; }
 
-  h1, h2, h3, .serif, .logo, .pillar-num, .test-quote-mark, .slogan-marquee {
-    font-family: 'Playfair Display', serif;
-    font-weight: 400;
-  }
+  /* SECTION */
+  section { padding:120px 6%; }
+  .section-label { font-size:.72rem; letter-spacing:.25em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:16px; display:block; }
+  .section-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,4.5vw,3.4rem); color:var(--text-main); line-height:1.15; }
 
-  .script {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-  }
+  /* HERO */
+  .hero { position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
+  .hero-bg { position:absolute; inset:0; background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/14fd73dedf3fcb8218f7a174c61f16e4.jpg?raw=true'); background-size:cover; background-position:center 30%; filter:brightness(.6) contrast(1.1); transform:scale(1.05); animation:heroZoom 18s ease-in-out infinite alternate; }
+  @keyframes heroZoom { from{transform:scale(1.05)} to{transform:scale(1.15)} }
+  .hero-overlay { position:absolute; inset:0; background:linear-gradient(180deg,rgba(10,7,6,.4) 0%,rgba(10,7,6,.2) 40%,rgba(10,7,6,.95) 100%); }
+  .hero-body { position:relative; z-index:2; padding:0 6%; max-width:900px; animation:fadeUp 1.4s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  .hero-eyebrow { font-size:.8rem; letter-spacing:.25em; text-transform:uppercase; color:var(--accent); margin-bottom:22px; display:inline-block; font-weight:400; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.6rem,7vw,5.5rem); line-height:1.05; color:var(--text-main); text-shadow:0 4px 30px rgba(0,0,0,.8); }
+  .hero h1 em { font-style:italic; color:var(--accent); }
+  .hero-sub { font-size:clamp(1rem,2vw,1.2rem); color:var(--text-muted); margin-top:22px; max-width:640px; margin-left:auto; margin-right:auto; line-height:1.6; }
+  .hero-cta { display:inline-flex; gap:20px; margin-top:46px; flex-wrap:wrap; justify-content:center; }
+  .scroll-cue { position:absolute; bottom:34px; left:50%; transform:translateX(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:10px; font-size:.65rem; letter-spacing:.2em; color:var(--text-muted); text-transform:uppercase; }
+  .scroll-line { width:1px; height:40px; background:linear-gradient(to bottom,var(--accent),transparent); animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
 
-  a { text-decoration: none; color: inherit; }
+  /* SOBRE */
+  .about { background:var(--bg-main); display:grid; grid-template-columns:.85fr 1.15fr; gap:80px; align-items:center; }
+  .about-img-frame { position:relative; padding-bottom:18px; padding-right:18px; }
+  .about-img-frame::before { content:''; position:absolute; inset:0; border:1px solid var(--border); margin:18px -18px -18px 18px; z-index:-1; }
+  .about-img-wrap { position:relative; aspect-ratio:3/4; overflow:hidden; }
+  .about-img-wrap img { width:100%; height:100%; object-fit:cover; filter:brightness(.85) contrast(1.05); transition:transform 1.2s,filter 1.2s; }
+  .about-img-wrap:hover img { transform:scale(1.03); filter:brightness(1) contrast(1.1); }
+  .about-text .script { font-family:'Playfair Display',serif; font-style:italic; font-size:1.6rem; color:var(--accent); line-height:1.5; margin-bottom:26px; }
+  .about-text p { color:var(--text-muted); line-height:1.9; margin-bottom:20px; font-size:.95rem; }
+  .about-text strong { color:var(--text-main); font-weight:600; }
+  .pillars { display:grid; grid-template-columns:repeat(4,1fr); gap:28px; margin-top:50px; }
+  .pillar { border-top:1px solid var(--border); padding-top:20px; }
+  .pillar-num { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--text-main); display:block; margin-bottom:10px; }
+  .pillar-title { font-size:.9rem; letter-spacing:.05em; color:var(--accent); margin-bottom:10px; font-weight:600; text-transform:uppercase; }
+  .pillar-text { font-size:.85rem; color:var(--text-muted); line-height:1.7; }
+  @media(max-width:900px){ .about{grid-template-columns:1fr;gap:50px;} .pillars{grid-template-columns:repeat(2,1fr);} }
 
-  /* ---------- NAV ---------- */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 22px 6%;
-    background: linear-gradient(to bottom, rgba(10, 7, 6, 0.95), transparent);
-    backdrop-filter: blur(4px);
-    transition: background 0.3s ease;
-  }
-  nav.scrolled {
-    background: rgba(10, 7, 6, 0.98);
-    box-shadow: 0 2px 20px rgba(0,0,0,0.6);
-  }
-  .logo {
-    font-size: 1.4rem;
-    letter-spacing: 0.05em;
-    color: var(--text-main);
-  }
-  .logo span { color: var(--accent-primary); font-style: italic; }
-  .nav-links {
-    display: flex;
-    gap: 34px;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    font-weight: 400;
-  }
-  .nav-links a {
-    position: relative;
-    padding-bottom: 4px;
-    transition: color 0.3s;
-    color: var(--text-main);
-  }
-  .nav-links a:hover { color: var(--accent-primary); }
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 0; height: 1px;
-    background: var(--accent-primary);
-    transition: width 0.3s ease;
-  }
-  .nav-links a:hover::after { width: 100%; }
-  
-  .nav-toggle {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    z-index: 1001;
-  }
-  .nav-toggle span {
-    width: 26px; height: 1.5px;
-    background: var(--text-main);
-  }
-  .mobile-menu {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: var(--bg-main);
-    z-index: 999;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 36px;
-  }
-  .mobile-menu.open { display: flex; }
-  .mobile-menu a {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    color: var(--text-main);
-  }
-  .mobile-close {
-    position: absolute;
-    top: 28px; right: 6%;
-    font-size: 2rem;
-    background: none;
-    border: none;
-    color: var(--text-main);
-    cursor: pointer;
-  }
+  /* MARQUEE */
+  .slogan-band { background:var(--bg-alt); background-image:linear-gradient(120deg,rgba(28,19,16,.95),rgba(28,19,16,.85)),url('https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true'); background-size:cover; background-blend-mode:multiply; background-position:center; padding:90px 6%; overflow:hidden; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .slogan-marquee { display:flex; white-space:nowrap; animation:marquee 32s linear infinite; font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(1.5rem,3vw,2.5rem); color:var(--accent); }
+  .slogan-marquee span { margin-right:60px; }
+  .slogan-marquee .sep { color:var(--text-muted); font-style:normal; }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-  @media (max-width: 860px) {
-    .nav-links { display: none; }
-    .nav-toggle { display: flex; }
-  }
+  /* RETIROS */
+  .retiros { background:var(--bg-main); }
+  .retiro-card { margin-top:60px; display:grid; grid-template-columns:1fr 1fr; background:var(--bg-alt); overflow:hidden; }
+  .retiro-img { position:relative; min-height:480px; background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/retiro-img.png?raw=true'); background-size:cover; background-position:center; }
+  .retiro-img::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(28,19,16,.4),rgba(10,7,6,.7)); }
+  .retiro-badge { position:absolute; top:30px; left:30px; background:var(--bg-main); padding:20px 25px; text-align:center; z-index:2; border:1px solid var(--border); }
+  .retiro-badge .day { font-family:'Playfair Display',serif; font-size:2rem; color:var(--accent); line-height:1; }
+  .retiro-badge .month { font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; margin-top:8px; }
+  .retiro-info { padding:60px; display:flex; flex-direction:column; justify-content:center; gap:14px; }
+  .retiro-info h3 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3vw,2.8rem); color:var(--text-main); line-height:1.2; }
+  .retiro-info p { color:var(--text-muted); line-height:1.85; font-size:.95rem; }
+  .retiro-meta { display:flex; flex-wrap:wrap; gap:24px; font-size:.85rem; color:var(--text-muted); }
+  .retiro-meta span { display:flex; align-items:center; gap:8px; }
+  .contacts-mini { font-size:.8rem; color:var(--text-muted); display:flex; flex-direction:column; gap:6px; }
+  @media(max-width:950px){ .retiro-card{grid-template-columns:1fr;} .retiro-img{min-height:300px;} .retiro-info{padding:36px 28px;} }
 
-  /* ---------- BORDER RADIUS MAX (BOTONES) ---------- */
-  .btn, .submit-btn {
-    padding: 16px 38px;
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-weight: 600;
-    border-radius: 0px; /* Estilo bloque/limpio como las imágenes */
-    cursor: pointer;
-    transition: all 0.35s ease;
-    border: 1px solid transparent;
-    display: inline-block;
-  }
-  .btn-primary, .submit-btn {
-    background: var(--accent-primary);
-    color: var(--bg-main);
-  }
-  .btn-primary:hover, .submit-btn:hover {
-    background: var(--text-main);
-    transform: translateY(-2px);
-  }
-  .btn-outline {
-    border-color: var(--accent-primary);
-    color: var(--accent-primary);
-  }
-  .btn-outline:hover {
-    background: var(--accent-primary);
-    color: var(--bg-main);
-  }
+  /* ===== BLOG / JOURNAL ===== */
+  .blog { background:var(--bg-alt); }
+  .blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:30px; margin-top:56px; }
+  .blog-card { background:var(--bg-main); border:1px solid var(--border); display:flex; flex-direction:column; }
+  .blog-thumb { aspect-ratio:16/10; overflow:hidden; }
+  .blog-thumb img { width:100%; height:100%; object-fit:cover; filter:brightness(.75); transition:transform .8s,filter .8s; }
+  .blog-card:hover .blog-thumb img { transform:scale(1.05); filter:brightness(.95); }
+  .blog-body { padding:28px 26px 30px; display:flex; flex-direction:column; flex:1; }
+  .blog-tag { font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:10px; display:block; }
+  .blog-body h4 { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--text-main); line-height:1.4; margin-bottom:12px; }
+  .blog-excerpt { font-size:.87rem; color:var(--text-muted); line-height:1.75; flex:1; }
+  .blog-read { display:inline-flex; align-items:center; gap:10px; margin-top:22px; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; font-weight:600; color:var(--accent); cursor:pointer; background:none; border:none; font-family:'Montserrat',sans-serif; padding:0; }
+  .blog-read .arr { transition:transform .3s; }
+  .blog-card:hover .arr { transform:translateX(5px); }
+  @media(max-width:1000px){ .blog-grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:640px){ .blog-grid{grid-template-columns:1fr;} }
 
-  /* ---------- HERO ---------- */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('https://github.com/agarciadg/sangreonosangre/blob/main/14fd73dedf3fcb8218f7a174c61f16e4.jpg?raw=true');
-    background-size: cover;
-    background-position: center 30%;
-    filter: brightness(0.6) contrast(1.1);
-    transform: scale(1.05);
-    animation: heroZoom 18s ease-in-out infinite alternate;
-  }
-  @keyframes heroZoom {
-    from { transform: scale(1.05); }
-    to { transform: scale(1.15); }
-  }
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(10, 7, 6, 0.4) 0%, rgba(10, 7, 6, 0.2) 40%, rgba(10, 7, 6, 0.95) 100%);
-  }
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 0 6%;
-    max-width: 900px;
-    animation: fadeUp 1.4s ease both;
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .hero-eyebrow {
-    font-size: 0.8rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--accent-primary);
-    margin-bottom: 22px;
-    display: inline-block;
-    font-weight: 400;
-  }
-  .hero h1 {
-    font-size: clamp(2.6rem, 7vw, 5.5rem);
-    line-height: 1.05;
-    color: var(--text-main);
-    letter-spacing: 0.01em;
-    text-shadow: 0 4px 30px rgba(0,0,0,0.8);
-  }
-  .hero h1 em {
-    font-style: italic;
-    color: var(--accent-primary);
-  }
-  .hero-sub {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    color: var(--text-muted);
-    margin-top: 22px;
-    max-width: 640px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.6;
-  }
-  .hero-cta {
-    display: inline-flex;
-    gap: 20px;
-    margin-top: 46px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .scroll-cue {
-    position: absolute;
-    bottom: 34px; left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-  }
-  .scroll-line {
-    width: 1px; height: 40px;
-    background: linear-gradient(to bottom, var(--accent-primary), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 1; }
-  }
+  /* TESTIMONIOS */
+  .testimonios { background:var(--bg-main); }
+  .test-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:56px; }
+  .test-card { background:var(--bg-alt); border:1px solid var(--border); padding:36px 30px; display:flex; flex-direction:column; }
+  .test-q { font-family:'Playfair Display',serif; font-size:3rem; color:var(--accent); opacity:.4; line-height:1; }
+  .test-author { display:flex; align-items:center; gap:12px; margin:20px 0 18px; }
+  .test-av { width:42px; height:42px; background:var(--bg-main); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; color:var(--accent); font-size:.95rem; flex-shrink:0; }
+  .test-name { font-size:.9rem; color:var(--text-main); font-weight:600; }
+  .test-role { font-size:.72rem; color:var(--text-muted); }
+  .test-body { flex:1; display:flex; flex-direction:column; }
+  .test-preview { font-family:'Playfair Display',serif; font-style:italic; font-size:1rem; color:var(--text-main); line-height:1.75; }
+  .test-full { display:none; margin-top:14px; }
+  .test-full .test-section { margin-bottom:20px; }
+  .test-full .test-section-q { font-size:.68rem; letter-spacing:.15em; text-transform:uppercase; color:var(--accent); font-weight:600; display:block; margin-bottom:6px; }
+  .test-full .test-section-a { font-size:.9rem; color:var(--text-muted); line-height:1.8; }
+  .test-full .test-section-a em { color:var(--text-main); font-style:italic; font-family:'Playfair Display',serif; }
+  .test-expand { background:none; border:none; color:var(--accent); font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; font-weight:600; cursor:pointer; font-family:'Montserrat',sans-serif; display:flex; align-items:center; gap:8px; margin-top:20px; padding:0; transition:color .3s; }
+  .test-expand:hover { color:var(--text-main); }
+  .test-expand .arr { transition:transform .3s; display:inline-block; }
+  .test-expand.open .arr { transform:rotate(90deg); }
+  @media(max-width:1000px){ .test-grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:640px){ .test-grid{grid-template-columns:1fr;} }
+  @media(max-width:900px){ .test-card{flex:0 0 100%;} }
 
-  /* ---------- SECTION GENERAL ---------- */
-  section { position: relative; padding: 130px 6%; }
-  .section-label {
-    font-size: 0.75rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--accent-primary);
-    font-weight: 600;
-    margin-bottom: 18px;
-    display: block;
-  }
-  .section-title {
-    font-size: clamp(2rem, 4.5vw, 3.4rem);
-    color: var(--text-main);
-    line-height: 1.15;
-    max-width: 800px;
-  }
-  .divider {
-    width: 70px; height: 1px;
-    background: var(--accent-primary);
-    margin: 28px 0;
-  }
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.9s ease, transform 0.9s ease;
-  }
-  .reveal.in-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* CONTACTO */
+  .contact { background:var(--bg-main); }
+  .contact-wrap { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:start; background:rgba(0,0,0,.85); padding:60px; border:1px solid var(--border); }
+  .contact-info p { color:var(--text-muted); line-height:1.9; margin:22px 0 34px; font-size:.95rem; }
+  .contact-datos { display:flex; flex-direction:column; gap:20px; }
+  .dato { display:flex; align-items:center; gap:12px; }
+  .dato-label { color:var(--accent); font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; font-weight:600; min-width:110px; }
+  .dato-val { color:var(--text-main); font-family:'Playfair Display',serif; font-size:1.05rem; }
+  .cf { display:flex; flex-direction:column; gap:20px; }
+  .cf-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .cf-field { display:flex; flex-direction:column; gap:7px; }
+  .cf-field label { font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; color:var(--text-muted); font-weight:600; }
+  .cf-field input,.cf-field textarea { background:transparent; border:none; border-bottom:1px solid var(--border); color:var(--text-main); font-family:'Montserrat',sans-serif; font-size:.92rem; padding:9px 0; outline:none; transition:border-color .3s; }
+  .cf-field input:focus,.cf-field textarea:focus { border-color:var(--accent); }
+  .cf-field textarea { resize:none; height:88px; }
+  .cf-ok { display:none; font-family:'Playfair Display',serif; font-style:italic; font-size:1.05rem; color:var(--accent); margin-top:10px; }
+  @media(max-width:860px){ .contact-wrap{grid-template-columns:1fr;gap:48px;padding:36px 24px;} .cf-row{grid-template-columns:1fr;} }
 
-  /* ---------- SOBRE NOSOTRAS ---------- */
-  .about {
-    background: var(--bg-main);
-    display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
-    gap: 80px;
-    align-items: center;
-  }
-  .about-img-frame {
-    position: relative;
-    padding-bottom: 18px; padding-right: 18px;
-  }
-  .about-img-frame::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border: 1px solid var(--border-color);
-    margin: 18px -18px -18px 18px;
-    z-index: -1;
-    border-radius: 0px;
-  }
-  .about-img-wrap {
-    position: relative;
-    aspect-ratio: 3/4;
-    overflow: hidden;
-    border-radius: 0px;
-  }
-  .about-img-wrap img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    filter: brightness(0.85) contrast(1.05);
-    transition: transform 1.2s ease, filter 1.2s ease;
-    border-radius: 0px;
-  }
-  .about-img-wrap:hover img {
-    transform: scale(1.03);
-    filter: brightness(1) contrast(1.1);
-  }
+  /* FOOTER */
+  footer { background:var(--bg-alt); padding:60px 6% 28px; border-top:1px solid var(--border); }
+  .footer-top { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:40px; }
+  .footer-logo { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--text-main); }
+  .footer-logo span { color:var(--accent); font-style:italic; }
+  .footer-tag { font-family:'Playfair Display',serif; font-style:italic; color:var(--text-muted); margin-top:10px; max-width:280px; font-size:1rem; }
+  .footer-cols { display:flex; gap:70px; flex-wrap:wrap; }
+  .footer-col h5 { font-size:.72rem; letter-spacing:.15em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; font-weight:600; }
+  .footer-col a,.footer-col p { display:block; color:var(--text-muted); font-size:.84rem; margin-bottom:9px; transition:color .3s; cursor:pointer; }
+  .footer-col a:hover,.footer-col p:hover { color:var(--text-main); }
+  .footer-bottom { margin-top:46px; padding-top:22px; border-top:1px solid var(--border); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:.76rem; color:var(--text-muted); }
 
-  .about-text .script {
-    font-size: 1.6rem;
-    color: var(--accent-primary);
-    line-height: 1.5;
-    margin-bottom: 26px;
-  }
-  .about-text p {
-    color: var(--text-muted);
-    line-height: 1.9;
-    margin-bottom: 20px;
-    font-size: 0.95rem;
-  }
-  .about-text strong { color: var(--text-main); font-weight: 600; }
+  /* ===== PÁGINA NOSOTRAS ===== */
+  .nos-hero { position:relative; height:55vh; min-height:360px; overflow:hidden; display:flex; align-items:flex-end; }
+  .nos-hero-bg { position:absolute; inset:0; background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true'); background-size:cover; background-position:center; filter:brightness(.4); }
+  .nos-hero-ov { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(10,7,6,.2),rgba(10,7,6,.92)); }
+  .nos-hero-body { position:relative; z-index:2; padding:0 6% 56px; }
+  .back-btn { background:none; border:none; color:var(--accent); font-size:.72rem; letter-spacing:.15em; text-transform:uppercase; cursor:pointer; margin-bottom:22px; display:flex; align-items:center; gap:10px; font-family:'Montserrat',sans-serif; font-weight:600; }
+  .back-btn:hover { color:var(--text-main); }
+  .bio-section { padding:90px 6%; }
+  .bio-section:not(:last-of-type) { border-bottom:1px solid var(--border); }
+  .bio-grid-l { display:grid; grid-template-columns:.8fr 1.2fr; gap:72px; align-items:start; }
+  .bio-grid-r { display:grid; grid-template-columns:1.2fr .8fr; gap:72px; align-items:start; }
+  .bio-img-outer { position:relative; }
+  .bio-img-inner { position:relative; aspect-ratio:3/4; overflow:hidden; }
+  .bio-img-inner img { width:100%; height:100%; object-fit:cover; filter:brightness(.85) contrast(1.05); transition:transform 1s; }
+  .bio-img-outer:hover img { transform:scale(1.04); }
+  .bio-caption { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(10,7,6,.88)); padding:28px 22px 20px; font-family:'Playfair Display',serif; font-style:italic; font-size:.95rem; color:var(--accent); }
+  .bio-frame-l::before { content:''; position:absolute; inset:0; border:1px solid var(--border); margin:18px -18px -18px 18px; z-index:-1; }
+  .bio-frame-r::before { content:''; position:absolute; inset:0; border:1px solid var(--border); margin:18px 18px -18px -18px; z-index:-1; }
+  .bio-role { font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:14px; font-weight:600; }
+  .bio-name { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3.5vw,2.8rem); color:var(--text-main); line-height:1.1; }
+  .bio-name-i { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3.5vw,2.8rem); color:var(--accent); font-style:italic; margin-bottom:28px; }
+  .bio-intro { font-family:'Playfair Display',serif; font-style:italic; font-size:1.12rem; color:var(--accent); line-height:1.7; margin-bottom:24px; }
+  .bio-p { color:var(--text-muted); line-height:1.9; font-size:.93rem; margin-bottom:15px; }
+  .bio-p strong { color:var(--text-main); font-weight:600; }
+  .bio-quote { border-left:2px solid var(--accent); padding-left:22px; margin:22px 0 24px; }
+  .bio-quote p { font-family:'Playfair Display',serif; font-style:italic; font-size:1.05rem; color:var(--text-main); line-height:1.7; }
+  .bio-tags { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+  .bio-tag { border:1px solid var(--border); color:var(--accent); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; padding:7px 13px; font-weight:600; }
+  .nos-cta { text-align:center; padding:80px 6% 100px; }
+  .nos-cta p { font-family:'Playfair Display',serif; font-style:italic; font-size:1.3rem; color:var(--text-muted); max-width:540px; margin:0 auto 32px; line-height:1.7; }
+  @media(max-width:900px){ .bio-grid-l,.bio-grid-r{grid-template-columns:1fr;} .bio-grid-r .bio-img-outer{order:-1;} }
 
-  .pillars {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 28px;
-    margin-top: 50px;
-  }
-  .pillar {
-    border-top: 1px solid var(--border-color);
-    padding-top: 20px;
-  }
-  .pillar-num {
-    font-size: 1.8rem;
-    color: var(--text-main);
-    display: block;
-    margin-bottom: 10px;
-  }
-  .pillar-title {
-    font-size: 0.9rem;
-    letter-spacing: 0.05em;
-    color: var(--accent-primary);
-    margin-bottom: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-  .pillar-text {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    line-height: 1.7;
-  }
-
-  @media (max-width: 900px) {
-    .about { grid-template-columns: 1fr; gap: 50px; }
-    .pillars { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  /* ---------- SLOGAN BAND ---------- */
-  .slogan-band {
-    background: var(--bg-alt);
-    background-image:
-      linear-gradient(120deg, rgba(28, 19, 16, 0.95), rgba(28, 19, 16, 0.85)),
-      url('https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true');
-    background-size: cover;
-    background-blend-mode: multiply;
-    background-position: center;
-    padding: 90px 6%;
-    text-align: center;
-    overflow: hidden;
-    position: relative;
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-  }
-  .slogan-marquee {
-    display: flex;
-    white-space: nowrap;
-    animation: marquee 32s linear infinite;
-    font-style: italic;
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
-    color: var(--accent-primary);
-    gap: 60px;
-  }
-  .slogan-marquee span { margin-right: 60px; }
-  .slogan-marquee .sep { color: var(--text-muted); font-style: normal; }
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  /* ---------- RETIROS ---------- */
-  .retiros { background: var(--bg-main); }
-  .retiro-card {
-    margin-top: 60px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    background: var(--bg-alt);
-    border: none;
-    border-radius: 0px; 
-    overflow: hidden;
-  }
-  .retiro-img {
-    position: relative;
-    min-height: 480px;
-    background-image: url('https://github.com/agarciadg/sangreonosangre/blob/main/retiro-img.png?raw=true');
-    background-size: cover;
-    background-position: center;
-    border-radius: 2px; 
-    overflow: hidden;
-  }
-  .retiro-img::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(28, 19, 16, 0.4), rgba(10, 7, 6, 0.7));
-  }
-  .retiro-date-badge {
-    position: absolute;
-    top: 30px; left: 30px;
-    background: var(--bg-main);
-    color: var(--text-main);
-    padding: 20px 25px;
-    border-radius: 0px;
-    text-align: center;
-    z-index: 2;
-    border: 1px solid var(--border-color);
-  }
-  .retiro-date-badge .day { font-size: 2rem; font-family: 'Playfair Display', serif; line-height: 1; color: var(--accent-primary); }
-  .retiro-date-badge .month { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 8px; font-weight: 400; }
-  .retiro-info {
-    padding: 60px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .retiro-info .section-label { margin-bottom: 14px; }
-  .retiro-info h3 {
-    font-size: clamp(1.8rem, 3vw, 2.8rem);
-    font-family: 'Playfair Display', serif;
-    color: var(--text-main);
-    margin-bottom: 18px;
-    line-height: 1.2;
-  }
-  .retiro-info p {
-    color: var(--text-muted);
-    line-height: 1.85;
-    margin-bottom: 16px;
-    font-size: 0.95rem;
-  }
-  .retiro-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    margin: 24px 0 30px;
-    font-size: 0.85rem;
-  }
-  .retiro-meta div {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--text-muted);
-  }
-  .retiro-meta .icon { color: var(--accent-primary); font-size: 1.2rem; }
-  .contacts-mini {
-    display: flex;
-    gap: 26px;
-    margin-top: 15px;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    flex-wrap: wrap;
-  }
-
-  @media (max-width: 950px) {
-    .retiro-card { grid-template-columns: 1fr; }
-    .retiro-img { min-height: 350px; }
-    .retiro-info { padding: 40px 30px; }
-  }
-
-  /* ---------- BLOG ---------- */
-  .blog { background: var(--bg-alt); }
-  .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 34px;
-    margin-top: 60px;
-  }
-  .blog-card {
-    cursor: pointer;
-    text-align: left;
-    background: var(--bg-main);
-    padding: 20px;
-    border: 1px solid var(--border-color);
-  }
-  .blog-img {
-    aspect-ratio: 4/3;
-    background-size: cover;
-    background-position: center;
-    border-radius: 0px; 
-    filter: brightness(0.8);
-    transition: transform 0.8s ease, filter 0.8s ease;
-    margin-bottom: 22px;
-    overflow: hidden;
-  }
-  .blog-card:hover .blog-img {
-    filter: brightness(1);
-  }
-  .blog-tag {
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent-primary);
-    margin-bottom: 12px;
-    display: block;
-    font-weight: 600;
-  }
-  .blog-card h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: var(--text-main);
-    line-height: 1.4;
-    margin-bottom: 12px;
-  }
-  .blog-card p {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    line-height: 1.7;
-  }
-  .blog-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 14px;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    color: var(--text-main);
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-  .blog-link .arrow { transition: transform 0.3s ease; color: var(--accent-primary); }
-  .blog-card:hover .arrow { transform: translateX(6px); }
-
-  @media (max-width: 900px) {
-    .blog-grid { grid-template-columns: 1fr; }
-  }
-
-  /* ---------- TESTIMONIOS ---------- */
-  .testimonios {
-    background: var(--bg-main);
-  }
-  .test-track-wrap { margin-top: 60px; overflow: hidden; position: relative; }
-  .test-track {
-    display: flex;
-    gap: 30px;
-    transition: transform 0.6s ease;
-  }
-  .test-card {
-    flex: 0 0 calc(33.333% - 20px);
-    background: var(--bg-alt);
-    border: 1px solid var(--border-color);
-    border-radius: 0px;
-    padding: 42px 34px;
-    position: relative;
-  }
-  .test-quote-mark {
-    font-size: 4rem;
-    color: var(--accent-primary);
-    line-height: 1;
-    opacity: 0.4;
-  }
-  .test-text {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1.15rem;
-    color: var(--text-main);
-    line-height: 1.7;
-    margin: 18px 0 26px;
-  }
-  .test-author {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .test-avatar {
-    width: 45px; height: 45px;
-    border-radius: 0px;
-    background: var(--bg-main);
-    border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Playfair Display', serif;
-    color: var(--accent-primary);
-    font-size: 1.1rem;
-  }
-  .test-author-name { font-size: 0.9rem; color: var(--text-main); font-weight: 600; }
-  .test-author-role { font-size: 0.75rem; color: var(--text-muted); }
-
-  .test-controls {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    margin-top: 44px;
-  }
-  .test-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--border-color);
-    cursor: pointer;
-    transition: background 0.3s;
-    border: none;
-  }
-  .test-dot.active { background: var(--accent-primary); }
-
-  @media (max-width: 900px) {
-    .test-card { flex: 0 0 100%; }
-  }
-
-  /* ---------- CONTACTO ---------- */
-  .contact {
-    background: var(--bg-main);
-    background-size: cover;
-    background-position: center;
-    background-blend-mode: multiply;
-  }
-  .contact-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 70px;
-    align-items: start;
-    background: rgb(0 0 0 / 85%); /* Caja de fondo para dar contraste como en las imágenes */
-    padding: 60px;
-    border: 1px solid var(--border-color);
-  }
-  .contact-info p {
-    color: var(--text-muted);
-    line-height: 1.9;
-    margin: 24px 0 36px;
-    max-width: 420px;
-    font-size: 0.95rem;
-  }
-  .contact-direct {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-  }
-  .contact-direct-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    font-size: 0.95rem;
-  }
-  .contact-direct-item .label { color: var(--accent-primary); min-width: 100px; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; }
-  .contact-direct-item .value { color: var(--text-main); font-family: 'Playfair Display', serif; font-size: 1.1rem; }
-
-  form { display: flex; flex-direction: column; gap: 22px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-  .field { display: flex; flex-direction: column; gap: 8px; }
-  .field label {
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-  .field input, .field textarea {
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid var(--border-color);
-    color: var(--text-main);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.95rem;
-    padding: 10px 0;
-    outline: none;
-    transition: border-color 0.3s;
-  }
-  .field input:focus, .field textarea:focus { border-color: var(--accent-primary); }
-  .field textarea { resize: none; height: 90px; }
-  
-  .form-success {
-    color: var(--accent-primary);
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1.1rem;
-    margin-top: 10px;
-  }
-
-  @media (max-width: 860px) {
-    .contact-wrap { grid-template-columns: 1fr; gap: 50px; padding: 40px 20px; }
-    .form-row { grid-template-columns: 1fr; }
-  }
-
-  /* ---------- FOOTER ---------- */
-  footer {
-    background: var(--bg-alt);
-    padding: 60px 6% 30px;
-    border-top: 1px solid var(--border-color);
-  }
-  .footer-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 40px;
-  }
-  .footer-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    color: var(--text-main);
-  }
-  .footer-logo span { color: var(--accent-primary); font-style: italic; }
-  .footer-tag {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    color: var(--text-muted);
-    margin-top: 10px;
-    max-width: 280px;
-    font-size: 1.05rem;
-  }
-  .footer-cols { display: flex; gap: 70px; flex-wrap: wrap; }
-  .footer-col h5 {
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent-primary);
-    margin-bottom: 16px;
-    font-weight: 600;
-  }
-  .footer-col a, .footer-col p {
-    display: block;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    margin-bottom: 10px;
-    transition: color 0.3s;
-  }
-  .footer-col a:hover { color: var(--text-main); }
-  .footer-bottom {
-    margin-top: 50px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-  }
-
-  /* placeholder marker */
-  .ph-tag {
-    position: absolute;
-    bottom: 20px; left: 50%;
-    transform: translateX(-50%);
-    background: rgba(10, 7, 6, 0.8);
-    color: var(--accent-primary);
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 8px 15px;
-    z-index: 3;
-    border: 1px solid var(--accent-primary);
-    border-radius: 0px; 
-    white-space: nowrap;
-  }
+  /* ===== PÁGINAS DE ARTÍCULO ===== */
+  .art-hero { position:relative; height:60vh; min-height:380px; overflow:hidden; display:flex; align-items:flex-end; }
+  .art-hero-bg { position:absolute; inset:0; background-size:cover; background-position:center; filter:brightness(.35) contrast(1.1); }
+  .art-hero-ov { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(10,7,6,.1),rgba(10,7,6,.95)); }
+  .art-hero-body { position:relative; z-index:2; padding:0 8% 60px; max-width:900px; }
+  .art-tag { font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); font-weight:600; display:block; margin-bottom:14px; }
+  .art-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.8rem); color:var(--text-main); line-height:1.1; font-weight:400; }
+  .art-subtitle { font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(1rem,2vw,1.3rem); color:var(--accent); margin-top:14px; }
+  .art-body { max-width:780px; margin:0 auto; padding:80px 6%; }
+  .art-body p { color:var(--text-muted); line-height:2; font-size:1.02rem; margin-bottom:26px; }
+  .art-body p strong { color:var(--text-main); font-weight:600; }
+  .art-body h3 { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--accent); margin:46px 0 18px; font-weight:400; }
+  .art-body blockquote { border-left:2px solid var(--accent); padding-left:26px; margin:36px 0; }
+  .art-body blockquote p { font-family:'Playfair Display',serif; font-style:italic; font-size:1.15rem; color:var(--text-main); line-height:1.7; margin:0; }
+  .art-body ul { list-style:none; margin:24px 0 32px; display:flex; flex-direction:column; gap:14px; }
+  .art-body ul li { color:var(--text-muted); font-size:.97rem; line-height:1.8; padding-left:22px; position:relative; }
+  .art-body ul li::before { content:'·'; position:absolute; left:0; color:var(--accent); font-size:1.4rem; line-height:1.2; }
+  .art-divider { width:60px; height:1px; background:var(--accent); margin:50px auto; }
+  .art-back { display:flex; align-items:center; gap:12px; margin-bottom:32px; }
+  .art-nav { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; padding:40px 6%; border-top:1px solid var(--border); margin-top:20px; }
+  .art-nav-label { font-size:.68rem; letter-spacing:.15em; text-transform:uppercase; color:var(--text-muted); display:block; margin-bottom:6px; }
+  .art-nav-title { font-family:'Playfair Display',serif; font-size:1rem; color:var(--accent); cursor:pointer; }
+  .art-nav-title:hover { color:var(--text-main); }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav id="navbar">
-  <div class="logo">Sangre <span>o no</span> Sangre</div>
+  <div class="logo" onclick="showPage('main',null)" style="cursor:pointer">Sangre <span>o no</span> Sangre</div>
   <div class="nav-links">
-    <a href="#sobre">Sobre nosotras</a>
-    <a href="#retiros">Retiros</a>
-    <a href="#blog">Journal</a>
-    <a href="#testimonios">Testimonios</a>
-    <a href="#contacto">Contacto</a>
+    <a href="#" onclick="showPage('nosotras',null);return false;">Nosotras</a>
+    <a href="#" onclick="showPage('main','retiros');return false;">Retiros</a>
+    <a href="#" onclick="showPage('main','blog');return false;">Journal</a>
+    <a href="#" onclick="showPage('main','testimonios');return false;">Testimonios</a>
+    <a href="#" onclick="showPage('main','contacto');return false;">Contacto</a>
   </div>
-  <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
 </nav>
-
-<div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-close" id="mobileClose">&times;</button>
-  <a href="#sobre">Sobre nosotras</a>
-  <a href="#retiros">Retiros</a>
-  <a href="#blog">Journal</a>
-  <a href="#testimonios">Testimonios</a>
-  <a href="#contacto">Contacto</a>
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" id="mobClose">&times;</button>
+  <a href="#" onclick="showPage('nosotras',null);closeMob();return false;">Nosotras</a>
+  <a href="#" onclick="showPage('main','retiros');closeMob();return false;">Retiros</a>
+  <a href="#" onclick="showPage('main','blog');closeMob();return false;">Journal</a>
+  <a href="#" onclick="showPage('main','testimonios');closeMob();return false;">Testimonios</a>
+  <a href="#" onclick="showPage('main','contacto');closeMob();return false;">Contacto</a>
 </div>
+
+<!-- ============================================================
+     PÁGINA PRINCIPAL
+     ============================================================ -->
+<div id="page-main">
 
 <!-- HERO -->
 <header class="hero">
   <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
+  <div class="hero-overlay" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,7,6,.4) 0%,rgba(10,7,6,.2) 40%,rgba(10,7,6,.95) 100%);"></div>
+  <div class="hero-body">
     <span class="hero-eyebrow">Reencuentro con tu erotismo</span>
     <h1>Ni seca, ni apagada, <em>ni callada</em></h1>
     <p class="hero-sub">El fin de la espera, nacimiento a tu soberanía. Un umbral hacia ti misma, donde la biología se rinde ante tu presencia.</p>
     <div class="hero-cta">
-      <a href="#retiros" class="btn btn-primary">Conoce el retiro</a>
-      <a href="#contacto" class="btn btn-outline">Reserva tu lugar</a>
+      <a href="#" onclick="showPage('main','retiros');return false;" class="btn btn-primary">Conoce el retiro</a>
+      <a href="#" onclick="showPage('main','contacto');return false;" class="btn btn-outline">Reserva tu lugar</a>
     </div>
   </div>
-  <div class="scroll-cue">
-    <span>Desliza</span>
-    <div class="scroll-line"></div>
-  </div>
+  <div class="scroll-cue"><span>Desliza</span><div class="scroll-line"></div></div>
 </header>
 
-<!-- SOBRE NOSOTRAS -->
+<!-- SOBRE -->
 <section id="sobre" class="about">
   <div class="about-img-frame reveal">
     <div class="about-img-wrap">
-      <img src="https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true">
+      <img src="https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true" alt="Sobre Sangre o no Sangre">
     </div>
   </div>
   <div class="about-text reveal">
     <span class="section-label">El rugido de la madurez</span>
-    <h2 class="section-title" style="margin-bottom: 26px;">Cambiamos diván por cueva</h2>
+    <h2 class="section-title" style="margin-bottom:26px;">Cambiamos diván por cueva</h2>
     <p class="script">NOSotras</p>
     <p>Con más de <strong>50 años de vida</strong> y décadas de recorrido en el psicoanálisis, la terapia Gestalt, el toque somático, los ritos y rituales, el arte y el humanismo, no venimos a decirte cómo sobrellevar o salir de esta etapa.</p>
-    <p>Venimos a invitarte a que saques la garra y la voz, y lo descubras por ti misma, en un lugar inclusivo y seguro. Usamos nuestra experiencia directa para desenterrar tu historia y lamer tus heridas sin sabor a víctima, para que encuentres la libertad que te fue negada.</p>
-    <p>Tomamos la incomodidad como las grietas donde entra la luz de tu nueva identidad. Creemos que este momento es el campo más fértil de tu existencia.</p>
-
+    <p>Venimos a invitarte a que saques la garra y la voz. Tomamos el síntoma como portal, la incomodidad como las grietas donde entra la luz de tu nueva identidad.</p>
+    <a href="#" onclick="showPage('nosotras',null);return false;" class="btn btn-outline" style="margin-top:26px;margin-bottom:40px;">Conócenos →</a>
     <div class="pillars">
-      <div class="pillar">
-        <span class="pillar-num">01</span>
-        <div class="pillar-title">La palabra</div>
-        <p class="pillar-text">Psicoanálisis para darle nombre a lo que nunca dijiste.</p>
-      </div>
-      <div class="pillar">
-        <span class="pillar-num">02</span>
-        <div class="pillar-title">El presente</div>
-        <p class="pillar-text">Gestalt para ocupar tu cuerpo aquí y ahora, con todo su peso y poder.</p>
-      </div>
-      <div class="pillar">
-        <span class="pillar-num">03</span>
-        <div class="pillar-title">La creación</div>
-        <p class="pillar-text">Arte para transformar el vacío en tu obra maestra.</p>
-      </div>
-      <div class="pillar">
-        <span class="pillar-num">04</span>
-        <div class="pillar-title">Lo humano</div>
-        <p class="pillar-text">Más allá de madres, esposas, hijas: somos seres que merecemos libertad.</p>
-      </div>
+      <div class="pillar"><span class="pillar-num">01</span><div class="pillar-title">La palabra</div><p class="pillar-text">Psicoanálisis para darle nombre a lo que nunca dijiste.</p></div>
+      <div class="pillar"><span class="pillar-num">02</span><div class="pillar-title">El presente</div><p class="pillar-text">Gestalt para ocupar tu cuerpo aquí y ahora.</p></div>
+      <div class="pillar"><span class="pillar-num">03</span><div class="pillar-title">La creación</div><p class="pillar-text">Arte para transformar el vacío en tu obra maestra.</p></div>
+      <div class="pillar"><span class="pillar-num">04</span><div class="pillar-title">Lo humano</div><p class="pillar-text">Más allá de roles: somos seres que merecemos libertad.</p></div>
     </div>
   </div>
 </section>
 
-<!-- SLOGAN MARQUEE -->
+<!-- MARQUEE -->
 <div class="slogan-band">
-  <div class="slogan-marquee" id="marquee">
+  <div class="slogan-marquee">
     <span>Ni dócil, ni mansa, ni seca <span class="sep">·</span></span>
     <span>La pausa no es el silencio, es el rugido <span class="sep">·</span></span>
     <span>Volviendo al barro y reclamando el fuego <span class="sep">·</span></span>
     <span>El erotismo de volver a habitarte <span class="sep">·</span></span>
     <span>Quemando el guion que tú no escribiste <span class="sep">·</span></span>
+    <span>Sensualidad sin reglas <span class="sep">·</span></span>
     <span>Ni dócil, ni mansa, ni seca <span class="sep">·</span></span>
     <span>La pausa no es el silencio, es el rugido <span class="sep">·</span></span>
     <span>Volviendo al barro y reclamando el fuego <span class="sep">·</span></span>
     <span>El erotismo de volver a habitarte <span class="sep">·</span></span>
     <span>Quemando el guion que tú no escribiste <span class="sep">·</span></span>
+    <span>Sensualidad sin reglas <span class="sep">·</span></span>
   </div>
 </div>
 
@@ -905,14 +334,9 @@
 <section id="retiros" class="retiros">
   <span class="section-label reveal">Próximo encuentro</span>
   <h2 class="section-title reveal">Entra en la cueva</h2>
-
   <div class="retiro-card reveal">
     <div class="retiro-img">
-      <div class="retiro-date-badge">
-        <div class="day">22–25</div>
-        <div class="month">Octubre 2026</div>
-      </div>
-      <span class=span>
+      <div class="retiro-badge"><div class="day">22–25</div><div class="month">Octubre 2026</div></div>
     </div>
     <div class="retiro-info">
       <span class="section-label">Retiro experiencial</span>
@@ -920,11 +344,11 @@
       <p>Un retiro experiencial desde un espacio íntimo, ético y seguro, en el que nos atrevemos a transformar la narrativa sobre la menopausia, el erotismo y la vejez.</p>
       <p>No es un retiro de descanso. Es un espacio para bailar e integrar tu sombra, encender tu fuego y rugir junto a otras que, como tú, se niegan a ser lo que no son.</p>
       <div class="retiro-meta">
-        <div><span class="icon"></span> Centro Werika, Tepoztlán, Morelos</div>
-        <div><span class="icon">🗓</span> 22 al 25 de octubre, 2026</div>
-        <div><span class="icon">◆</span> Cupos limitados</div>
+        <span>📍 Centro Werika, Tepoztlán, Morelos</span>
+        <span>🗓 22 al 25 de octubre, 2026</span>
+        <span>◆ Cupos limitados</span>
       </div>
-      <a href="#contacto" class="btn btn-primary" style="align-self: flex-start;">Reservar mi lugar</a>
+      <a href="#" onclick="showPage('main','contacto');return false;" class="btn btn-primary" style="align-self:flex-start;">Reservar mi lugar</a>
       <div class="contacts-mini">
         <span>Andrea de Losada — +52 555 435 2377</span>
         <span>Gabriela Carretta — +52 552 702 6284</span>
@@ -936,38 +360,84 @@
 <!-- BLOG / JOURNAL -->
 <section id="blog" class="blog">
   <span class="section-label reveal">Journal</span>
-  <h2 class="section-title reveal" style="margin-bottom: 40px;">Palabras que aún no se habían nombrado</h2>
+  <h2 class="section-title reveal">Palabras que aún no se habían nombrado</h2>
 
   <div class="blog-grid">
-    <article class="blog-card reveal">
-      <div class="blog-img" style="background-image: url('https://github.com/agarciadg/sangreonosangre/blob/main/a8bd5c2cf919c85913535c5f9e07fd71.jpg?raw=true');"></div>
-      <div class="blog-card-content">
-        <span class="blog-tag">Erotismo</span>
-        <h4>Menos flujo hormonal, más deseo carnal</h4>
-        <p>El Eros no se agota: al contrario, se vuelve más vivo, más fino, más propio. Una mirada a la sexualidad que no caduca.</p>
-        <span class="blog-link">Leer más <span class="arrow">→</span></span>
-      </div>
-    </article>
 
-    <article class="blog-card reveal">
-      <div class="blog-img" style="background-image: url('https://github.com/agarciadg/sangreonosangre/blob/main/d2877b3cb0a12a637cb6a545c48988ff.jpg?raw=true');"></div>
-      <div class="blog-card-content">
-        <span class="blog-tag">Psique</span>
-        <h4>Re-parirnos a nosotras mismas</h4>
-        <p>Tomamos el síntoma como portal: una oportunidad de sacar la voz y habitar esa parte de nosotras no domesticada.</p>
-        <span class="blog-link">Leer más <span class="arrow">→</span></span>
+    <!-- Artículo 1 -->
+    <div class="blog-card reveal">
+      <div class="blog-thumb">
+        <img src="https://github.com/agarciadg/sangreonosangre/blob/main/a8bd5c2cf919c85913535c5f9e07fd71.jpg?raw=true" alt="Insomnio">
       </div>
-    </article>
+      <div class="blog-body">
+        <span class="blog-tag">Cuerpo · Menopausia</span>
+        <h4>Insomnio</h4>
+        <p class="blog-excerpt">Hay noches en las que el sueño simplemente decide escaparse. Empiezo a aceptar que el insomnio se está volviendo una cita conmigo. Tal vez no vino sólo a quitarme el sueño...</p>
+        <button class="blog-read" onclick="showPage('blog-1',null)">Leer artículo <span class="arr">→</span></button>
+      </div>
+    </div>
 
-    <article class="blog-card reveal">
-      <div class="blog-img" style="background-image: url('https://github.com/agarciadg/sangreonosangre/blob/main/343fd0968a663bb911cdf4dc6f680344.jpg?raw=true');"></div>
-      <div class="blog-card-content">
-        <span class="blog-tag">Comunidad</span>
-        <h4>No somos una suma de síntomas</h4>
-        <p>Somos una comunidad de espejos. La sabiduría nace de un cruce de vivencias, donde todas aportamos vida.</p>
-        <span class="blog-link">Leer más <span class="arrow">→</span></span>
+    <!-- Artículo 2 -->
+    <div class="blog-card reveal">
+      <div class="blog-thumb">
+        <img src="https://github.com/agarciadg/sangreonosangre/blob/main/d2877b3cb0a12a637cb6a545c48988ff.jpg?raw=true" alt="El Rugido de la Liberación">
       </div>
-    </article>
+      <div class="blog-body">
+        <span class="blog-tag">Identidad · Transformación</span>
+        <h4>El Rugido de la Liberación</h4>
+        <p class="blog-excerpt">El sonido es una vibración que expresa más de lo que la palabra pueda contener. Desde el centro de la tripa hacia afuera, conectando con el instinto y dando sonido a lo silenciado...</p>
+        <button class="blog-read" onclick="showPage('blog-2',null)">Leer artículo <span class="arr">→</span></button>
+      </div>
+    </div>
+
+    <!-- Artículo 3 -->
+    <div class="blog-card reveal">
+      <div class="blog-thumb">
+        <img src="https://github.com/agarciadg/sangreonosangre/blob/main/343fd0968a663bb911cdf4dc6f680344.jpg?raw=true" alt="Eros y Menopausia">
+      </div>
+      <div class="blog-body">
+        <span class="blog-tag">Erotismo · Deseo</span>
+        <h4>Eros y Menopausia: La llama que no se apaga</h4>
+        <p class="blog-excerpt">La verdadera naturaleza del Erotismo es la manera de recibir la vida a través de los sentidos. Esta energía vital no muere hasta que muere el cuerpo...</p>
+        <button class="blog-read" onclick="showPage('blog-3',null)">Leer artículo <span class="arr">→</span></button>
+      </div>
+    </div>
+
+    <!-- Artículo 4 -->
+    <div class="blog-card reveal">
+      <div class="blog-thumb">
+        <img src="https://github.com/agarciadg/sangreonosangre/blob/main/14fd73dedf3fcb8218f7a174c61f16e4.jpg?raw=true" alt="El Síntoma como Sincronía">
+      </div>
+      <div class="blog-body">
+        <span class="blog-tag">Psique · Síntoma</span>
+        <h4>El Síntoma como Sincronía</h4>
+        <p class="blog-excerpt">Síntoma, del griego symptoma: coincidencia. El síntoma no es un error del sistema. Es la señal de sincronía para volver a gestarnos y parirnos como quien realmente somos...</p>
+        <button class="blog-read" onclick="showPage('blog-4',null)">Leer artículo <span class="arr">→</span></button>
+      </div>
+    </div>
+
+    <!-- Artículo 5 -->
+    <div class="blog-card reveal">
+      <div class="blog-thumb">
+        <img src="https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true" alt="Sabiduría Erótica">
+      </div>
+      <div class="blog-body">
+        <span class="blog-tag">Erotismo · Sabiduría</span>
+        <h4>Sabiduría Erótica en la Menopausia</h4>
+        <p class="blog-excerpt">Al caer las hormonas, el Eros se democratiza en todo nuestro cuerpo. Ya no es una descarga; es un estado de presencia y de apertura al gozo...</p>
+        <button class="blog-read" onclick="showPage('blog-5',null)">Leer artículo <span class="arr">→</span></button>
+      </div>
+    </div>
+
+    <!-- Testimonio real como tarjeta -->
+    <div class="blog-card reveal" style="background:var(--bg-alt);justify-content:center;">
+      <div class="blog-body" style="padding:40px 32px;">
+        <span class="blog-tag">Testimonio</span>
+        <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;color:var(--text-main);line-height:1.7;margin-bottom:22px;">"Sangre o no sangre propició una revelación en torno a momentos clave de mi vida, y me permitió establecer un hilo conductor que me dio claridad acerca de mi presente."</p>
+        <span style="font-size:.82rem;color:var(--accent);font-weight:600;">— María Vázquez</span>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -976,55 +446,171 @@
   <span class="section-label reveal">Voces que rugen</span>
   <h2 class="section-title reveal">Lo que dejan quienes atraviesan la cueva</h2>
 
-  <div class="test-track-wrap reveal">
-    <div class="test-track" id="testTrack">
-      <div class="test-card">
-        <div class="test-quote-mark">"</div>
-        <p class="test-text">Llegué pensando que esto era el final de algo. Me fui sabiendo que era el comienzo de mi propia soberanía.</p>
-        <div class="test-author">
-          <div class="test-avatar">M</div>
-          <div>
-            <div class="test-author-name">M.</div>
-            <div class="test-author-role">52 años, participante 2025</div>
-          </div>
-        </div>
+  <div class="test-grid">
+
+    <!-- Amanda -->
+    <div class="test-card reveal">
+      <div class="test-q">"</div>
+      <div class="test-author">
+        <div class="test-av">A</div>
+        <div><div class="test-name">Amanda</div><div class="test-role">Pionera · retiro Feb 2025</div></div>
       </div>
-      <div class="test-card">
-        <div class="test-quote-mark">"</div>
-        <p class="test-text">Nunca había estado en un espacio donde hablar de deseo, vergüenza y cuerpo no se sintiera incómodo. Aquí se siente sagrado.</p>
-        <div class="test-author">
-          <div class="test-avatar">L</div>
-          <div>
-            <div class="test-author-name">L.</div>
-            <div class="test-author-role">48 años, participante 2025</div>
+      <div class="test-body">
+        <p class="test-preview">Es un aterrizaje perfecto y amoroso de todo tu revuelo interior. Un espacio seguro con una colectividad que abraza y va en la misma dirección pero trae su propio camino andado y por andar.</p>
+        <div class="test-full" id="tf-amanda">
+          <div class="test-section">
+            <span class="test-section-q">¿Cómo cambió la relación con tu cuerpo?</span>
+            <p class="test-section-a">Hice nuevos pactos conmigo misma, me vi con todo mi yo desde un nuevo lugar; es un espacio de reinvención, reconocimiento, aligeramiento, acompañamiento y camaradería que deja profunda huella en el espíritu, la mente y el cuerpo.</p>
+          </div>
+          <div class="test-section">
+            <span class="test-section-q">El ambiente en una frase</span>
+            <p class="test-section-a">Cada momento desde el despertar, se te va llevando y acompañando para ir visitando distintos lugares de la memoria física y emocional, y así poder reacomodar recuerdos, versiones de ti misma, memorias corporales y descubrimientos de tu más profundo ser.</p>
+          </div>
+          <div class="test-section">
+            <span class="test-section-q">Un momento de revelación</span>
+            <p class="test-section-a">El fuego jugó para mí un gran papel, abrazando, aportando sacralidad, energía, alegría, integración, renovación, profundidad, calma y encuentro.</p>
+          </div>
+          <div class="test-section">
+            <span class="test-section-q">¿Por qué es urgente este espacio?</span>
+            <p class="test-section-a">Un espacio seguro con una colectividad que abraza y va en la misma dirección pero trae su propio camino andado y por andar es un regalo que no debemos desaprovechar. <em>¡Arrieras somos y en camino andamos!</em> Como pionera sólo puedo decir que repetiría al infinito ♾️</p>
           </div>
         </div>
-      </div>
-      <div class="test-card">
-        <div class="test-quote-mark">"</div>
-        <p class="test-text">Cambié el diván por la cueva, como dicen ellas. Y encontré ahí algo que ninguna terapia me había dado: comunidad.</p>
-        <div class="test-author">
-          <div class="test-avatar">P</div>
-          <div>
-            <div class="test-author-name">P.</div>
-            <div class="test-author-role">55 años, participante 2024</div>
-          </div>
-        </div>
-      </div>
-      <div class="test-card">
-        <div class="test-quote-mark">"</div>
-        <p class="test-text">Volví a bailar con mi sombra. Volví a sentir que mi cuerpo era mío, sin pedir permiso.</p>
-        <div class="test-author">
-          <div class="test-avatar">R</div>
-          <div>
-            <div class="test-author-name">R.</div>
-            <div class="test-author-role">59 años, participante 2024</div>
-          </div>
-        </div>
+        <button class="test-expand" onclick="toggleTest('tf-amanda', this)">Leer más <span class="arr">›</span></button>
       </div>
     </div>
+
+    <!-- Enna -->
+    <div class="test-card reveal">
+      <div class="test-q">"</div>
+      <div class="test-author">
+        <div class="test-av">E</div>
+        <div><div class="test-name">Enna Román</div><div class="test-role">46 años · retiro Feb 2025</div></div>
+      </div>
+      <div class="test-body">
+        <p class="test-preview">Si alguna vez pensaste que en tu vida hay "algo" que no sabes qué es pero que sabes que está ahí y que después de eso la vida es otra, es este taller.</p>
+        <div class="test-full" id="tf-enna">
+          <div class="test-section">
+            <span class="test-section-q">¿Cómo cambió la relación con tu cuerpo?</span>
+            <p class="test-section-a">No sé si cambió mi relación con mi cuerpo o si más bien, inicié una relación con él. Antes del retiro estaba muchísimo más desconectada de mi cuerpo de lo que pensaba. Desde entonces, estoy aprendiendo cada día más a vivir una vida mucho más sensorial, vivir todo desde el cuerpo y sus sentidos.</p>
+          </div>
+          <div class="test-section">
+            <span class="test-section-q">El ambiente en una palabra</span>
+            <p class="test-section-a"><em>Apapacho.</em> Todas las partes de la experiencia, aunque fueran muy distintas unas de otras, se sentía que fueron planeadas desde el profundo cariñito a nuestro ser más vulnerable.</p>
+          </div>
+          <div class="test-section">
+            <span class="test-section-q">Un momento de revelación</span>
+            <p class="test-section-a">Uff, no pues todo. La revelación de verme, tal cual, estuvo presente en todo el taller, y los veintes siguen cayendo año y medio después.</p>
+          </div>
+          <div class="test-section">
+            <span class="test-section-q">¿Qué parte de ti pudiste abrazar?</span>
+            <p class="test-section-a">Mi necesidad de ser querida y apapachada.</p>
+          </div>
+          <div class="test-section">
+            <span class="test-section-q">¿Por qué es urgente este espacio?</span>
+            <p class="test-section-a">Porque en los tiempos que vivíamos antes estos espacios eran parte de la vida y nos los quitaron. Urge regresar a lo que siempre hemos sido.</p>
+          </div>
+        </div>
+        <button class="test-expand" onclick="toggleTest('tf-enna', this)">Leer más <span class="arr">›</span></button>
+      </div>
+    </div>
+
+    <!-- Luz María -->
+    <div class="test-card reveal">
+      <div class="test-q">"</div>
+      <div class="test-author">
+        <div class="test-av">L</div>
+        <div><div class="test-name">Luz María C.</div><div class="test-role">63 años · participante</div></div>
+      </div>
+      <div class="test-body">
+        <p class="test-preview">En 3 días me cayeron más veintes que en años de terapia individual. Trabajar en grupo potencializó la experiencia y los hallazgos.</p>
+        <div class="test-full" id="tf-luz">
+          <div class="test-section">
+            <p class="test-section-a">Participar en el retiro ha sido muy enriquecedor para mí. Me sentí siempre segura con la guía cálida y empática de Andrea y Gabriela que con sabia experiencia nos fueron guiando paso a paso a un viaje interior al encuentro con nuestra esencia femenina.</p>
+          </div>
+          <div class="test-section">
+            <p class="test-section-a">Yo he logrado tener una nueva y más completa visión de mi historia personal y la posibilidad de por fin integrar y hacer las paces con todas mis partes.</p>
+          </div>
+        </div>
+        <button class="test-expand" onclick="toggleTest('tf-luz', this)">Leer más <span class="arr">›</span></button>
+      </div>
+    </div>
+
+    <!-- Marisol -->
+    <div class="test-card reveal">
+      <div class="test-q">"</div>
+      <div class="test-author">
+        <div class="test-av">M</div>
+        <div><div class="test-name">Marisol</div><div class="test-role">46 años · participante</div></div>
+      </div>
+      <div class="test-body">
+        <p class="test-preview">Hoy miro mi cuerpo con otros ojos. Dejé de verlo desde lo físico, para reconocerlo como el lugar donde habita mi historia.</p>
+        <div class="test-full" id="tf-marisol">
+          <div class="test-section">
+            <span class="test-section-q">¿Cómo cambió la relación con tu cuerpo?</span>
+            <p class="test-section-a">Comprendí que el cuerpo guarda emociones, silencios y experiencias que muchas veces no alcanzamos a expresar con palabras. El retiro me enseñó a escucharlo, a darle voz a ese sentir y a honrarlo con amor y respeto. También resignifiqué lo que significa ser mujer en esta etapa de mi vida: ya no desde lo que creo que debería ser, sino desde quien auténticamente soy.</p>
+          </div>
+          <div class="test-section">
+            <span class="test-section-q">El ambiente en una frase</span>
+            <p class="test-section-a"><em>"Un espacio profundamente seguro y amoroso."</em> El acompañamiento de Andrea y Gabriela fue extraordinariamente profesional, sensible y amoroso. Además encontré una tribu de mujeres que, sin conocernos antes, nos acompañamos con respeto, empatía y muchísimo amor.</p>
+          </div>
+          <div class="test-section">
+            <span class="test-section-q">Un momento de revelación</span>
+            <p class="test-section-a">Hubo muchos momentos de revelación. Cada herramienta —la escritura, la meditación, la respiración, el movimiento, los estados ampliados de conciencia— fue abriendo una puerta distinta hacia mi interior. Fue la integración de todas esas experiencias lo que me permitió mirarme desde un lugar completamente nuevo.</p>
+          </div>
+          <div class="test-section">
+            <span class="test-section-q">¿Qué parte de ti pudiste abrazar?</span>
+            <p class="test-section-a">Sin duda, a mi niña interior. La abracé, la reconocí y le dije que ya no estaba sola. Ese encuentro también me permitió abrazar a la mujer que soy hoy. Regresé sintiendo un profundo amor por mí.</p>
+          </div>
+          <div class="test-section">
+            <span class="test-section-q">¿Qué le dirías a quien duda en ir?</span>
+            <p class="test-section-a">Pocas veces en la vida tenemos la oportunidad de regalarnos un espacio para detenernos y escucharnos de verdad. Si sientes ese llamado, aunque no sepas exactamente por qué, confía en él.</p>
+          </div>
+          <div class="test-section">
+            <span class="test-section-q">¿Por qué es urgente este espacio?</span>
+            <p class="test-section-a">Porque durante muchos años aprendimos a cuidar de todos antes que de nosotras. Espacios como este nos invitan a regresar al cuerpo, a nuestra intuición y a nuestro erotismo. Nos invitan a sentirnos acompañadas, compartir nuestras historias sin juicio y recordar que no estamos solas.</p>
+          </div>
+        </div>
+        <button class="test-expand" onclick="toggleTest('tf-marisol', this)">Leer más <span class="arr">›</span></button>
+      </div>
+    </div>
+
+    <!-- María Vázquez -->
+    <div class="test-card reveal">
+      <div class="test-q">"</div>
+      <div class="test-author">
+        <div class="test-av">M</div>
+        <div><div class="test-name">María Vázquez</div><div class="test-role">Participante</div></div>
+      </div>
+      <div class="test-body">
+        <p class="test-preview">Introspección afinada y muy bien conducida; espacio privilegiado para escuchar, observar, sentir y amar mi cuerpo.</p>
+        <div class="test-full" id="tf-maria">
+          <div class="test-section">
+            <p class="test-section-a">Con un acompañamiento sabio, sensible, generoso y profesional, Andrea Losada y Gabriela Carretta son las guías magníficas que conducen, con un diseño sublime, al cuerpo y al alma hacia sitios ignotos de la vida donde residen la esencia y la razón de ser.</p>
+          </div>
+          <div class="test-section">
+            <p class="test-section-a">"Sangre o no sangre" propició una revelación en torno a momentos clave de mi vida, y me permitió establecer un hilo conductor que me dio claridad acerca de mi presente. Durante cuatro días que trascendieron eras, pude abrazarme en distintas etapas de mi vida.</p>
+          </div>
+          <div class="test-section">
+            <p class="test-section-a">Una de las cosas más bellas e importantes que encontré en este taller es que, más allá del tiempo y el espacio, la conexión con doce mujeres durante cuatro días resultó tan profunda y perdurable como muchas relaciones importantes y longevas de mi vida.</p>
+          </div>
+          <div class="test-section">
+            <p class="test-section-a"><em>Muchas gracias, Andrea y Gaba, por este espacio excepcional.</em></p>
+          </div>
+        </div>
+        <button class="test-expand" onclick="toggleTest('tf-maria', this)">Leer más <span class="arr">›</span></button>
+      </div>
+    </div>
+
+    <!-- Cita destacada -->
+    <div class="test-card reveal" style="justify-content:center;border-color:rgba(212,181,149,.35);">
+      <div style="text-align:center;padding:10px 0;">
+        <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:1.35rem;color:var(--accent);line-height:1.7;margin-bottom:28px;">"Arrieras somos<br>y en camino andamos."</p>
+        <div style="width:40px;height:1px;background:var(--accent);margin:0 auto 28px;"></div>
+        <a href="#" onclick="showPage('main','contacto');return false;" class="btn btn-outline" style="font-size:.68rem;">Reserva tu lugar →</a>
+      </div>
+    </div>
+
   </div>
-  <div class="test-controls" id="testControls"></div>
 </section>
 
 <!-- CONTACTO -->
@@ -1034,51 +620,19 @@
       <span class="section-label">Reserva tu lugar</span>
       <h2 class="section-title">Contacto</h2>
       <p>Para resolver cualquier duda o iniciar tu proceso de inscripción, comunícate con nosotras. Cupos limitados para cuidar la intimidad del grupo.</p>
-
-      <div class="contact-direct">
-        <div class="contact-direct-item">
-          <span class="label">Gabriela Carretta</span>
-          <span class="value">+52 552 702 6284</span>
-        </div>
-        <div class="contact-direct-item">
-          <span class="label">Andrea de Losada</span>
-          <span class="value">+52 555 435 2377</span>
-        </div>
-        <div class="contact-direct-item">
-          <span class="label">Ubicación</span>
-          <span class="value">Centro Werika<br>Tepoztlán, Morelos</span>
-        </div>
+      <div class="contact-datos">
+        <div class="dato"><span class="dato-label">Gabriela</span><span class="dato-val">+52 552 702 6284</span></div>
+        <div class="dato"><span class="dato-label">Andrea</span><span class="dato-val">+52 555 435 2377</span></div>
+        <div class="dato"><span class="dato-label">Lugar</span><span class="dato-val">Centro Werika, Tepoztlán</span></div>
       </div>
     </div>
-
     <div class="reveal">
-      <form id="contactForm">
-        <div class="form-row">
-          <div class="field">
-            <label for="fname">Nombre</label>
-            <input type="text" id="fname" required>
-          </div>
-          <div class="field">
-            <label for="lname">Apellido</label>
-            <input type="text" id="lname" required>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="field">
-            <label for="email">Email</label>
-            <input type="email" id="email" required>
-          </div>
-          <div class="field">
-            <label for="phone">Teléfono</label>
-            <input type="tel" id="phone">
-          </div>
-        </div>
-        <div class="field">
-          <label for="msg">Mensaje</label>
-          <textarea id="msg" placeholder="Cuéntanos qué te trae hasta aquí..."></textarea>
-        </div>
-        <button type="submit" class="submit-btn">Enviar mensaje</button>
-        <p class="form-success" id="formSuccess" style="display:none;">Gracias. Tu mensaje ha sido recibido — pronto nos pondremos en contacto.</p>
+      <form class="cf" id="cf">
+        <div class="cf-row"><div class="cf-field"><label>Nombre</label><input type="text" required></div><div class="cf-field"><label>Apellido</label><input type="text" required></div></div>
+        <div class="cf-row"><div class="cf-field"><label>Email</label><input type="email" required></div><div class="cf-field"><label>Teléfono</label><input type="tel"></div></div>
+        <div class="cf-field"><label>Mensaje</label><textarea placeholder="Cuéntanos qué te trae hasta aquí..."></textarea></div>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Enviar mensaje</button>
+        <p class="cf-ok" id="cfOk">Gracias — pronto nos ponemos en contacto contigo.</p>
       </form>
     </div>
   </div>
@@ -1094,21 +648,24 @@
     <div class="footer-cols">
       <div class="footer-col">
         <h5>Navegación</h5>
-        <a href="#sobre">Sobre nosotras</a>
-        <a href="#retiros">Retiros</a>
-        <a href="#blog">Journal</a>
-        <a href="#testimonios">Testimonios</a>
+        <a href="#" onclick="showPage('nosotras',null);return false;">Nosotras</a>
+        <a href="#" onclick="showPage('main','retiros');return false;">Retiros</a>
+        <a href="#" onclick="showPage('main','blog');return false;">Journal</a>
+        <a href="#" onclick="showPage('main','testimonios');return false;">Testimonios</a>
+      </div>
+      <div class="footer-col">
+        <h5>Journal</h5>
+        <a href="#" onclick="showPage('blog-1',null);return false;">Insomnio</a>
+        <a href="#" onclick="showPage('blog-2',null);return false;">El Rugido</a>
+        <a href="#" onclick="showPage('blog-3',null);return false;">Eros y Menopausia</a>
+        <a href="#" onclick="showPage('blog-4',null);return false;">El Síntoma</a>
+        <a href="#" onclick="showPage('blog-5',null);return false;">Sabiduría Erótica</a>
       </div>
       <div class="footer-col">
         <h5>Contacto</h5>
         <p>Andrea de Losada</p>
         <p>Gabriela Carretta</p>
-        <a href="#contacto">Escríbenos →</a>
-      </div>
-      <div class="footer-col">
-        <h5>Redes</h5>
-        <a href="#">Instagram</a>
-        <a href="#">X / Twitter</a>
+        <a href="#" onclick="showPage('main','contacto');return false;">Escríbenos →</a>
       </div>
     </div>
   </div>
@@ -1117,80 +674,351 @@
     <span>Tepoztlán, Morelos, México</span>
   </div>
 </footer>
+</div><!-- /page-main -->
 
+
+<!-- ============================================================
+     PÁGINA NOSOTRAS
+     ============================================================ -->
+<div id="page-nosotras">
+  <div class="nos-hero">
+    <div class="nos-hero-bg"></div>
+    <div class="nos-hero-ov"></div>
+    <div class="nos-hero-body">
+      <button class="back-btn" onclick="showPage('main',null)">← Volver al inicio</button>
+      <span class="section-label" style="margin-bottom:10px;">El rugido de la madurez</span>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2.4rem,6vw,4rem);font-weight:400;">Quiénes somos</h1>
+    </div>
+  </div>
+  <div class="bio-section" style="background:var(--bg-main);">
+    <div class="bio-grid-l">
+      <div class="bio-img-outer bio-frame-l">
+        <div class="bio-img-inner"><img src="https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true" alt="Gabriela Carretta"><div class="bio-caption">Psicoanalista · Gestalt · Arte terapéutico</div></div>
+      </div>
+      <div>
+        <span class="bio-role">Fundadora</span>
+        <div class="bio-name">Gabriela Andrea</div>
+        <div class="bio-name-i">Carretta</div>
+        <p class="bio-intro">Concibo la psicoterapia como un espacio para la creación de escenarios simbólicos en los que una persona puede reencontrarse con aquellas partes de sí misma que le resultan complejas de reconocer.</p>
+        <p class="bio-p">Me interesa aquello que el síntoma intenta decir de múltiples maneras; eso que insiste en repetir y que en ocasiones no encuentra palabras para ser descifrado. Durante más de veinte años esta pregunta ha orientado tanto mi práctica clínica como mi propia búsqueda.</p>
+        <p class="bio-p">Mi formación psicoanalítica es la base de mi trabajo; sin embargo, comprendí que la mente por sí sola no alcanza para explicar la experiencia humana. <strong>El cuerpo conserva memorias, expresa conflictos y muchas veces conoce el camino antes que nuestra conciencia.</strong></p>
+        <p class="bio-p">La práctica de Ashtanga Yoga transformó radicalmente la relación conmigo misma. La maternidad volvió a enseñarme desde otro lugar: gestar, parir, amamantar y acompañar a dos hijos adolescentes me permitió reconocer una dimensión profundamente instintiva de lo femenino.</p>
+        <div class="bio-quote"><p>Hoy continúo aprendiendo a hacer algo que durante años me resultó difícil: detenerme. Habitar cada transformación con menos exigencia y mayor curiosidad.</p></div>
+        <p class="bio-p">La llegada temprana de la menopausia me confrontó con preguntas que jamás imaginé hacerme. Descubrí que <strong>compartir la experiencia modifica profundamente la manera de vivirla.</strong></p>
+        <div class="bio-tags"><span class="bio-tag">Psicoanálisis</span><span class="bio-tag">Gestalt</span><span class="bio-tag">Arte Terapéutico</span><span class="bio-tag">Toque Somático</span><span class="bio-tag">Ashtanga Yoga</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="bio-section" style="background:var(--bg-alt);">
+    <div class="bio-grid-r">
+      <div>
+        <span class="bio-role">Fundadora</span>
+        <div class="bio-name">Andrea</div>
+        <div class="bio-name-i">de Losada</div>
+        <p class="bio-intro">Nací bajo el signo de Sagitario. Quizás eso explica por qué, desde niña, he conectado con mi parte instintiva — el Centauro — y con esa mirada perenne hacia el cielo en busca de la verdad.</p>
+        <p class="bio-p">Mi amor por la gastronomía, siendo esta mi primera licenciatura, me llevó sin saberlo a apasionarme por el humanismo y por lo que habita detrás del deseo de nutrirnos. Pronto comprendí que mi verdadera vocación iba más enfocada a la <strong>nutrición emocional</strong> que a dirigir un restaurante.</p>
+        <p class="bio-p">El yoga me confrontó radicalmente con mi propia incapacidad para habitar el cuerpo. Me certifiqué en Vijnana Yoga con Orit Sen-Gupta, quien me mostró que <strong>el cuerpo es el mapa.</strong></p>
+        <p class="bio-p">Ese silencio despertó mi curiosidad por la psique y me impulsó a estudiar psicología Gestalt con la guía de Claudio Naranjo. Viviendo en Perú exploré los estados no ordinarios de conciencia y comprendí que estas ventanas, sin contención terapéutica, pueden generar más confusión que claridad.</p>
+        <div class="bio-quote"><p>La pérdida de un hijo marcó mi rumbo a la exploración de la muerte de manera profunda, formándome como acompañante de duelos. Comprendí que tanto la muerte como la sexualidad son puertas directas para mirar de frente nuestras protecciones.</p></div>
+        <p class="bio-p">Hoy mi atención está puesta en encontrar el gozo consciente que surge al deconstruir las máscaras sociales y culturales, resignificando las creencias impuestas sobre la vejez y la menopausia.</p>
+        <div class="bio-tags"><span class="bio-tag">Gestalt</span><span class="bio-tag">Vijnana Yoga</span><span class="bio-tag">Duelos</span><span class="bio-tag">Estados Ampliados</span><span class="bio-tag">Rituales</span></div>
+      </div>
+      <div class="bio-img-outer bio-frame-r">
+        <div class="bio-img-inner"><img src="https://github.com/agarciadg/sangreonosangre/blob/main/a8bd5c2cf919c85913535c5f9e07fd71.jpg?raw=true" alt="Andrea de Losada"><div class="bio-caption">Gestalt · Yoga · Rituales · Duelos</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="nos-cta" style="background:var(--bg-main);">
+    <p>No tenemos el poder de que este momento se pase rápido. Estamos aquí haciendo comunidad, para que mientras dure, te encuentres con la fuerza que habías dejado encerrada.</p>
+    <a href="#" onclick="showPage('main','contacto');return false;" class="btn btn-primary">Reserva tu lugar en el retiro</a>
+  </div>
+</div><!-- /page-nosotras -->
+
+
+<!-- ============================================================
+     ARTÍCULO 1 — INSOMNIO
+     ============================================================ -->
+<div id="page-blog-1">
+  <div class="art-hero">
+    <div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/a8bd5c2cf919c85913535c5f9e07fd71.jpg?raw=true');"></div>
+    <div class="art-hero-ov"></div>
+    <div class="art-hero-body">
+      <button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button>
+      <span class="art-tag">Cuerpo · Menopausia</span>
+      <h1 class="art-title">Insomnio</h1>
+      <p class="art-subtitle">Sangre o no Sangre</p>
+    </div>
+  </div>
+  <div class="art-body">
+    <p>Hay noches en las que el sueño simplemente decide escaparse.</p>
+    <p>Llevo tiempo lidiando con esas horas vacías: evito mirar el reloj, cambio de postura, intento convencer a mi cuerpo de dormir. Como si obedeciera a la voluntad… vaya broma.</p>
+    <p>Empiezo a aceptar que el insomnio se está volviendo una cita conmigo.</p>
+    <p>La casa está en silencio. Escucho la respiración y los ronquidos de mi pareja. Afuera, los grillos cantan: al principio endulzan la noche; luego se vuelven tan insistentes como mis pensamientos.</p>
+    <p>Mis hijos adolescentes duermen en las habitaciones de junto. Pienso en ellos: si estarán bien, si dije demasiado o muy poco, si algún día recordarán que intenté hacerlo lo mejor que pude.</p>
+    <blockquote><p>Entonces llega el bochorno... Irrumpe sin aviso: una oleada de calor sube del pecho, pasa por la nuca, llega hasta la cara y me recuerda que mi cuerpo escribe una historia que mi mente empieza poco a poco a poder leer.</p></blockquote>
+    <p>Me costó mucho aprender a reconocer el idioma de mi biología y una vez que por fin ya lo tenía claro, ahora, en esta otra etapa, las hormonas lo reescriben y me obligan a aprender una lengua distinta: más impredecible, menos dócil.</p>
+    <p>En esas madrugadas también aparece el deseo… No ha desaparecido, pero ya no se parece al de antes, ya no me mueve la urgencia, sino la presencia.</p>
+    <p>Mi cuerpo parece haber perdido la paciencia para aquello que no es verdadero. Hay una forma de erotismo que ya caducó en mí y otra que apenas comienza a surgir; más lenta, más honesta.</p>
+    <div class="art-divider"></div>
+    <p>Después aparecen mis padres: no como fueron, sino como son ahora. Sus cuerpos ya no tienen la fuerza de antes. Los veo envejecer mientras descubro, con ternura y desconcierto, que empiezo a ser quien los protege. Nunca imaginé que amar también implicaría acompañar el deterioro de quienes alguna vez parecieron inquebrantables.</p>
+    <p>Luego desfilan las pequeñas responsabilidades: llamadas, cuentas, citas médicas, reparaciones, mensajes sin responder, logísticas propias y ajenas, proyectos que esperan nacer.</p>
+    <p>Lo cotidiano nunca duerme del todo; sólo espera a que la noche le abra espacio y, sin embargo, debajo de todo eso hay otra conversación. Quizá la más íntima.</p>
+    <blockquote><p>Empiezo a preguntarme quién soy cuando dejo de ser útil para los demás. Cuando nadie necesita una respuesta inmediata. Cuando el teléfono calla, los hijos duermen, la pareja sueña y el mundo suspende su demanda.</p></blockquote>
+    <p>Entonces el insomnio deja de ser sólo un enemigo para ser un síntoma que habla. Un síntoma no es sólo lo que incomoda; a veces es una forma torpe e insistente de la psique de decir algo que no encuentra lugar, ni palabra. Interrumpe, desordena, nos quita eficacia, pero también abre una grieta en la superficie organizada de la existencia.</p>
+    <h3>La mujer que despierta a las tres de la mañana</h3>
+    <p>Tal vez mi insomnio no vino sólo a quitarme el sueño. Vino a despertarme de la mujer que cuida, responde, organiza, contiene, resuelve. De la madre disponible, la hija responsable, la pareja funcional, la terapeuta experta, la administradora invisible de tantas vidas.</p>
+    <p>En la vigilia forzada, algo de mí deja de cumplir y en ese incumplimiento aparece una verdad incómoda: he vivido mucho tiempo respondiendo a otros. No sólo por obligación, sino por amor, deseo, historia, mandato, miedo a decepcionar, por la fantasía de que ser necesaria era una forma segura de existir.</p>
+    <p>Porque cuando el mundo duerme y guarda silencio, ya no queda nadie a quien cuidar, organizar o tranquilizar y quedamos nosotras.</p>
+    <blockquote><p>La mujer que despierta a las tres de la mañana bañada en sudor quizá está llamando a la puerta de sí misma.</p></blockquote>
+    <p>Por eso he dejado de pelear con algunas noches en vela, aunque he de reconocer que no siempre las disfruto. Hay madrugadas agotadoras en las que predomina la sensación de estar perdida, sin brújula, pero hay otras en las que el insomnio abre una puerta y mi vida interior logra sentarse frente a mí sin interrupciones.</p>
+    <p>Tal vez la menopausia no sólo esté transformando mis hormonas. Tal vez esté desmontando, una por una, las identidades con las que aprendí a sostenerme.</p>
+    <div class="art-divider"></div>
+    <blockquote><p>¿Quién soy cuando ya no necesito demostrarle nada al mundo?</p></blockquote>
+  </div>
+  <div class="art-nav">
+    <div></div>
+    <div style="text-align:right;">
+      <span class="art-nav-label">Siguiente artículo</span>
+      <div class="art-nav-title" onclick="showPage('blog-2',null)">El Rugido de la Liberación →</div>
+    </div>
+  </div>
+</div><!-- /blog-1 -->
+
+
+<!-- ============================================================
+     ARTÍCULO 2 — EL RUGIDO DE LA LIBERACIÓN
+     ============================================================ -->
+<div id="page-blog-2">
+  <div class="art-hero">
+    <div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/d2877b3cb0a12a637cb6a545c48988ff.jpg?raw=true');"></div>
+    <div class="art-hero-ov"></div>
+    <div class="art-hero-body">
+      <button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button>
+      <span class="art-tag">Identidad · Transformación</span>
+      <h1 class="art-title">El Rugido de la Liberación</h1>
+      <p class="art-subtitle">Narrativas de transición y autonomía</p>
+    </div>
+  </div>
+  <div class="art-body">
+    <p><strong>Onomatopéyica:</strong> el sonido mismo de la palabra trata de evocar su significado. Describe y emite un sonido imponente para delimitar territorio, un llamado de advertencia para evitar una confrontación física y mantener unida a la manada, entre otras cosas.</p>
+    <blockquote><p>El rugido viaja grandes distancias; desde el centro de la tripa hacia afuera, el sonido es una vibración que expresa más de lo que la palabra pueda contener.</p></blockquote>
+    <p>En Sangre o no sangre se exhorta al "rugido" como una descarga que transita la historia sin quedarse en ella; la recorre y la ofrenda para su transformación.</p>
+    <h3>Dar sonido a lo silenciado</h3>
+    <p>Conectando con el instinto y la intuición, se da sonido a lo silenciado, a lo domesticado, haciendo visibles los mandatos sociales que hemos confundido como nuestros. El rugir permite la emoción sin filtros o decoros.</p>
+    <p>El rugido abre la puerta al enojo sagrado, recuperando nuestra fuerza vital y dignidad.</p>
+    <blockquote><p>La oscuridad de la cueva nutre la fuerza propulsora que nos regresa al mundo exterior, pudiendo encarnar nuestra autenticidad.</p></blockquote>
+    <h3>Frases que resuenan</h3>
+    <ul>
+      <li>El síntoma es la sincronía perfecta que nos invita a tomar una pausa.</li>
+      <li>El síntoma hablará con más fuerza que las palabras que piden su ausencia.</li>
+      <li>La despedida a la cansada tarea de complacer.</li>
+      <li>El duelo que nos permite morir a lo que nunca fuimos.</li>
+      <li>Uniendo nuestras sincronías en grupo, crecen las posibilidades de encontrarse en el tejido perfecto que da vida al rugido de la liberación.</li>
+    </ul>
+    <div class="art-divider"></div>
+    <p>Dar sonido a lo silenciado, a lo domesticado, haciendo visibles los mandatos sociales que hemos confundido como nuestros.</p>
+    <p>El rugir permite la emoción sin filtros o decoros. El rugido abre la puerta al enojo sagrado, recuperando nuestra fuerza vital y dignidad.</p>
+  </div>
+  <div class="art-nav">
+    <div>
+      <span class="art-nav-label">Artículo anterior</span>
+      <div class="art-nav-title" onclick="showPage('blog-1',null)">← Insomnio</div>
+    </div>
+    <div style="text-align:right;">
+      <span class="art-nav-label">Siguiente artículo</span>
+      <div class="art-nav-title" onclick="showPage('blog-3',null)">Eros y Menopausia →</div>
+    </div>
+  </div>
+</div><!-- /blog-2 -->
+
+
+<!-- ============================================================
+     ARTÍCULO 3 — EROS Y MENOPAUSIA
+     ============================================================ -->
+<div id="page-blog-3">
+  <div class="art-hero">
+    <div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/343fd0968a663bb911cdf4dc6f680344.jpg?raw=true');"></div>
+    <div class="art-hero-ov"></div>
+    <div class="art-hero-body">
+      <button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button>
+      <span class="art-tag">Erotismo · Deseo</span>
+      <h1 class="art-title">Eros y Menopausia</h1>
+      <p class="art-subtitle">La llama que no se apaga</p>
+    </div>
+  </div>
+  <div class="art-body">
+    <p>En Sangre o no Sangre tomamos en cuenta la biología, que sabiamente nos habla a través de la disminución hormonal como una invitación a dejar de buscar afuera para comenzar a buscar adentro.</p>
+    <p>Los cambios a veces se viven como pérdidas, y las pérdidas nos confrontan con la realidad y con el miedo profundo a la muerte. Cuando nuestra etapa de reproducción pasa, también se diluye el instinto de olfatear al macho fuerte que nos ayudaría a preservar la especie. Es ahí donde, desde el condicionamiento cultural, se siembra la creencia de que el deseo, el placer y el erotismo mueren.</p>
+    <blockquote><p>La verdadera naturaleza del Erotismo es la manera de recibir la vida a través de los sentidos. Esta energía vital no muere hasta que muere el cuerpo.</p></blockquote>
+    <p>Incluso nos deja la duda de si, en el paso a otra realidad y desde un entendimiento transpersonal, no seguiremos conectadas con el placer; tal vez en otro reino, en otra forma y en otro espacio.</p>
+    <h3>Regresar al primer momento</h3>
+    <p>Sangre o no Sangre invita a darnos la oportunidad de regresar a ese primer momento en que nuestros cuerpos fueron erotizados. No desde el hecho biográfico e histórico, sino desde la memoria corporal. Nos invita a mantener esa llama viva, con la apertura cambiante a las ganas y a la forma en que, en este momento actual, queremos recibir el placer.</p>
+    <p>Permitirnos, sin condicionamientos, darnos ese derecho aun sin el torrente hormonal que antes nos hacía desearlo de una manera diferente. Es regresar al instinto pulido por la experiencia que nos da la vida al llegar a este punto. Es poner la carne como lenguaje y poder amigarnos con las emociones que emergen.</p>
+    <h3>Lo que la cultura calla</h3>
+    <p>Desde lo social, cultural y religioso, cuando nos permitimos ser hembras deseantes de un contacto, de un juego o de un olor que nos lleve al placer, a veces sentimos pena o vergüenza. Esto nos hace reprimir el impulso erótico, matando poco a poco una parte nuestra que aún late con fuerza.</p>
+    <blockquote><p>Poder explorar de manera compasiva las estrategias que hemos creado ante el rechazo, ante el no tener lo que necesitamos o el no sentirnos merecedoras de recibirlo, nos permite mirar, sintiendo y comprendiendo.</p></blockquote>
+    <p>Solo así podemos relacionarnos con nuestro erotismo de manera permisiva, amorosa y plenamente aceptada.</p>
+  </div>
+  <div class="art-nav">
+    <div>
+      <span class="art-nav-label">Artículo anterior</span>
+      <div class="art-nav-title" onclick="showPage('blog-2',null)">← El Rugido de la Liberación</div>
+    </div>
+    <div style="text-align:right;">
+      <span class="art-nav-label">Siguiente artículo</span>
+      <div class="art-nav-title" onclick="showPage('blog-4',null)">El Síntoma como Sincronía →</div>
+    </div>
+  </div>
+</div><!-- /blog-3 -->
+
+
+<!-- ============================================================
+     ARTÍCULO 4 — EL SÍNTOMA COMO SINCRONÍA
+     ============================================================ -->
+<div id="page-blog-4">
+  <div class="art-hero">
+    <div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/14fd73dedf3fcb8218f7a174c61f16e4.jpg?raw=true');"></div>
+    <div class="art-hero-ov"></div>
+    <div class="art-hero-body">
+      <button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button>
+      <span class="art-tag">Psique · Síntoma</span>
+      <h1 class="art-title">El Síntoma como Sincronía</h1>
+      <p class="art-subtitle">Narrativas de transición y autonomía</p>
+    </div>
+  </div>
+  <div class="art-body">
+    <p><em>Síntoma, del griego symptoma, que significa "coincidencia", hecho fortuito que cae conjuntamente con otro.</em></p>
+    <blockquote><p>Por lo tanto, el síntoma no es un error del sistema, es la señal de sincronía para volver a gestarnos y parirnos, convirtiéndonos en quien realmente somos.</p></blockquote>
+    <p>El cuerpo, la psique y la emoción coinciden en el momento perfecto que invita a una "pausa", un silencio y una mirada hacia las profundidades de nuestro interior.</p>
+    <p>Ahí la cueva: este lugar que nos regala las respuestas, las propuestas y señales que preparan nuestro "estar" en un portal que propulsa el regreso a casa, a nuestra casa interior, este lugar instintivo y sabio que desea y que se permite estar en la vida de forma auténtica y libre.</p>
+    <h3>El síntoma como mensajero</h3>
+    <p>En Sangre o no sangre, el síntoma es material, es mensajero de lo que está pidiendo ser visitado. Cansadas de luchar contra lo inevitable, tomamos la incomodidad como una voz que está pidiendo ser escuchada.</p>
+    <blockquote><p>Si el síntoma hablara, más allá de las primeras sensaciones y palabras que piden su ausencia, ¿qué nos estaría diciendo realmente?</p></blockquote>
+    <p>Tal vez la invitación a un descanso, un cambio de narrativa, una visita a nuestra sexualidad, una invitación al gozo y la despedida a la cansada tarea de complacer.</p>
+    <h3>Cambiar de piel</h3>
+    <p>Si podemos amigarnos con la resistencia de cambiar de piel, dándole espacio al duelo que benditamente nos permite morir a lo que nunca fuimos, podemos darle la bienvenida a la mujer que en esta etapa de su vida se permite ser y estar para ella.</p>
+    <p>Uniendo nuestras sincronías en grupo, las propuestas, las pistas y las posibilidades crecen como un tejido perfecto que nos hace encontrarnos en un deseo, un lugar, un descanso que vive en la aceptación de un autoamor y reconocimiento de llegar hasta este momento.</p>
+    <div class="art-divider"></div>
+    <ul>
+      <li>El síntoma es la sincronía perfecta que nos invita a tomar una pausa.</li>
+      <li>El síntoma hablará con más fuerza que las palabras que piden su ausencia.</li>
+      <li>La despedida a la cansada tarea de complacer.</li>
+      <li>El duelo que nos permite morir a lo que nunca fuimos.</li>
+    </ul>
+  </div>
+  <div class="art-nav">
+    <div>
+      <span class="art-nav-label">Artículo anterior</span>
+      <div class="art-nav-title" onclick="showPage('blog-3',null)">← Eros y Menopausia</div>
+    </div>
+    <div style="text-align:right;">
+      <span class="art-nav-label">Siguiente artículo</span>
+      <div class="art-nav-title" onclick="showPage('blog-5',null)">Sabiduría Erótica →</div>
+    </div>
+  </div>
+</div><!-- /blog-4 -->
+
+
+<!-- ============================================================
+     ARTÍCULO 5 — SABIDURÍA ERÓTICA
+     ============================================================ -->
+<div id="page-blog-5">
+  <div class="art-hero">
+    <div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true');"></div>
+    <div class="art-hero-ov"></div>
+    <div class="art-hero-body">
+      <button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button>
+      <span class="art-tag">Erotismo · Sabiduría</span>
+      <h1 class="art-title">Sabiduría Erótica en la Menopausia</h1>
+      <p class="art-subtitle">Reflexiones para el Blog — Sangre o no Sangre</p>
+    </div>
+  </div>
+  <div class="art-body">
+    <p>Antes, el torrente hormonal enfocaba el erotismo en una meta inconsciente o consciente: la preservación de la especie.</p>
+    <blockquote><p>Al caer las hormonas, el Eros se democratiza en todo nuestro cuerpo. Ya no es una descarga; es un estado de presencia y de apertura al gozo.</p></blockquote>
+    <p>El Eros se permite habitar la piel, tomando la mirada, el olfato y la escucha al deleite, convirtiendo el cuerpo en un órgano integrado que se rinde al placer.</p>
+    <h3>Arqueología amorosa</h3>
+    <p>Con la sabiduría del cuerpo, despertar el Eros en esta etapa de la vida es un acto de arqueología amorosa, permitiendo sentir más allá de cualquier condicionamiento y sin necesitar hormonas para acceder a la memoria celular del gozo.</p>
+    <blockquote><p>La menopausia como el verdadero inicio de la sabiduría erótica: al liberarnos de los ciclos hormonales y del instinto de preservación, el placer se vuelve puramente nuestro.</p></blockquote>
+    <p>Se libera el deseo de encajar o gustar y se transforma en una necesidad de sentir, convirtiendo el erotismo en un derecho que no pide permiso.</p>
+    <h3>El fuego de la pasión creativa</h3>
+    <p>Cambiando la creencia de que el enojo y la irritabilidad son síntomas histéricos, la energía del Eros que quedó atrapada desemboca en la ruptura del cascarón sumiso. La dignidad despierta, encendiendo el fuego de la pasión creativa, y nos permitimos estar vivas en la vida.</p>
+    <p>En la menopausia, el placer llega desde lo más sutil. Fusionarse con él nos hace unir las polaridades de lo carnal y lo sagrado como parte de lo mismo.</p>
+    <div class="art-divider"></div>
+    <ul>
+      <li>El sonido es una vibración que expresa más de lo que la palabra pueda contener.</li>
+      <li>Dar sonido a lo silenciado, a lo domesticado, haciendo visibles los mandatos sociales que hemos confundido como nuestros.</li>
+      <li>El rugir permite la emoción sin filtros o decoros.</li>
+      <li>El rugido abre la puerta al enojo sagrado, recuperando nuestra fuerza vital y dignidad.</li>
+      <li>La oscuridad de la cueva nutre la fuerza propulsora que nos regresa al mundo exterior para encarnar nuestra autenticidad.</li>
+    </ul>
+  </div>
+  <div class="art-nav">
+    <div>
+      <span class="art-nav-label">Artículo anterior</span>
+      <div class="art-nav-title" onclick="showPage('blog-4',null)">← El Síntoma como Sincronía</div>
+    </div>
+    <div style="text-align:right;">
+      <span class="art-nav-label">Volver al Journal</span>
+      <div class="art-nav-title" onclick="showPage('main','blog')">Ver todos los artículos →</div>
+    </div>
+  </div>
+</div><!-- /blog-5 -->
+
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
 <script>
-  // Nav scroll state
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
-  });
+  const pages = ['main','nosotras','blog-1','blog-2','blog-3','blog-4','blog-5'];
 
-  // Mobile menu
-  const navToggle = document.getElementById('navToggle');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobileClose = document.getElementById('mobileClose');
-  navToggle.addEventListener('click', () => mobileMenu.classList.add('open'));
-  mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
-  mobileMenu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => mobileMenu.classList.remove('open'));
-  });
-
-  // Reveal on scroll
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-      }
+  function showPage(page, anchor) {
+    pages.forEach(p => {
+      document.getElementById('page-' + p).style.display = (p === page) ? 'block' : 'none';
     });
-  }, { threshold: 0.15 });
-  revealEls.forEach(el => observer.observe(el));
-
-  // Testimonios slider
-  const track = document.getElementById('testTrack');
-  const controls = document.getElementById('testControls');
-  const cards = track.children.length;
-  const isMobile = () => window.innerWidth <= 900;
-  const getSlides = () => isMobile() ? cards : Math.ceil(cards / 3);
-  let current = 0;
-
-  function buildDots() {
-    controls.innerHTML = '';
-    const slides = getSlides();
-    for (let i = 0; i < slides; i++) {
-      const dot = document.createElement('button');
-      dot.className = 'test-dot' + (i === current ? ' active' : '');
-      dot.addEventListener('click', () => goTo(i));
-      controls.appendChild(dot);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (anchor) {
+      setTimeout(() => {
+        const el = document.getElementById(anchor);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 120);
     }
   }
 
-  function goTo(i) {
-    current = i;
-    const slides = getSlides();
-    const pct = isMobile() ? i * 100 : i * 100;
-    track.style.transform = `translateX(-${i * 100}%)`;
-    [...controls.children].forEach((d, idx) => d.classList.toggle('active', idx === i));
+  // Nav scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+
+  // Mobile menu
+  function closeMob() { document.getElementById('mobMenu').classList.remove('open'); }
+  document.getElementById('navToggle').addEventListener('click', () => document.getElementById('mobMenu').classList.add('open'));
+  document.getElementById('mobClose').addEventListener('click', closeMob);
+
+  // Reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+  }, { threshold: 0.13 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Testimonios expandibles
+  function toggleTest(id, btn) {
+    const el = document.getElementById(id);
+    const isOpen = el.style.display === 'block';
+    el.style.display = isOpen ? 'none' : 'block';
+    btn.classList.toggle('open', !isOpen);
+    btn.querySelector('.arr').textContent = isOpen ? '›' : '‹';
+    btn.childNodes[0].textContent = isOpen ? 'Leer más ' : 'Leer menos ';
   }
-
-  buildDots();
-  window.addEventListener('resize', () => { current = 0; buildDots(); goTo(0); });
-
-  let autoSlide = setInterval(() => {
-    const slides = getSlides();
-    goTo((current + 1) % slides);
-  }, 5000);
+  window.toggleTest = toggleTest;
 
   // Form
-  const form = document.getElementById('contactForm');
-  const success = document.getElementById('formSuccess');
-  form.addEventListener('submit', (e) => {
+  document.getElementById('cf').addEventListener('submit', e => {
     e.preventDefault();
-    success.style.display = 'block';
-    form.reset();
-    setTimeout(() => { success.style.display = 'none'; }, 5000);
+    const ok = document.getElementById('cfOk');
+    ok.style.display = 'block';
+    e.target.reset();
+    setTimeout(() => ok.style.display = 'none', 5000);
   });
 </script>
-
 </body>
 </html>
