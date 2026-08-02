@@ -134,6 +134,28 @@
   @media(max-width:1000px){ .blog-grid{grid-template-columns:repeat(2,1fr);} }
   @media(max-width:640px){ .blog-grid{grid-template-columns:1fr;} }
 
+  /* POPUP RETIRO */
+  .popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:2000; align-items:center; justify-content:center; padding:20px; }
+  .popup-overlay.open { display:flex; }
+  .popup-box { background:var(--bg-alt); border:1px solid var(--border); max-width:720px; width:100%; max-height:90vh; overflow-y:auto; position:relative; }
+  .popup-close { position:absolute; top:18px; right:22px; background:none; border:none; color:var(--text-muted); font-size:1.6rem; cursor:pointer; z-index:10; line-height:1; }
+  .popup-close:hover { color:var(--text-main); }
+  .popup-header { padding:50px 50px 0; }
+  .popup-header .section-label { margin-bottom:10px; }
+  .popup-header h2 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3vw,2.6rem); color:var(--text-main); line-height:1.2; font-weight:400; }
+  .popup-header p.sub { font-family:'Playfair Display',serif; font-style:italic; font-size:1.05rem; color:var(--accent); margin-top:10px; }
+  .popup-body { padding:36px 50px 50px; }
+  .popup-body p { color:var(--text-muted); line-height:1.85; font-size:.93rem; margin-bottom:16px; }
+  .popup-body strong { color:var(--text-main); font-weight:600; }
+  .popup-meta { display:flex; flex-direction:column; gap:12px; margin:28px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:22px 0; }
+  .popup-meta-item { display:flex; gap:14px; font-size:.88rem; }
+  .popup-meta-item .pm-label { color:var(--accent); font-weight:600; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; min-width:90px; }
+  .popup-meta-item .pm-val { color:var(--text-main); }
+  .popup-actions { display:flex; gap:16px; flex-wrap:wrap; margin-top:28px; }
+  .popup-pdf { display:inline-flex; align-items:center; gap:10px; border:1px solid var(--border); color:var(--text-muted); padding:12px 22px; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; font-weight:600; transition:all .3s; }
+  .popup-pdf:hover { border-color:var(--accent); color:var(--accent); }
+  @media(max-width:640px){ .popup-header,.popup-body{padding-left:28px;padding-right:28px;} }
+
   /* TESTIMONIOS */
   .testimonios { background:var(--bg-main); }
   .test-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:56px; }
@@ -280,7 +302,7 @@
   <div class="hero-body">
     <span class="hero-eyebrow">Reencuentro con tu erotismo</span>
     <h1>Ni seca, ni apagada, <em>ni callada</em></h1>
-    <p class="hero-sub">El nacimiento a tu soberanía: un umbral hacia ti misma.</p>
+    <p class="hero-sub">El fin de la espera, nacimiento a tu soberanía. Un umbral hacia ti misma, donde la biología se rinde ante tu presencia.</p>
     <div class="hero-cta">
       <a href="#" onclick="showPage('main','retiros');return false;" class="btn btn-primary">Conoce el retiro</a>
       <a href="#" onclick="showPage('main','contacto');return false;" class="btn btn-outline">Reserva tu lugar</a>
@@ -342,12 +364,11 @@
       <span class="section-label">Retiro experiencial</span>
       <h3>Sangre o no Sangre</h3>
       <p>Un retiro experiencial desde un espacio íntimo, ético y seguro, en el que nos atrevemos a transformar la narrativa sobre la menopausia, el erotismo y la vejez.</p>
-      <p>Es un movimiento que propone encender tu fuego y rugir junto a otras que como tú se niegan a ser lo que no son.</p>
+      <p>No es un retiro de descanso. Es un espacio para bailar e integrar tu sombra, encender tu fuego y rugir junto a otras que, como tú, se niegan a ser lo que no son.</p>
       <div class="retiro-meta">
         <span>📍 Centro Werika, Tepoztlán, Morelos</span>
         <span>🗓 22 al 25 de octubre, 2026</span>
         <span>◆ Cupos limitados</span>
-        <span>Inversión General $15,000 MXN (Incluye hospedaje completo y alimentos).-</span>
       </div>
       <a href="#" onclick="showPage('main','contacto');return false;" class="btn btn-primary" style="align-self:flex-start;">Reservar mi lugar</a>
       <div class="contacts-mini">
@@ -605,9 +626,11 @@
     <!-- Cita destacada -->
     <div class="test-card reveal" style="justify-content:center;border-color:rgba(212,181,149,.35);">
       <div style="text-align:center;padding:10px 0;">
-        <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:1.35rem;color:var(--accent);line-height:1.7;margin-bottom:28px;">"Arrieras somos<br>y en camino andamos."</p>
+        <span class="section-label" style="justify-content:center;">El Rugido de la Madurez</span>
+        <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:1.35rem;color:var(--accent);line-height:1.7;margin-bottom:10px;">Sangre o no Sangre</p>
+        <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--text-muted);line-height:1.7;margin-bottom:28px;">El retiro</p>
         <div style="width:40px;height:1px;background:var(--accent);margin:0 auto 28px;"></div>
-        <a href="#" onclick="showPage('main','contacto');return false;" class="btn btn-outline" style="font-size:.68rem;">Reserva tu lugar →</a>
+        <button onclick="document.getElementById('popupRetiro').classList.add('open')" class="btn btn-outline" style="font-size:.68rem;">Ver el retiro →</button>
       </div>
     </div>
 
@@ -701,12 +724,16 @@
         <div class="bio-name">Gabriela Andrea</div>
         <div class="bio-name-i">Carretta</div>
         <p class="bio-intro">Concibo la psicoterapia como un espacio para la creación de escenarios simbólicos en los que una persona puede reencontrarse con aquellas partes de sí misma que le resultan complejas de reconocer.</p>
-        <p class="bio-p">Me interesa aquello que el síntoma intenta decir de múltiples maneras; eso que insiste en repetir y que en ocasiones no encuentra palabras para ser descifrado. Durante más de veinte años esta pregunta ha orientado tanto mi práctica clínica como mi propia búsqueda.</p>
-        <p class="bio-p">Mi formación psicoanalítica es la base de mi trabajo; sin embargo, comprendí que la mente por sí sola no alcanza para explicar la experiencia humana. <strong>El cuerpo conserva memorias, expresa conflictos y muchas veces conoce el camino antes que nuestra conciencia.</strong></p>
-        <p class="bio-p">La práctica de Ashtanga Yoga transformó radicalmente la relación conmigo misma. La maternidad volvió a enseñarme desde otro lugar: gestar, parir, amamantar y acompañar a dos hijos adolescentes me permitió reconocer una dimensión profundamente instintiva de lo femenino.</p>
-        <div class="bio-quote"><p>Hoy continúo aprendiendo a hacer algo que durante años me resultó difícil: detenerme. Habitar cada transformación con menos exigencia y mayor curiosidad.</p></div>
-        <p class="bio-p">La llegada temprana de la menopausia me confrontó con preguntas que jamás imaginé hacerme. Descubrí que <strong>compartir la experiencia modifica profundamente la manera de vivirla.</strong></p>
-        <div class="bio-tags"><span class="bio-tag">Psicoanálisis</span><span class="bio-tag">Gestalt</span><span class="bio-tag">Arte Terapéutico</span><span class="bio-tag">Toque Somático</span><span class="bio-tag">Ashtanga Yoga</span></div>
+        <p class="bio-p">Me interesa aquello que el síntoma intenta decir de múltiples maneras; eso que insiste en repetir y que en ocasiones no encuentra palabras para ser descifrado. ¿Qué ocurre cuando una persona pierde contacto con su deseo y con la posibilidad de habitar su vida? Durante más de veinte años esta pregunta ha orientado tanto mi práctica clínica como mi propia búsqueda.</p>
+        <p class="bio-p">Mi formación psicoanalítica constituye la base de mi trabajo y pensamiento teórico; sin embargo, con los años comprendí que la mente, por sí sola, no alcanza para explicar la experiencia humana. <strong>El cuerpo conserva memorias, expresa conflictos y muchas veces conoce el camino antes que nuestra conciencia.</strong></p>
+        <p class="bio-p">Llegué a esta convicción a partir de mi propia historia. Durante mucho tiempo viví más cerca de la exigencia que de mi cuerpo. En la adolescencia, mi desarrollo físico apareció antes de que pudiera comprender lo que implicaba habitarlo. Más adelante, el trabajo psicoanalítico me permitió reconocer una profunda disociación entre mi pensamiento, mi deseo y mi experiencia corporal. Esa comprensión despertó una búsqueda que continúa hasta hoy.</p>
+        <p class="bio-p">La práctica de Ashtanga Yoga transformó radicalmente la relación conmigo misma. Descubrí un cuerpo mucho más fuerte y sabio de lo que imaginaba, y encontré en la respiración una forma de sostener la vida, no sólo la práctica. Confirmé que existen experiencias que necesitan ser respiradas, atravesadas y simbolizadas para ser comprendidas.</p>
+        <p class="bio-p">La maternidad volvió a enseñarme desde otro lugar. Gestar, parir, amamantar y acompañar a dos hijos adolescentes me permite reconocer una dimensión profundamente instintiva de lo femenino. Comprendí que, antes que cualquier ideal o construcción cultural, también soy un cuerpo capaz de crear, cuidar, perder, transformarse y volver a empezar.</p>
+        <p class="bio-p">La llegada temprana de la menopausia me confrontó con preguntas que jamás imaginé hacerme: el duelo por el fin de la menstruación, las transformaciones del deseo, los bochornos, el insomnio, la incertidumbre frente a los tratamientos hormonales y la necesidad de construir una nueva relación con el paso del tiempo. Descubrí que muchas mujeres atravesamos estos cambios en silencio y que <strong>compartir la experiencia modifica profundamente la manera de vivirla.</strong></p>
+        <div class="bio-quote"><p>Hoy continúo aprendiendo a hacer algo que durante años me resultó difícil: detenerme… Habitar cada transformación con menos exigencia y mayor curiosidad. Dar lugar a las arrugas, a los pliegues, a los cambios hormonales y emocionales como parte de una historia que sigue escribiéndose.</p></div>
+        <p class="bio-p">Mi práctica clínica integra la escucha psicoanalítica, la experiencia grupal, el arte como herramienta terapéutica, el trabajo corporal y, cuando existe indicación clínica y ética, el trabajo con estados amplificados de consciencia como herramientas para favorecer procesos de simbolización e integración entre soma y psique.</p>
+        <p class="bio-p">Sangre, no sangre… surge del encuentro entre dos mujeres que compartimos preguntas semejantes sobre la fertilidad, la menopausia, el deseo y el cuerpo, y que desde nuestra vivencia evidenciamos que es necesario abrir un espacio donde estas experiencias puedan ser nombradas, pensadas y vividas colectivamente.</p>
+        <div class="bio-tags"><span class="bio-tag">Psicoanálisis</span><span class="bio-tag">Gestalt</span><span class="bio-tag">Arte Terapéutico</span><span class="bio-tag">Toque Somático</span><span class="bio-tag">Ashtanga Yoga</span><span class="bio-tag">Estados Ampliados</span></div>
       </div>
     </div>
   </div>
@@ -725,16 +752,44 @@
         <div class="bio-tags"><span class="bio-tag">Gestalt</span><span class="bio-tag">Vijnana Yoga</span><span class="bio-tag">Duelos</span><span class="bio-tag">Estados Ampliados</span><span class="bio-tag">Rituales</span></div>
       </div>
       <div class="bio-img-outer bio-frame-r">
-        <div class="bio-img-inner"><img src="https://github.com/agarciadg/sangreonosangre/blob/main/a8bd5c2cf919c85913535c5f9e07fd71.jpg?raw=true" alt="Andrea de Losada"><div class="bio-caption">Gestalt · Yoga · Rituales · Duelos</div></div>
+        <div class="bio-img-inner"><img src="https://github.com/agarciadg/sangreonosangre/blob/main/Foto%20Andrea%20de%20losada.jpeg?raw=true" alt="Andrea de Losada"><div class="bio-caption">Gestalt · Yoga · Rituales · Duelos</div></div>
       </div>
     </div>
   </div>
   <div class="nos-cta" style="background:var(--bg-main);">
-    <p>No tenemos el poder de que este momento pase rápido. Estamos aquí haciendo comunidad, para que mientras dure, te encuentres con la fuerza que habías dejado encerrada.</p>
+    <p>No tenemos el poder de que este momento se pase rápido. Estamos aquí haciendo comunidad, para que mientras dure, te encuentres con la fuerza que habías dejado encerrada.</p>
     <a href="#" onclick="showPage('main','contacto');return false;" class="btn btn-primary">Reserva tu lugar en el retiro</a>
   </div>
 </div><!-- /page-nosotras -->
 
+
+<!-- POPUP RETIRO -->
+<div class="popup-overlay" id="popupRetiro" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="popup-box">
+    <button class="popup-close" onclick="document.getElementById('popupRetiro').classList.remove('open')">&times;</button>
+    <div class="popup-header">
+      <span class="section-label">Retiro experiencial · Octubre 2026</span>
+      <h2>El Rugido de la Madurez</h2>
+      <p class="sub">Sangre o no Sangre — Un umbral hacia ti misma</p>
+    </div>
+    <div class="popup-body">
+      <p>Un retiro experiencial desde un espacio íntimo, ético y seguro, en el que nos atrevemos a transformar la narrativa sobre la menopausia, el erotismo y la vejez.</p>
+      <p>Acompañadas por otras mujeres atravesaremos el duelo de ciertas versiones de nosotras mismas para reencontrarnos con un erotismo menos complaciente, más instintivo y salvaje.</p>
+      <p>Desde la palabra, el cuerpo y lo transpersonal, honraremos el camino de las etapas que nos marcaron, asumiendo el cambio biológico como un aliado de nuestra fuerza, autenticidad y soberanía.</p>
+      <p><strong>No es un retiro de descanso.</strong> Es un espacio para bailar e integrar tu sombra, encender tu fuego y rugir junto a otras que, como tú, se niegan a ser lo que no son.</p>
+      <div class="popup-meta">
+        <div class="popup-meta-item"><span class="pm-label">Fechas</span><span class="pm-val">22 al 25 de octubre, 2026</span></div>
+        <div class="popup-meta-item"><span class="pm-label">Lugar</span><span class="pm-val">Centro Werika, Tepoztlán, Morelos</span></div>
+        <div class="popup-meta-item"><span class="pm-label">Cupos</span><span class="pm-val">Limitados — para cuidar la intimidad del grupo</span></div>
+        <div class="popup-meta-item"><span class="pm-label">Contacto</span><span class="pm-val">Andrea de Losada — +52 555 435 2377<br>Gabriela Carretta — +52 552 702 6284</span></div>
+      </div>
+      <div class="popup-actions">
+        <a href="#" onclick="document.getElementById('popupRetiro').classList.remove('open');showPage('main','contacto');return false;" class="btn btn-primary">Reservar mi lugar</a>
+        <a href="https://github.com/agarciadg/sangreonosangre/blob/main/EL%20RUGIDO%20DE%20LA%20MADUREZ.pdf?raw=true" target="_blank" class="popup-pdf">⬇ Descargar programa (PDF)</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ============================================================
      ARTÍCULO 1 — INSOMNIO
