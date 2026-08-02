@@ -117,7 +117,7 @@
   .contacts-mini { font-size:.8rem; color:var(--text-muted); display:flex; flex-direction:column; gap:6px; }
   @media(max-width:950px){ .retiro-card{grid-template-columns:1fr;} .retiro-img{min-height:300px;} .retiro-info{padding:36px 28px;} }
 
-  /* ===== BLOG / JOURNAL ===== */
+  /* BLOG */
   .blog { background:var(--bg-alt); }
   .blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:30px; margin-top:56px; }
   .blog-card { background:var(--bg-main); border:1px solid var(--border); display:flex; flex-direction:column; }
@@ -133,28 +133,6 @@
   .blog-card:hover .arr { transform:translateX(5px); }
   @media(max-width:1000px){ .blog-grid{grid-template-columns:repeat(2,1fr);} }
   @media(max-width:640px){ .blog-grid{grid-template-columns:1fr;} }
-
-  /* POPUP RETIRO */
-  .popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:2000; align-items:center; justify-content:center; padding:20px; }
-  .popup-overlay.open { display:flex; }
-  .popup-box { background:var(--bg-alt); border:1px solid var(--border); max-width:720px; width:100%; max-height:90vh; overflow-y:auto; position:relative; }
-  .popup-close { position:absolute; top:18px; right:22px; background:none; border:none; color:var(--text-muted); font-size:1.6rem; cursor:pointer; z-index:10; line-height:1; }
-  .popup-close:hover { color:var(--text-main); }
-  .popup-header { padding:50px 50px 0; }
-  .popup-header .section-label { margin-bottom:10px; }
-  .popup-header h2 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3vw,2.6rem); color:var(--text-main); line-height:1.2; font-weight:400; }
-  .popup-header p.sub { font-family:'Playfair Display',serif; font-style:italic; font-size:1.05rem; color:var(--accent); margin-top:10px; }
-  .popup-body { padding:36px 50px 50px; }
-  .popup-body p { color:var(--text-muted); line-height:1.85; font-size:.93rem; margin-bottom:16px; }
-  .popup-body strong { color:var(--text-main); font-weight:600; }
-  .popup-meta { display:flex; flex-direction:column; gap:12px; margin:28px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:22px 0; }
-  .popup-meta-item { display:flex; gap:14px; font-size:.88rem; }
-  .popup-meta-item .pm-label { color:var(--accent); font-weight:600; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; min-width:90px; }
-  .popup-meta-item .pm-val { color:var(--text-main); }
-  .popup-actions { display:flex; gap:16px; flex-wrap:wrap; margin-top:28px; }
-  .popup-pdf { display:inline-flex; align-items:center; gap:10px; border:1px solid var(--border); color:var(--text-muted); padding:12px 22px; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; font-weight:600; transition:all .3s; }
-  .popup-pdf:hover { border-color:var(--accent); color:var(--accent); }
-  @media(max-width:640px){ .popup-header,.popup-body{padding-left:28px;padding-right:28px;} }
 
   /* TESTIMONIOS */
   .testimonios { background:var(--bg-main); }
@@ -178,7 +156,6 @@
   .test-expand.open .arr { transform:rotate(90deg); }
   @media(max-width:1000px){ .test-grid{grid-template-columns:repeat(2,1fr);} }
   @media(max-width:640px){ .test-grid{grid-template-columns:1fr;} }
-  @media(max-width:900px){ .test-card{flex:0 0 100%;} }
 
   /* CONTACTO */
   .contact { background:var(--bg-main); }
@@ -210,7 +187,7 @@
   .footer-col a:hover,.footer-col p:hover { color:var(--text-main); }
   .footer-bottom { margin-top:46px; padding-top:22px; border-top:1px solid var(--border); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:.76rem; color:var(--text-muted); }
 
-  /* ===== PÁGINA NOSOTRAS ===== */
+  /* NOSOTRAS */
   .nos-hero { position:relative; height:55vh; min-height:360px; overflow:hidden; display:flex; align-items:flex-end; }
   .nos-hero-bg { position:absolute; inset:0; background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true'); background-size:cover; background-position:center; filter:brightness(.4); }
   .nos-hero-ov { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(10,7,6,.2),rgba(10,7,6,.92)); }
@@ -242,7 +219,7 @@
   .nos-cta p { font-family:'Playfair Display',serif; font-style:italic; font-size:1.3rem; color:var(--text-muted); max-width:540px; margin:0 auto 32px; line-height:1.7; }
   @media(max-width:900px){ .bio-grid-l,.bio-grid-r{grid-template-columns:1fr;} .bio-grid-r .bio-img-outer{order:-1;} }
 
-  /* ===== PÁGINAS DE ARTÍCULO ===== */
+  /* ARTÍCULOS */
   .art-hero { position:relative; height:60vh; min-height:380px; overflow:hidden; display:flex; align-items:flex-end; }
   .art-hero-bg { position:absolute; inset:0; background-size:cover; background-position:center; filter:brightness(.35) contrast(1.1); }
   .art-hero-ov { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(10,7,6,.1),rgba(10,7,6,.95)); }
@@ -260,11 +237,30 @@
   .art-body ul li { color:var(--text-muted); font-size:.97rem; line-height:1.8; padding-left:22px; position:relative; }
   .art-body ul li::before { content:'·'; position:absolute; left:0; color:var(--accent); font-size:1.4rem; line-height:1.2; }
   .art-divider { width:60px; height:1px; background:var(--accent); margin:50px auto; }
-  .art-back { display:flex; align-items:center; gap:12px; margin-bottom:32px; }
   .art-nav { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; padding:40px 6%; border-top:1px solid var(--border); margin-top:20px; }
   .art-nav-label { font-size:.68rem; letter-spacing:.15em; text-transform:uppercase; color:var(--text-muted); display:block; margin-bottom:6px; }
   .art-nav-title { font-family:'Playfair Display',serif; font-size:1rem; color:var(--accent); cursor:pointer; }
   .art-nav-title:hover { color:var(--text-main); }
+
+  /* POPUP RETIRO */
+  .popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.88); z-index:2000; align-items:center; justify-content:center; padding:20px; }
+  .popup-box { background:var(--bg-alt); border:1px solid var(--border); max-width:720px; width:100%; max-height:90vh; overflow-y:auto; position:relative; }
+  .popup-close { position:absolute; top:18px; right:22px; background:none; border:none; color:var(--text-muted); font-size:1.8rem; cursor:pointer; z-index:10; line-height:1; font-family:'Montserrat',sans-serif; }
+  .popup-close:hover { color:var(--text-main); }
+  .popup-header { padding:50px 50px 0; }
+  .popup-header h2 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3vw,2.6rem); color:var(--text-main); line-height:1.2; font-weight:400; margin-top:10px; }
+  .popup-header .sub { font-family:'Playfair Display',serif; font-style:italic; font-size:1.05rem; color:var(--accent); margin-top:10px; }
+  .popup-body { padding:36px 50px 50px; }
+  .popup-body p { color:var(--text-muted); line-height:1.85; font-size:.93rem; margin-bottom:16px; }
+  .popup-body strong { color:var(--text-main); font-weight:600; }
+  .popup-meta { display:flex; flex-direction:column; gap:12px; margin:28px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:22px 0; }
+  .popup-meta-item { display:flex; gap:14px; font-size:.88rem; }
+  .pm-label { color:var(--accent); font-weight:600; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; min-width:90px; }
+  .pm-val { color:var(--text-main); line-height:1.6; }
+  .popup-actions { display:flex; gap:16px; flex-wrap:wrap; margin-top:28px; align-items:center; }
+  .popup-pdf { display:inline-flex; align-items:center; gap:10px; border:1px solid var(--border); color:var(--text-muted); padding:13px 22px; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; font-weight:600; transition:all .3s; font-family:'Montserrat',sans-serif; }
+  .popup-pdf:hover { border-color:var(--accent); color:var(--accent); }
+  @media(max-width:640px){ .popup-header,.popup-body{padding-left:24px;padding-right:24px;} .popup-header{padding-top:36px;} }
 </style>
 </head>
 <body>
@@ -290,19 +286,45 @@
   <a href="#" onclick="showPage('main','contacto');closeMob();return false;">Contacto</a>
 </div>
 
-<!-- ============================================================
-     PÁGINA PRINCIPAL
-     ============================================================ -->
+<!-- POPUP RETIRO -->
+<div class="popup-overlay" id="popupRetiro" onclick="if(event.target===this)closePopup()">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup()">&times;</button>
+    <div class="popup-header">
+      <span class="section-label">Retiro experiencial · Octubre 2026</span>
+      <h2>El Rugido de la Madurez</h2>
+      <p class="sub">Sangre o no Sangre — Un umbral hacia ti misma</p>
+    </div>
+    <div class="popup-body">
+      <p>Un retiro experiencial desde un espacio íntimo, ético y seguro, en el que nos atrevemos a transformar la narrativa sobre la menopausia, el erotismo y la vejez.</p>
+      <p>Acompañadas por otras mujeres atravesaremos el duelo de ciertas versiones de nosotras mismas para reencontrarnos con un erotismo menos complaciente, más instintivo y salvaje.</p>
+      <p>Desde la palabra, el cuerpo y lo transpersonal, honraremos el camino de las etapas que nos marcaron, asumiendo el cambio biológico como un aliado de nuestra fuerza, autenticidad y soberanía.</p>
+      <p><strong>No es un retiro de descanso.</strong> Es un espacio para bailar e integrar tu sombra, encender tu fuego y rugir junto a otras que, como tú, se niegan a ser lo que no son.</p>
+      <div class="popup-meta">
+        <div class="popup-meta-item"><span class="pm-label">Fechas</span><span class="pm-val">22 al 25 de octubre, 2026</span></div>
+        <div class="popup-meta-item"><span class="pm-label">Lugar</span><span class="pm-val">Centro Werika, Tepoztlán, Morelos</span></div>
+        <div class="popup-meta-item"><span class="pm-label">Inversión</span><span class="pm-val">$15,000 MXN — incluye hospedaje completo y alimentos</span></div>
+        <div class="popup-meta-item"><span class="pm-label">Cupos</span><span class="pm-val">Limitados — para cuidar la intimidad del grupo</span></div>
+        <div class="popup-meta-item"><span class="pm-label">Contacto</span><span class="pm-val">Andrea de Losada — +52 555 435 2377<br>Gabriela Carretta — +52 552 702 6284</span></div>
+      </div>
+      <div class="popup-actions">
+        <a href="#" onclick="closePopup();showPage('main','contacto');return false;" class="btn btn-primary">Reservar mi lugar</a>
+        <a href="https://github.com/agarciadg/sangreonosangre/blob/main/EL%20RUGIDO%20DE%20LA%20MADUREZ.pdf?raw=true" target="_blank" class="popup-pdf">⬇ Descargar programa (PDF)</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ PÁGINA PRINCIPAL ============================================================ -->
 <div id="page-main">
 
-<!-- HERO -->
 <header class="hero">
   <div class="hero-bg"></div>
-  <div class="hero-overlay" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,7,6,.4) 0%,rgba(10,7,6,.2) 40%,rgba(10,7,6,.95) 100%);"></div>
+  <div class="hero-overlay"></div>
   <div class="hero-body">
     <span class="hero-eyebrow">Reencuentro con tu erotismo</span>
     <h1>Ni seca, ni apagada, <em>ni callada</em></h1>
-    <p class="hero-sub">El fin de la espera, nacimiento a tu soberanía. Un umbral hacia ti misma, donde la biología se rinde ante tu presencia.</p>
+    <p class="hero-sub">El nacimiento a tu soberanía: un umbral hacia ti misma.</p>
     <div class="hero-cta">
       <a href="#" onclick="showPage('main','retiros');return false;" class="btn btn-primary">Conoce el retiro</a>
       <a href="#" onclick="showPage('main','contacto');return false;" class="btn btn-outline">Reserva tu lugar</a>
@@ -311,7 +333,6 @@
   <div class="scroll-cue"><span>Desliza</span><div class="scroll-line"></div></div>
 </header>
 
-<!-- SOBRE -->
 <section id="sobre" class="about">
   <div class="about-img-frame reveal">
     <div class="about-img-wrap">
@@ -334,7 +355,6 @@
   </div>
 </section>
 
-<!-- MARQUEE -->
 <div class="slogan-band">
   <div class="slogan-marquee">
     <span>Ni dócil, ni mansa, ni seca <span class="sep">·</span></span>
@@ -352,7 +372,6 @@
   </div>
 </div>
 
-<!-- RETIROS -->
 <section id="retiros" class="retiros">
   <span class="section-label reveal">Próximo encuentro</span>
   <h2 class="section-title reveal">Entra en la cueva</h2>
@@ -364,13 +383,18 @@
       <span class="section-label">Retiro experiencial</span>
       <h3>Sangre o no Sangre</h3>
       <p>Un retiro experiencial desde un espacio íntimo, ético y seguro, en el que nos atrevemos a transformar la narrativa sobre la menopausia, el erotismo y la vejez.</p>
-      <p>No es un retiro de descanso. Es un espacio para bailar e integrar tu sombra, encender tu fuego y rugir junto a otras que, como tú, se niegan a ser lo que no son.</p>
+      <p>Es un movimiento que propone encender tu fuego y rugir junto a otras que como tú se niegan a ser lo que no son.</p>
       <div class="retiro-meta">
         <span>📍 Centro Werika, Tepoztlán, Morelos</span>
         <span>🗓 22 al 25 de octubre, 2026</span>
         <span>◆ Cupos limitados</span>
+        <span>Inversión General $15,000 MXN (Incluye hospedaje completo y alimentos)</span>
       </div>
-      <a href="#" onclick="showPage('main','contacto');return false;" class="btn btn-primary" style="align-self:flex-start;">Reservar mi lugar</a>
+      <!-- CAMBIO 2: botones con "Ver más sobre el retiro" -->
+      <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+        <a href="#" onclick="showPage('main','contacto');return false;" class="btn btn-primary">Reservar mi lugar</a>
+        <button class="btn btn-outline" onclick="openPopup()">Ver más sobre el retiro →</button>
+      </div>
       <div class="contacts-mini">
         <span>Andrea de Losada — +52 555 435 2377</span>
         <span>Gabriela Carretta — +52 552 702 6284</span>
@@ -379,79 +403,30 @@
   </div>
 </section>
 
-<!-- BLOG / JOURNAL -->
 <section id="blog" class="blog">
   <span class="section-label reveal">Journal</span>
   <h2 class="section-title reveal">Palabras que aún no se habían nombrado</h2>
-
   <div class="blog-grid">
-
-    <!-- Artículo 1 -->
     <div class="blog-card reveal">
-      <div class="blog-thumb">
-        <img src="https://github.com/agarciadg/sangreonosangre/blob/main/a8bd5c2cf919c85913535c5f9e07fd71.jpg?raw=true" alt="Insomnio">
-      </div>
-      <div class="blog-body">
-        <span class="blog-tag">Cuerpo · Menopausia</span>
-        <h4>Insomnio</h4>
-        <p class="blog-excerpt">Hay noches en las que el sueño simplemente decide escaparse. Empiezo a aceptar que el insomnio se está volviendo una cita conmigo. Tal vez no vino sólo a quitarme el sueño...</p>
-        <button class="blog-read" onclick="showPage('blog-1',null)">Leer artículo <span class="arr">→</span></button>
-      </div>
+      <div class="blog-thumb"><img src="https://github.com/agarciadg/sangreonosangre/blob/main/a8bd5c2cf919c85913535c5f9e07fd71.jpg?raw=true" alt="Insomnio"></div>
+      <div class="blog-body"><span class="blog-tag">Cuerpo · Menopausia</span><h4>Insomnio</h4><p class="blog-excerpt">Hay noches en las que el sueño simplemente decide escaparse. Empiezo a aceptar que el insomnio se está volviendo una cita conmigo. Tal vez no vino sólo a quitarme el sueño...</p><button class="blog-read" onclick="showPage('blog-1',null)">Leer artículo <span class="arr">→</span></button></div>
     </div>
-
-    <!-- Artículo 2 -->
     <div class="blog-card reveal">
-      <div class="blog-thumb">
-        <img src="https://github.com/agarciadg/sangreonosangre/blob/main/d2877b3cb0a12a637cb6a545c48988ff.jpg?raw=true" alt="El Rugido de la Liberación">
-      </div>
-      <div class="blog-body">
-        <span class="blog-tag">Identidad · Transformación</span>
-        <h4>El Rugido de la Liberación</h4>
-        <p class="blog-excerpt">El sonido es una vibración que expresa más de lo que la palabra pueda contener. Desde el centro de la tripa hacia afuera, conectando con el instinto y dando sonido a lo silenciado...</p>
-        <button class="blog-read" onclick="showPage('blog-2',null)">Leer artículo <span class="arr">→</span></button>
-      </div>
+      <div class="blog-thumb"><img src="https://github.com/agarciadg/sangreonosangre/blob/main/d2877b3cb0a12a637cb6a545c48988ff.jpg?raw=true" alt="El Rugido"></div>
+      <div class="blog-body"><span class="blog-tag">Identidad · Transformación</span><h4>El Rugido de la Liberación</h4><p class="blog-excerpt">El sonido es una vibración que expresa más de lo que la palabra pueda contener. Desde el centro de la tripa hacia afuera, conectando con el instinto y dando sonido a lo silenciado...</p><button class="blog-read" onclick="showPage('blog-2',null)">Leer artículo <span class="arr">→</span></button></div>
     </div>
-
-    <!-- Artículo 3 -->
     <div class="blog-card reveal">
-      <div class="blog-thumb">
-        <img src="https://github.com/agarciadg/sangreonosangre/blob/main/343fd0968a663bb911cdf4dc6f680344.jpg?raw=true" alt="Eros y Menopausia">
-      </div>
-      <div class="blog-body">
-        <span class="blog-tag">Erotismo · Deseo</span>
-        <h4>Eros y Menopausia: La llama que no se apaga</h4>
-        <p class="blog-excerpt">La verdadera naturaleza del Erotismo es la manera de recibir la vida a través de los sentidos. Esta energía vital no muere hasta que muere el cuerpo...</p>
-        <button class="blog-read" onclick="showPage('blog-3',null)">Leer artículo <span class="arr">→</span></button>
-      </div>
+      <div class="blog-thumb"><img src="https://github.com/agarciadg/sangreonosangre/blob/main/343fd0968a663bb911cdf4dc6f680344.jpg?raw=true" alt="Eros y Menopausia"></div>
+      <div class="blog-body"><span class="blog-tag">Erotismo · Deseo</span><h4>Eros y Menopausia: La llama que no se apaga</h4><p class="blog-excerpt">La verdadera naturaleza del Erotismo es la manera de recibir la vida a través de los sentidos. Esta energía vital no muere hasta que muere el cuerpo...</p><button class="blog-read" onclick="showPage('blog-3',null)">Leer artículo <span class="arr">→</span></button></div>
     </div>
-
-    <!-- Artículo 4 -->
     <div class="blog-card reveal">
-      <div class="blog-thumb">
-        <img src="https://github.com/agarciadg/sangreonosangre/blob/main/14fd73dedf3fcb8218f7a174c61f16e4.jpg?raw=true" alt="El Síntoma como Sincronía">
-      </div>
-      <div class="blog-body">
-        <span class="blog-tag">Psique · Síntoma</span>
-        <h4>El Síntoma como Sincronía</h4>
-        <p class="blog-excerpt">Síntoma, del griego symptoma: coincidencia. El síntoma no es un error del sistema. Es la señal de sincronía para volver a gestarnos y parirnos como quien realmente somos...</p>
-        <button class="blog-read" onclick="showPage('blog-4',null)">Leer artículo <span class="arr">→</span></button>
-      </div>
+      <div class="blog-thumb"><img src="https://github.com/agarciadg/sangreonosangre/blob/main/14fd73dedf3fcb8218f7a174c61f16e4.jpg?raw=true" alt="El Síntoma"></div>
+      <div class="blog-body"><span class="blog-tag">Psique · Síntoma</span><h4>El Síntoma como Sincronía</h4><p class="blog-excerpt">Síntoma, del griego symptoma: coincidencia. El síntoma no es un error del sistema. Es la señal de sincronía para volver a gestarnos y parirnos como quien realmente somos...</p><button class="blog-read" onclick="showPage('blog-4',null)">Leer artículo <span class="arr">→</span></button></div>
     </div>
-
-    <!-- Artículo 5 -->
     <div class="blog-card reveal">
-      <div class="blog-thumb">
-        <img src="https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true" alt="Sabiduría Erótica">
-      </div>
-      <div class="blog-body">
-        <span class="blog-tag">Erotismo · Sabiduría</span>
-        <h4>Sabiduría Erótica en la Menopausia</h4>
-        <p class="blog-excerpt">Al caer las hormonas, el Eros se democratiza en todo nuestro cuerpo. Ya no es una descarga; es un estado de presencia y de apertura al gozo...</p>
-        <button class="blog-read" onclick="showPage('blog-5',null)">Leer artículo <span class="arr">→</span></button>
-      </div>
+      <div class="blog-thumb"><img src="https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true" alt="Sabiduría Erótica"></div>
+      <div class="blog-body"><span class="blog-tag">Erotismo · Sabiduría</span><h4>Sabiduría Erótica en la Menopausia</h4><p class="blog-excerpt">Al caer las hormonas, el Eros se democratiza en todo nuestro cuerpo. Ya no es una descarga; es un estado de presencia y de apertura al gozo...</p><button class="blog-read" onclick="showPage('blog-5',null)">Leer artículo <span class="arr">→</span></button></div>
     </div>
-
-    <!-- Testimonio real como tarjeta -->
     <div class="blog-card reveal" style="background:var(--bg-alt);justify-content:center;">
       <div class="blog-body" style="padding:40px 32px;">
         <span class="blog-tag">Testimonio</span>
@@ -459,185 +434,104 @@
         <span style="font-size:.82rem;color:var(--accent);font-weight:600;">— María Vázquez</span>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- TESTIMONIOS -->
 <section id="testimonios" class="testimonios">
   <span class="section-label reveal">Voces que rugen</span>
   <h2 class="section-title reveal">Lo que dejan quienes atraviesan la cueva</h2>
-
   <div class="test-grid">
 
-    <!-- Amanda -->
     <div class="test-card reveal">
       <div class="test-q">"</div>
-      <div class="test-author">
-        <div class="test-av">A</div>
-        <div><div class="test-name">Amanda</div><div class="test-role">Pionera · retiro Feb 2025</div></div>
-      </div>
+      <div class="test-author"><div class="test-av">A</div><div><div class="test-name">Amanda</div><div class="test-role">Pionera · retiro Feb 2025</div></div></div>
       <div class="test-body">
         <p class="test-preview">Es un aterrizaje perfecto y amoroso de todo tu revuelo interior. Un espacio seguro con una colectividad que abraza y va en la misma dirección pero trae su propio camino andado y por andar.</p>
         <div class="test-full" id="tf-amanda">
-          <div class="test-section">
-            <span class="test-section-q">¿Cómo cambió la relación con tu cuerpo?</span>
-            <p class="test-section-a">Hice nuevos pactos conmigo misma, me vi con todo mi yo desde un nuevo lugar; es un espacio de reinvención, reconocimiento, aligeramiento, acompañamiento y camaradería que deja profunda huella en el espíritu, la mente y el cuerpo.</p>
-          </div>
-          <div class="test-section">
-            <span class="test-section-q">El ambiente en una frase</span>
-            <p class="test-section-a">Cada momento desde el despertar, se te va llevando y acompañando para ir visitando distintos lugares de la memoria física y emocional, y así poder reacomodar recuerdos, versiones de ti misma, memorias corporales y descubrimientos de tu más profundo ser.</p>
-          </div>
-          <div class="test-section">
-            <span class="test-section-q">Un momento de revelación</span>
-            <p class="test-section-a">El fuego jugó para mí un gran papel, abrazando, aportando sacralidad, energía, alegría, integración, renovación, profundidad, calma y encuentro.</p>
-          </div>
-          <div class="test-section">
-            <span class="test-section-q">¿Por qué es urgente este espacio?</span>
-            <p class="test-section-a">Un espacio seguro con una colectividad que abraza y va en la misma dirección pero trae su propio camino andado y por andar es un regalo que no debemos desaprovechar. <em>¡Arrieras somos y en camino andamos!</em> Como pionera sólo puedo decir que repetiría al infinito ♾️</p>
-          </div>
+          <div class="test-section"><span class="test-section-q">¿Cómo cambió la relación con tu cuerpo?</span><p class="test-section-a">Hice nuevos pactos conmigo misma, me vi con todo mi yo desde un nuevo lugar; es un espacio de reinvención, reconocimiento, aligeramiento, acompañamiento y camaradería que deja profunda huella en el espíritu, la mente y el cuerpo.</p></div>
+          <div class="test-section"><span class="test-section-q">El ambiente en una frase</span><p class="test-section-a">Cada momento desde el despertar, se te va llevando y acompañando para ir visitando distintos lugares de la memoria física y emocional, y así poder reacomodar recuerdos, versiones de ti misma, memorias corporales y descubrimientos de tu más profundo ser.</p></div>
+          <div class="test-section"><span class="test-section-q">Un momento de revelación</span><p class="test-section-a">El fuego jugó para mí un gran papel, abrazando, aportando sacralidad, energía, alegría, integración, renovación, profundidad, calma y encuentro.</p></div>
+          <div class="test-section"><span class="test-section-q">¿Por qué es urgente este espacio?</span><p class="test-section-a">Un espacio seguro con una colectividad que abraza y va en la misma dirección pero trae su propio camino andado y por andar es un regalo que no debemos desaprovechar. <em>¡Arrieras somos y en camino andamos!</em> Como pionera sólo puedo decir que repetiría al infinito ♾️</p></div>
         </div>
         <button class="test-expand" onclick="toggleTest('tf-amanda', this)">Leer más <span class="arr">›</span></button>
       </div>
     </div>
 
-    <!-- Enna -->
     <div class="test-card reveal">
       <div class="test-q">"</div>
-      <div class="test-author">
-        <div class="test-av">E</div>
-        <div><div class="test-name">Enna Román</div><div class="test-role">46 años · retiro Feb 2025</div></div>
-      </div>
+      <div class="test-author"><div class="test-av">E</div><div><div class="test-name">Enna Román</div><div class="test-role">46 años · retiro Feb 2025</div></div></div>
       <div class="test-body">
         <p class="test-preview">Si alguna vez pensaste que en tu vida hay "algo" que no sabes qué es pero que sabes que está ahí y que después de eso la vida es otra, es este taller.</p>
         <div class="test-full" id="tf-enna">
-          <div class="test-section">
-            <span class="test-section-q">¿Cómo cambió la relación con tu cuerpo?</span>
-            <p class="test-section-a">No sé si cambió mi relación con mi cuerpo o si más bien, inicié una relación con él. Antes del retiro estaba muchísimo más desconectada de mi cuerpo de lo que pensaba. Desde entonces, estoy aprendiendo cada día más a vivir una vida mucho más sensorial, vivir todo desde el cuerpo y sus sentidos.</p>
-          </div>
-          <div class="test-section">
-            <span class="test-section-q">El ambiente en una palabra</span>
-            <p class="test-section-a"><em>Apapacho.</em> Todas las partes de la experiencia, aunque fueran muy distintas unas de otras, se sentía que fueron planeadas desde el profundo cariñito a nuestro ser más vulnerable.</p>
-          </div>
-          <div class="test-section">
-            <span class="test-section-q">Un momento de revelación</span>
-            <p class="test-section-a">Uff, no pues todo. La revelación de verme, tal cual, estuvo presente en todo el taller, y los veintes siguen cayendo año y medio después.</p>
-          </div>
-          <div class="test-section">
-            <span class="test-section-q">¿Qué parte de ti pudiste abrazar?</span>
-            <p class="test-section-a">Mi necesidad de ser querida y apapachada.</p>
-          </div>
-          <div class="test-section">
-            <span class="test-section-q">¿Por qué es urgente este espacio?</span>
-            <p class="test-section-a">Porque en los tiempos que vivíamos antes estos espacios eran parte de la vida y nos los quitaron. Urge regresar a lo que siempre hemos sido.</p>
-          </div>
+          <div class="test-section"><span class="test-section-q">¿Cómo cambió la relación con tu cuerpo?</span><p class="test-section-a">No sé si cambió mi relación con mi cuerpo o si más bien, inicié una relación con él. Antes del retiro estaba muchísimo más desconectada de mi cuerpo de lo que pensaba. Desde entonces, estoy aprendiendo cada día más a vivir una vida mucho más sensorial, vivir todo desde el cuerpo y sus sentidos.</p></div>
+          <div class="test-section"><span class="test-section-q">El ambiente en una palabra</span><p class="test-section-a"><em>Apapacho.</em> Todas las partes de la experiencia, aunque fueran muy distintas unas de otras, se sentía que fueron planeadas desde el profundo cariñito a nuestro ser más vulnerable.</p></div>
+          <div class="test-section"><span class="test-section-q">Un momento de revelación</span><p class="test-section-a">Uff, no pues todo. La revelación de verme, tal cual, estuvo presente en todo el taller, y los veintes siguen cayendo año y medio después.</p></div>
+          <div class="test-section"><span class="test-section-q">¿Qué parte de ti pudiste abrazar?</span><p class="test-section-a">Mi necesidad de ser querida y apapachada.</p></div>
+          <div class="test-section"><span class="test-section-q">¿Por qué es urgente este espacio?</span><p class="test-section-a">Porque en los tiempos que vivíamos antes estos espacios eran parte de la vida y nos los quitaron. Urge regresar a lo que siempre hemos sido.</p></div>
         </div>
         <button class="test-expand" onclick="toggleTest('tf-enna', this)">Leer más <span class="arr">›</span></button>
       </div>
     </div>
 
-    <!-- Luz María -->
     <div class="test-card reveal">
       <div class="test-q">"</div>
-      <div class="test-author">
-        <div class="test-av">L</div>
-        <div><div class="test-name">Luz María C.</div><div class="test-role">63 años · participante</div></div>
-      </div>
+      <div class="test-author"><div class="test-av">L</div><div><div class="test-name">Luz María C.</div><div class="test-role">63 años · participante</div></div></div>
       <div class="test-body">
         <p class="test-preview">En 3 días me cayeron más veintes que en años de terapia individual. Trabajar en grupo potencializó la experiencia y los hallazgos.</p>
         <div class="test-full" id="tf-luz">
-          <div class="test-section">
-            <p class="test-section-a">Participar en el retiro ha sido muy enriquecedor para mí. Me sentí siempre segura con la guía cálida y empática de Andrea y Gabriela que con sabia experiencia nos fueron guiando paso a paso a un viaje interior al encuentro con nuestra esencia femenina.</p>
-          </div>
-          <div class="test-section">
-            <p class="test-section-a">Yo he logrado tener una nueva y más completa visión de mi historia personal y la posibilidad de por fin integrar y hacer las paces con todas mis partes.</p>
-          </div>
+          <div class="test-section"><p class="test-section-a">Participar en el retiro ha sido muy enriquecedor para mí. Me sentí siempre segura con la guía cálida y empática de Andrea y Gabriela que con sabia experiencia nos fueron guiando paso a paso a un viaje interior al encuentro con nuestra esencia femenina.</p></div>
+          <div class="test-section"><p class="test-section-a">Yo he logrado tener una nueva y más completa visión de mi historia personal y la posibilidad de por fin integrar y hacer las paces con todas mis partes.</p></div>
         </div>
         <button class="test-expand" onclick="toggleTest('tf-luz', this)">Leer más <span class="arr">›</span></button>
       </div>
     </div>
 
-    <!-- Marisol -->
     <div class="test-card reveal">
       <div class="test-q">"</div>
-      <div class="test-author">
-        <div class="test-av">M</div>
-        <div><div class="test-name">Marisol</div><div class="test-role">46 años · participante</div></div>
-      </div>
+      <div class="test-author"><div class="test-av">M</div><div><div class="test-name">Marisol</div><div class="test-role">46 años · participante</div></div></div>
       <div class="test-body">
         <p class="test-preview">Hoy miro mi cuerpo con otros ojos. Dejé de verlo desde lo físico, para reconocerlo como el lugar donde habita mi historia.</p>
         <div class="test-full" id="tf-marisol">
-          <div class="test-section">
-            <span class="test-section-q">¿Cómo cambió la relación con tu cuerpo?</span>
-            <p class="test-section-a">Comprendí que el cuerpo guarda emociones, silencios y experiencias que muchas veces no alcanzamos a expresar con palabras. El retiro me enseñó a escucharlo, a darle voz a ese sentir y a honrarlo con amor y respeto. También resignifiqué lo que significa ser mujer en esta etapa de mi vida: ya no desde lo que creo que debería ser, sino desde quien auténticamente soy.</p>
-          </div>
-          <div class="test-section">
-            <span class="test-section-q">El ambiente en una frase</span>
-            <p class="test-section-a"><em>"Un espacio profundamente seguro y amoroso."</em> El acompañamiento de Andrea y Gabriela fue extraordinariamente profesional, sensible y amoroso. Además encontré una tribu de mujeres que, sin conocernos antes, nos acompañamos con respeto, empatía y muchísimo amor.</p>
-          </div>
-          <div class="test-section">
-            <span class="test-section-q">Un momento de revelación</span>
-            <p class="test-section-a">Hubo muchos momentos de revelación. Cada herramienta —la escritura, la meditación, la respiración, el movimiento, los estados ampliados de conciencia— fue abriendo una puerta distinta hacia mi interior. Fue la integración de todas esas experiencias lo que me permitió mirarme desde un lugar completamente nuevo.</p>
-          </div>
-          <div class="test-section">
-            <span class="test-section-q">¿Qué parte de ti pudiste abrazar?</span>
-            <p class="test-section-a">Sin duda, a mi niña interior. La abracé, la reconocí y le dije que ya no estaba sola. Ese encuentro también me permitió abrazar a la mujer que soy hoy. Regresé sintiendo un profundo amor por mí.</p>
-          </div>
-          <div class="test-section">
-            <span class="test-section-q">¿Qué le dirías a quien duda en ir?</span>
-            <p class="test-section-a">Pocas veces en la vida tenemos la oportunidad de regalarnos un espacio para detenernos y escucharnos de verdad. Si sientes ese llamado, aunque no sepas exactamente por qué, confía en él.</p>
-          </div>
-          <div class="test-section">
-            <span class="test-section-q">¿Por qué es urgente este espacio?</span>
-            <p class="test-section-a">Porque durante muchos años aprendimos a cuidar de todos antes que de nosotras. Espacios como este nos invitan a regresar al cuerpo, a nuestra intuición y a nuestro erotismo. Nos invitan a sentirnos acompañadas, compartir nuestras historias sin juicio y recordar que no estamos solas.</p>
-          </div>
+          <div class="test-section"><span class="test-section-q">¿Cómo cambió la relación con tu cuerpo?</span><p class="test-section-a">Comprendí que el cuerpo guarda emociones, silencios y experiencias que muchas veces no alcanzamos a expresar con palabras. El retiro me enseñó a escucharlo, a darle voz a ese sentir y a honrarlo con amor y respeto. También resignifiqué lo que significa ser mujer en esta etapa de mi vida: ya no desde lo que creo que debería ser, sino desde quien auténticamente soy.</p></div>
+          <div class="test-section"><span class="test-section-q">El ambiente en una frase</span><p class="test-section-a"><em>"Un espacio profundamente seguro y amoroso."</em> El acompañamiento de Andrea y Gabriela fue extraordinariamente profesional, sensible y amoroso. Además encontré una tribu de mujeres que, sin conocernos antes, nos acompañamos con respeto, empatía y muchísimo amor.</p></div>
+          <div class="test-section"><span class="test-section-q">Un momento de revelación</span><p class="test-section-a">Hubo muchos momentos de revelación. Cada herramienta —la escritura, la meditación, la respiración, el movimiento, los estados ampliados de conciencia— fue abriendo una puerta distinta hacia mi interior.</p></div>
+          <div class="test-section"><span class="test-section-q">¿Qué parte de ti pudiste abrazar?</span><p class="test-section-a">Sin duda, a mi niña interior. La abracé, la reconocí y le dije que ya no estaba sola. Regresé sintiendo un profundo amor por mí.</p></div>
+          <div class="test-section"><span class="test-section-q">¿Qué le dirías a quien duda en ir?</span><p class="test-section-a">Pocas veces en la vida tenemos la oportunidad de regalarnos un espacio para detenernos y escucharnos de verdad. Si sientes ese llamado, aunque no sepas exactamente por qué, confía en él.</p></div>
+          <div class="test-section"><span class="test-section-q">¿Por qué es urgente este espacio?</span><p class="test-section-a">Porque durante muchos años aprendimos a cuidar de todos antes que de nosotras. Espacios como este nos invitan a regresar al cuerpo, a nuestra intuición y a nuestro erotismo.</p></div>
         </div>
         <button class="test-expand" onclick="toggleTest('tf-marisol', this)">Leer más <span class="arr">›</span></button>
       </div>
     </div>
 
-    <!-- María Vázquez -->
     <div class="test-card reveal">
       <div class="test-q">"</div>
-      <div class="test-author">
-        <div class="test-av">M</div>
-        <div><div class="test-name">María Vázquez</div><div class="test-role">Participante</div></div>
-      </div>
+      <div class="test-author"><div class="test-av">M</div><div><div class="test-name">María Vázquez</div><div class="test-role">Participante</div></div></div>
       <div class="test-body">
         <p class="test-preview">Introspección afinada y muy bien conducida; espacio privilegiado para escuchar, observar, sentir y amar mi cuerpo.</p>
         <div class="test-full" id="tf-maria">
-          <div class="test-section">
-            <p class="test-section-a">Con un acompañamiento sabio, sensible, generoso y profesional, Andrea Losada y Gabriela Carretta son las guías magníficas que conducen, con un diseño sublime, al cuerpo y al alma hacia sitios ignotos de la vida donde residen la esencia y la razón de ser.</p>
-          </div>
-          <div class="test-section">
-            <p class="test-section-a">"Sangre o no sangre" propició una revelación en torno a momentos clave de mi vida, y me permitió establecer un hilo conductor que me dio claridad acerca de mi presente. Durante cuatro días que trascendieron eras, pude abrazarme en distintas etapas de mi vida.</p>
-          </div>
-          <div class="test-section">
-            <p class="test-section-a">Una de las cosas más bellas e importantes que encontré en este taller es que, más allá del tiempo y el espacio, la conexión con doce mujeres durante cuatro días resultó tan profunda y perdurable como muchas relaciones importantes y longevas de mi vida.</p>
-          </div>
-          <div class="test-section">
-            <p class="test-section-a"><em>Muchas gracias, Andrea y Gaba, por este espacio excepcional.</em></p>
-          </div>
+          <div class="test-section"><p class="test-section-a">Con un acompañamiento sabio, sensible, generoso y profesional, Andrea Losada y Gabriela Carretta son las guías magníficas que conducen, con un diseño sublime, al cuerpo y al alma hacia sitios ignotos de la vida donde residen la esencia y la razón de ser.</p></div>
+          <div class="test-section"><p class="test-section-a">"Sangre o no sangre" propició una revelación en torno a momentos clave de mi vida, y me permitió establecer un hilo conductor que me dio claridad acerca de mi presente. Durante cuatro días que trascendieron eras, pude abrazarme en distintas etapas de mi vida.</p></div>
+          <div class="test-section"><p class="test-section-a">La conexión con doce mujeres durante cuatro días resultó tan profunda y perdurable como muchas relaciones importantes y longevas de mi vida.</p></div>
+          <div class="test-section"><p class="test-section-a"><em>Muchas gracias, Andrea y Gaba, por este espacio excepcional.</em></p></div>
         </div>
         <button class="test-expand" onclick="toggleTest('tf-maria', this)">Leer más <span class="arr">›</span></button>
       </div>
     </div>
 
-    <!-- Cita destacada -->
+    <!-- CAMBIO 3: tarjeta "El Rugido de la Madurez" en lugar de "Arrieras somos" -->
     <div class="test-card reveal" style="justify-content:center;border-color:rgba(212,181,149,.35);">
       <div style="text-align:center;padding:10px 0;">
-        <span class="section-label" style="justify-content:center;">El Rugido de la Madurez</span>
-        <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:1.35rem;color:var(--accent);line-height:1.7;margin-bottom:10px;">Sangre o no Sangre</p>
-        <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--text-muted);line-height:1.7;margin-bottom:28px;">El retiro</p>
+        <span class="section-label" style="display:block;text-align:center;">El Rugido de la Madurez</span>
+        <p style="font-family:'Playfair Display',serif;font-style:italic;font-size:1.35rem;color:var(--accent);line-height:1.7;margin-bottom:6px;">Sangre o no Sangre</p>
+        <p style="font-family:'Playfair Display',serif;font-size:.95rem;color:var(--text-muted);margin-bottom:28px;">El retiro</p>
         <div style="width:40px;height:1px;background:var(--accent);margin:0 auto 28px;"></div>
-        <button onclick="document.getElementById('popupRetiro').classList.add('open')" class="btn btn-outline" style="font-size:.68rem;">Ver el retiro →</button>
+        <button onclick="openPopup()" class="btn btn-outline" style="font-size:.68rem;">Ver más sobre el retiro →</button>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- CONTACTO -->
 <section id="contacto" class="contact">
   <div class="contact-wrap">
     <div class="contact-info reveal">
@@ -662,7 +556,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-top">
     <div>
@@ -701,9 +594,7 @@
 </div><!-- /page-main -->
 
 
-<!-- ============================================================
-     PÁGINA NOSOTRAS
-     ============================================================ -->
+<!-- ============================================================ PÁGINA NOSOTRAS ============================================================ -->
 <div id="page-nosotras">
   <div class="nos-hero">
     <div class="nos-hero-bg"></div>
@@ -751,60 +642,22 @@
         <p class="bio-p">Hoy mi atención está puesta en encontrar el gozo consciente que surge al deconstruir las máscaras sociales y culturales, resignificando las creencias impuestas sobre la vejez y la menopausia.</p>
         <div class="bio-tags"><span class="bio-tag">Gestalt</span><span class="bio-tag">Vijnana Yoga</span><span class="bio-tag">Duelos</span><span class="bio-tag">Estados Ampliados</span><span class="bio-tag">Rituales</span></div>
       </div>
+      <!-- CAMBIO 1: foto real de Andrea -->
       <div class="bio-img-outer bio-frame-r">
         <div class="bio-img-inner"><img src="https://github.com/agarciadg/sangreonosangre/blob/main/Foto%20Andrea%20de%20losada.jpeg?raw=true" alt="Andrea de Losada"><div class="bio-caption">Gestalt · Yoga · Rituales · Duelos</div></div>
       </div>
     </div>
   </div>
   <div class="nos-cta" style="background:var(--bg-main);">
-    <p>No tenemos el poder de que este momento se pase rápido. Estamos aquí haciendo comunidad, para que mientras dure, te encuentres con la fuerza que habías dejado encerrada.</p>
+    <p>No tenemos el poder de que este momento pase rápido. Estamos aquí haciendo comunidad, para que mientras dure, te encuentres con la fuerza que habías dejado encerrada.</p>
     <a href="#" onclick="showPage('main','contacto');return false;" class="btn btn-primary">Reserva tu lugar en el retiro</a>
   </div>
 </div><!-- /page-nosotras -->
 
 
-<!-- POPUP RETIRO -->
-<div class="popup-overlay" id="popupRetiro" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="popup-box">
-    <button class="popup-close" onclick="document.getElementById('popupRetiro').classList.remove('open')">&times;</button>
-    <div class="popup-header">
-      <span class="section-label">Retiro experiencial · Octubre 2026</span>
-      <h2>El Rugido de la Madurez</h2>
-      <p class="sub">Sangre o no Sangre — Un umbral hacia ti misma</p>
-    </div>
-    <div class="popup-body">
-      <p>Un retiro experiencial desde un espacio íntimo, ético y seguro, en el que nos atrevemos a transformar la narrativa sobre la menopausia, el erotismo y la vejez.</p>
-      <p>Acompañadas por otras mujeres atravesaremos el duelo de ciertas versiones de nosotras mismas para reencontrarnos con un erotismo menos complaciente, más instintivo y salvaje.</p>
-      <p>Desde la palabra, el cuerpo y lo transpersonal, honraremos el camino de las etapas que nos marcaron, asumiendo el cambio biológico como un aliado de nuestra fuerza, autenticidad y soberanía.</p>
-      <p><strong>No es un retiro de descanso.</strong> Es un espacio para bailar e integrar tu sombra, encender tu fuego y rugir junto a otras que, como tú, se niegan a ser lo que no son.</p>
-      <div class="popup-meta">
-        <div class="popup-meta-item"><span class="pm-label">Fechas</span><span class="pm-val">22 al 25 de octubre, 2026</span></div>
-        <div class="popup-meta-item"><span class="pm-label">Lugar</span><span class="pm-val">Centro Werika, Tepoztlán, Morelos</span></div>
-        <div class="popup-meta-item"><span class="pm-label">Cupos</span><span class="pm-val">Limitados — para cuidar la intimidad del grupo</span></div>
-        <div class="popup-meta-item"><span class="pm-label">Contacto</span><span class="pm-val">Andrea de Losada — +52 555 435 2377<br>Gabriela Carretta — +52 552 702 6284</span></div>
-      </div>
-      <div class="popup-actions">
-        <a href="#" onclick="document.getElementById('popupRetiro').classList.remove('open');showPage('main','contacto');return false;" class="btn btn-primary">Reservar mi lugar</a>
-        <a href="https://github.com/agarciadg/sangreonosangre/blob/main/EL%20RUGIDO%20DE%20LA%20MADUREZ.pdf?raw=true" target="_blank" class="popup-pdf">⬇ Descargar programa (PDF)</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================
-     ARTÍCULO 1 — INSOMNIO
-     ============================================================ -->
+<!-- ============================================================ ARTÍCULOS ============================================================ -->
 <div id="page-blog-1">
-  <div class="art-hero">
-    <div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/a8bd5c2cf919c85913535c5f9e07fd71.jpg?raw=true');"></div>
-    <div class="art-hero-ov"></div>
-    <div class="art-hero-body">
-      <button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button>
-      <span class="art-tag">Cuerpo · Menopausia</span>
-      <h1 class="art-title">Insomnio</h1>
-      <p class="art-subtitle">Sangre o no Sangre</p>
-    </div>
-  </div>
+  <div class="art-hero"><div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/a8bd5c2cf919c85913535c5f9e07fd71.jpg?raw=true');"></div><div class="art-hero-ov"></div><div class="art-hero-body"><button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button><span class="art-tag">Cuerpo · Menopausia</span><h1 class="art-title">Insomnio</h1><p class="art-subtitle">Sangre o no Sangre</p></div></div>
   <div class="art-body">
     <p>Hay noches en las que el sueño simplemente decide escaparse.</p>
     <p>Llevo tiempo lidiando con esas horas vacías: evito mirar el reloj, cambio de postura, intento convencer a mi cuerpo de dormir. Como si obedeciera a la voluntad… vaya broma.</p>
@@ -816,52 +669,30 @@
     <p>En esas madrugadas también aparece el deseo… No ha desaparecido, pero ya no se parece al de antes, ya no me mueve la urgencia, sino la presencia.</p>
     <p>Mi cuerpo parece haber perdido la paciencia para aquello que no es verdadero. Hay una forma de erotismo que ya caducó en mí y otra que apenas comienza a surgir; más lenta, más honesta.</p>
     <div class="art-divider"></div>
-    <p>Después aparecen mis padres: no como fueron, sino como son ahora. Sus cuerpos ya no tienen la fuerza de antes. Los veo envejecer mientras descubro, con ternura y desconcierto, que empiezo a ser quien los protege. Nunca imaginé que amar también implicaría acompañar el deterioro de quienes alguna vez parecieron inquebrantables.</p>
+    <p>Después aparecen mis padres: no como fueron, sino como son ahora. Sus cuerpos ya no tienen la fuerza de antes. Los veo envejecer mientras descubro, con ternura y desconcierto, que empiezo a ser quien los protege.</p>
     <p>Luego desfilan las pequeñas responsabilidades: llamadas, cuentas, citas médicas, reparaciones, mensajes sin responder, logísticas propias y ajenas, proyectos que esperan nacer.</p>
-    <p>Lo cotidiano nunca duerme del todo; sólo espera a que la noche le abra espacio y, sin embargo, debajo de todo eso hay otra conversación. Quizá la más íntima.</p>
     <blockquote><p>Empiezo a preguntarme quién soy cuando dejo de ser útil para los demás. Cuando nadie necesita una respuesta inmediata. Cuando el teléfono calla, los hijos duermen, la pareja sueña y el mundo suspende su demanda.</p></blockquote>
-    <p>Entonces el insomnio deja de ser sólo un enemigo para ser un síntoma que habla. Un síntoma no es sólo lo que incomoda; a veces es una forma torpe e insistente de la psique de decir algo que no encuentra lugar, ni palabra. Interrumpe, desordena, nos quita eficacia, pero también abre una grieta en la superficie organizada de la existencia.</p>
+    <p>Entonces el insomnio deja de ser sólo un enemigo para ser un síntoma que habla. Un síntoma no es sólo lo que incomoda; a veces es una forma torpe e insistente de la psique de decir algo que no encuentra lugar, ni palabra.</p>
     <h3>La mujer que despierta a las tres de la mañana</h3>
     <p>Tal vez mi insomnio no vino sólo a quitarme el sueño. Vino a despertarme de la mujer que cuida, responde, organiza, contiene, resuelve. De la madre disponible, la hija responsable, la pareja funcional, la terapeuta experta, la administradora invisible de tantas vidas.</p>
-    <p>En la vigilia forzada, algo de mí deja de cumplir y en ese incumplimiento aparece una verdad incómoda: he vivido mucho tiempo respondiendo a otros. No sólo por obligación, sino por amor, deseo, historia, mandato, miedo a decepcionar, por la fantasía de que ser necesaria era una forma segura de existir.</p>
-    <p>Porque cuando el mundo duerme y guarda silencio, ya no queda nadie a quien cuidar, organizar o tranquilizar y quedamos nosotras.</p>
+    <p>He vivido mucho tiempo respondiendo a otros. No sólo por obligación, sino por amor, deseo, historia, mandato, miedo a decepcionar, por la fantasía de que ser necesaria era una forma segura de existir.</p>
     <blockquote><p>La mujer que despierta a las tres de la mañana bañada en sudor quizá está llamando a la puerta de sí misma.</p></blockquote>
-    <p>Por eso he dejado de pelear con algunas noches en vela, aunque he de reconocer que no siempre las disfruto. Hay madrugadas agotadoras en las que predomina la sensación de estar perdida, sin brújula, pero hay otras en las que el insomnio abre una puerta y mi vida interior logra sentarse frente a mí sin interrupciones.</p>
+    <p>Hay madrugadas agotadoras en las que predomina la sensación de estar perdida, sin brújula, pero hay otras en las que el insomnio abre una puerta y mi vida interior logra sentarse frente a mí sin interrupciones.</p>
     <p>Tal vez la menopausia no sólo esté transformando mis hormonas. Tal vez esté desmontando, una por una, las identidades con las que aprendí a sostenerme.</p>
     <div class="art-divider"></div>
     <blockquote><p>¿Quién soy cuando ya no necesito demostrarle nada al mundo?</p></blockquote>
   </div>
-  <div class="art-nav">
-    <div></div>
-    <div style="text-align:right;">
-      <span class="art-nav-label">Siguiente artículo</span>
-      <div class="art-nav-title" onclick="showPage('blog-2',null)">El Rugido de la Liberación →</div>
-    </div>
-  </div>
-</div><!-- /blog-1 -->
+  <div class="art-nav"><div></div><div style="text-align:right;"><span class="art-nav-label">Siguiente artículo</span><div class="art-nav-title" onclick="showPage('blog-2',null)">El Rugido de la Liberación →</div></div></div>
+</div>
 
-
-<!-- ============================================================
-     ARTÍCULO 2 — EL RUGIDO DE LA LIBERACIÓN
-     ============================================================ -->
 <div id="page-blog-2">
-  <div class="art-hero">
-    <div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/d2877b3cb0a12a637cb6a545c48988ff.jpg?raw=true');"></div>
-    <div class="art-hero-ov"></div>
-    <div class="art-hero-body">
-      <button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button>
-      <span class="art-tag">Identidad · Transformación</span>
-      <h1 class="art-title">El Rugido de la Liberación</h1>
-      <p class="art-subtitle">Narrativas de transición y autonomía</p>
-    </div>
-  </div>
+  <div class="art-hero"><div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/d2877b3cb0a12a637cb6a545c48988ff.jpg?raw=true');"></div><div class="art-hero-ov"></div><div class="art-hero-body"><button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button><span class="art-tag">Identidad · Transformación</span><h1 class="art-title">El Rugido de la Liberación</h1><p class="art-subtitle">Narrativas de transición y autonomía</p></div></div>
   <div class="art-body">
     <p><strong>Onomatopéyica:</strong> el sonido mismo de la palabra trata de evocar su significado. Describe y emite un sonido imponente para delimitar territorio, un llamado de advertencia para evitar una confrontación física y mantener unida a la manada, entre otras cosas.</p>
     <blockquote><p>El rugido viaja grandes distancias; desde el centro de la tripa hacia afuera, el sonido es una vibración que expresa más de lo que la palabra pueda contener.</p></blockquote>
     <p>En Sangre o no sangre se exhorta al "rugido" como una descarga que transita la historia sin quedarse en ella; la recorre y la ofrenda para su transformación.</p>
     <h3>Dar sonido a lo silenciado</h3>
     <p>Conectando con el instinto y la intuición, se da sonido a lo silenciado, a lo domesticado, haciendo visibles los mandatos sociales que hemos confundido como nuestros. El rugir permite la emoción sin filtros o decoros.</p>
-    <p>El rugido abre la puerta al enojo sagrado, recuperando nuestra fuerza vital y dignidad.</p>
     <blockquote><p>La oscuridad de la cueva nutre la fuerza propulsora que nos regresa al mundo exterior, pudiendo encarnar nuestra autenticidad.</p></blockquote>
     <h3>Frases que resuenan</h3>
     <ul>
@@ -871,90 +702,35 @@
       <li>El duelo que nos permite morir a lo que nunca fuimos.</li>
       <li>Uniendo nuestras sincronías en grupo, crecen las posibilidades de encontrarse en el tejido perfecto que da vida al rugido de la liberación.</li>
     </ul>
-    <div class="art-divider"></div>
-    <p>Dar sonido a lo silenciado, a lo domesticado, haciendo visibles los mandatos sociales que hemos confundido como nuestros.</p>
-    <p>El rugir permite la emoción sin filtros o decoros. El rugido abre la puerta al enojo sagrado, recuperando nuestra fuerza vital y dignidad.</p>
   </div>
-  <div class="art-nav">
-    <div>
-      <span class="art-nav-label">Artículo anterior</span>
-      <div class="art-nav-title" onclick="showPage('blog-1',null)">← Insomnio</div>
-    </div>
-    <div style="text-align:right;">
-      <span class="art-nav-label">Siguiente artículo</span>
-      <div class="art-nav-title" onclick="showPage('blog-3',null)">Eros y Menopausia →</div>
-    </div>
-  </div>
-</div><!-- /blog-2 -->
+  <div class="art-nav"><div><span class="art-nav-label">Artículo anterior</span><div class="art-nav-title" onclick="showPage('blog-1',null)">← Insomnio</div></div><div style="text-align:right;"><span class="art-nav-label">Siguiente artículo</span><div class="art-nav-title" onclick="showPage('blog-3',null)">Eros y Menopausia →</div></div></div>
+</div>
 
-
-<!-- ============================================================
-     ARTÍCULO 3 — EROS Y MENOPAUSIA
-     ============================================================ -->
 <div id="page-blog-3">
-  <div class="art-hero">
-    <div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/343fd0968a663bb911cdf4dc6f680344.jpg?raw=true');"></div>
-    <div class="art-hero-ov"></div>
-    <div class="art-hero-body">
-      <button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button>
-      <span class="art-tag">Erotismo · Deseo</span>
-      <h1 class="art-title">Eros y Menopausia</h1>
-      <p class="art-subtitle">La llama que no se apaga</p>
-    </div>
-  </div>
+  <div class="art-hero"><div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/343fd0968a663bb911cdf4dc6f680344.jpg?raw=true');"></div><div class="art-hero-ov"></div><div class="art-hero-body"><button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button><span class="art-tag">Erotismo · Deseo</span><h1 class="art-title">Eros y Menopausia</h1><p class="art-subtitle">La llama que no se apaga</p></div></div>
   <div class="art-body">
     <p>En Sangre o no Sangre tomamos en cuenta la biología, que sabiamente nos habla a través de la disminución hormonal como una invitación a dejar de buscar afuera para comenzar a buscar adentro.</p>
-    <p>Los cambios a veces se viven como pérdidas, y las pérdidas nos confrontan con la realidad y con el miedo profundo a la muerte. Cuando nuestra etapa de reproducción pasa, también se diluye el instinto de olfatear al macho fuerte que nos ayudaría a preservar la especie. Es ahí donde, desde el condicionamiento cultural, se siembra la creencia de que el deseo, el placer y el erotismo mueren.</p>
     <blockquote><p>La verdadera naturaleza del Erotismo es la manera de recibir la vida a través de los sentidos. Esta energía vital no muere hasta que muere el cuerpo.</p></blockquote>
-    <p>Incluso nos deja la duda de si, en el paso a otra realidad y desde un entendimiento transpersonal, no seguiremos conectadas con el placer; tal vez en otro reino, en otra forma y en otro espacio.</p>
     <h3>Regresar al primer momento</h3>
-    <p>Sangre o no Sangre invita a darnos la oportunidad de regresar a ese primer momento en que nuestros cuerpos fueron erotizados. No desde el hecho biográfico e histórico, sino desde la memoria corporal. Nos invita a mantener esa llama viva, con la apertura cambiante a las ganas y a la forma en que, en este momento actual, queremos recibir el placer.</p>
-    <p>Permitirnos, sin condicionamientos, darnos ese derecho aun sin el torrente hormonal que antes nos hacía desearlo de una manera diferente. Es regresar al instinto pulido por la experiencia que nos da la vida al llegar a este punto. Es poner la carne como lenguaje y poder amigarnos con las emociones que emergen.</p>
+    <p>Sangre o no Sangre invita a darnos la oportunidad de regresar a ese primer momento en que nuestros cuerpos fueron erotizados. No desde el hecho biográfico e histórico, sino desde la memoria corporal. Es poner la carne como lenguaje y poder amigarnos con las emociones que emergen.</p>
     <h3>Lo que la cultura calla</h3>
-    <p>Desde lo social, cultural y religioso, cuando nos permitimos ser hembras deseantes de un contacto, de un juego o de un olor que nos lleve al placer, a veces sentimos pena o vergüenza. Esto nos hace reprimir el impulso erótico, matando poco a poco una parte nuestra que aún late con fuerza.</p>
-    <blockquote><p>Poder explorar de manera compasiva las estrategias que hemos creado ante el rechazo, ante el no tener lo que necesitamos o el no sentirnos merecedoras de recibirlo, nos permite mirar, sintiendo y comprendiendo.</p></blockquote>
-    <p>Solo así podemos relacionarnos con nuestro erotismo de manera permisiva, amorosa y plenamente aceptada.</p>
+    <p>Desde lo social, cultural y religioso, cuando nos permitimos ser hembras deseantes de un contacto, a veces sentimos pena o vergüenza. Esto nos hace reprimir el impulso erótico, matando poco a poco una parte nuestra que aún late con fuerza.</p>
+    <blockquote><p>Poder explorar de manera compasiva las estrategias que hemos creado ante el rechazo nos permite mirar, sintiendo y comprendiendo. Solo así podemos relacionarnos con nuestro erotismo de manera permisiva, amorosa y plenamente aceptada.</p></blockquote>
   </div>
-  <div class="art-nav">
-    <div>
-      <span class="art-nav-label">Artículo anterior</span>
-      <div class="art-nav-title" onclick="showPage('blog-2',null)">← El Rugido de la Liberación</div>
-    </div>
-    <div style="text-align:right;">
-      <span class="art-nav-label">Siguiente artículo</span>
-      <div class="art-nav-title" onclick="showPage('blog-4',null)">El Síntoma como Sincronía →</div>
-    </div>
-  </div>
-</div><!-- /blog-3 -->
+  <div class="art-nav"><div><span class="art-nav-label">Artículo anterior</span><div class="art-nav-title" onclick="showPage('blog-2',null)">← El Rugido de la Liberación</div></div><div style="text-align:right;"><span class="art-nav-label">Siguiente artículo</span><div class="art-nav-title" onclick="showPage('blog-4',null)">El Síntoma como Sincronía →</div></div></div>
+</div>
 
-
-<!-- ============================================================
-     ARTÍCULO 4 — EL SÍNTOMA COMO SINCRONÍA
-     ============================================================ -->
 <div id="page-blog-4">
-  <div class="art-hero">
-    <div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/14fd73dedf3fcb8218f7a174c61f16e4.jpg?raw=true');"></div>
-    <div class="art-hero-ov"></div>
-    <div class="art-hero-body">
-      <button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button>
-      <span class="art-tag">Psique · Síntoma</span>
-      <h1 class="art-title">El Síntoma como Sincronía</h1>
-      <p class="art-subtitle">Narrativas de transición y autonomía</p>
-    </div>
-  </div>
+  <div class="art-hero"><div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/14fd73dedf3fcb8218f7a174c61f16e4.jpg?raw=true');"></div><div class="art-hero-ov"></div><div class="art-hero-body"><button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button><span class="art-tag">Psique · Síntoma</span><h1 class="art-title">El Síntoma como Sincronía</h1><p class="art-subtitle">Narrativas de transición y autonomía</p></div></div>
   <div class="art-body">
     <p><em>Síntoma, del griego symptoma, que significa "coincidencia", hecho fortuito que cae conjuntamente con otro.</em></p>
-    <blockquote><p>Por lo tanto, el síntoma no es un error del sistema, es la señal de sincronía para volver a gestarnos y parirnos, convirtiéndonos en quien realmente somos.</p></blockquote>
+    <blockquote><p>El síntoma no es un error del sistema, es la señal de sincronía para volver a gestarnos y parirnos, convirtiéndonos en quien realmente somos.</p></blockquote>
     <p>El cuerpo, la psique y la emoción coinciden en el momento perfecto que invita a una "pausa", un silencio y una mirada hacia las profundidades de nuestro interior.</p>
-    <p>Ahí la cueva: este lugar que nos regala las respuestas, las propuestas y señales que preparan nuestro "estar" en un portal que propulsa el regreso a casa, a nuestra casa interior, este lugar instintivo y sabio que desea y que se permite estar en la vida de forma auténtica y libre.</p>
     <h3>El síntoma como mensajero</h3>
     <p>En Sangre o no sangre, el síntoma es material, es mensajero de lo que está pidiendo ser visitado. Cansadas de luchar contra lo inevitable, tomamos la incomodidad como una voz que está pidiendo ser escuchada.</p>
     <blockquote><p>Si el síntoma hablara, más allá de las primeras sensaciones y palabras que piden su ausencia, ¿qué nos estaría diciendo realmente?</p></blockquote>
-    <p>Tal vez la invitación a un descanso, un cambio de narrativa, una visita a nuestra sexualidad, una invitación al gozo y la despedida a la cansada tarea de complacer.</p>
     <h3>Cambiar de piel</h3>
     <p>Si podemos amigarnos con la resistencia de cambiar de piel, dándole espacio al duelo que benditamente nos permite morir a lo que nunca fuimos, podemos darle la bienvenida a la mujer que en esta etapa de su vida se permite ser y estar para ella.</p>
-    <p>Uniendo nuestras sincronías en grupo, las propuestas, las pistas y las posibilidades crecen como un tejido perfecto que nos hace encontrarnos en un deseo, un lugar, un descanso que vive en la aceptación de un autoamor y reconocimiento de llegar hasta este momento.</p>
-    <div class="art-divider"></div>
     <ul>
       <li>El síntoma es la sincronía perfecta que nos invita a tomar una pausa.</li>
       <li>El síntoma hablará con más fuerza que las palabras que piden su ausencia.</li>
@@ -962,69 +738,32 @@
       <li>El duelo que nos permite morir a lo que nunca fuimos.</li>
     </ul>
   </div>
-  <div class="art-nav">
-    <div>
-      <span class="art-nav-label">Artículo anterior</span>
-      <div class="art-nav-title" onclick="showPage('blog-3',null)">← Eros y Menopausia</div>
-    </div>
-    <div style="text-align:right;">
-      <span class="art-nav-label">Siguiente artículo</span>
-      <div class="art-nav-title" onclick="showPage('blog-5',null)">Sabiduría Erótica →</div>
-    </div>
-  </div>
-</div><!-- /blog-4 -->
+  <div class="art-nav"><div><span class="art-nav-label">Artículo anterior</span><div class="art-nav-title" onclick="showPage('blog-3',null)">← Eros y Menopausia</div></div><div style="text-align:right;"><span class="art-nav-label">Siguiente artículo</span><div class="art-nav-title" onclick="showPage('blog-5',null)">Sabiduría Erótica →</div></div></div>
+</div>
 
-
-<!-- ============================================================
-     ARTÍCULO 5 — SABIDURÍA ERÓTICA
-     ============================================================ -->
 <div id="page-blog-5">
-  <div class="art-hero">
-    <div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true');"></div>
-    <div class="art-hero-ov"></div>
-    <div class="art-hero-body">
-      <button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button>
-      <span class="art-tag">Erotismo · Sabiduría</span>
-      <h1 class="art-title">Sabiduría Erótica en la Menopausia</h1>
-      <p class="art-subtitle">Reflexiones para el Blog — Sangre o no Sangre</p>
-    </div>
-  </div>
+  <div class="art-hero"><div class="art-hero-bg" style="background-image:url('https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true');"></div><div class="art-hero-ov"></div><div class="art-hero-body"><button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button><span class="art-tag">Erotismo · Sabiduría</span><h1 class="art-title">Sabiduría Erótica en la Menopausia</h1><p class="art-subtitle">Reflexiones — Sangre o no Sangre</p></div></div>
   <div class="art-body">
     <p>Antes, el torrente hormonal enfocaba el erotismo en una meta inconsciente o consciente: la preservación de la especie.</p>
     <blockquote><p>Al caer las hormonas, el Eros se democratiza en todo nuestro cuerpo. Ya no es una descarga; es un estado de presencia y de apertura al gozo.</p></blockquote>
-    <p>El Eros se permite habitar la piel, tomando la mirada, el olfato y la escucha al deleite, convirtiendo el cuerpo en un órgano integrado que se rinde al placer.</p>
     <h3>Arqueología amorosa</h3>
     <p>Con la sabiduría del cuerpo, despertar el Eros en esta etapa de la vida es un acto de arqueología amorosa, permitiendo sentir más allá de cualquier condicionamiento y sin necesitar hormonas para acceder a la memoria celular del gozo.</p>
     <blockquote><p>La menopausia como el verdadero inicio de la sabiduría erótica: al liberarnos de los ciclos hormonales y del instinto de preservación, el placer se vuelve puramente nuestro.</p></blockquote>
-    <p>Se libera el deseo de encajar o gustar y se transforma en una necesidad de sentir, convirtiendo el erotismo en un derecho que no pide permiso.</p>
     <h3>El fuego de la pasión creativa</h3>
     <p>Cambiando la creencia de que el enojo y la irritabilidad son síntomas histéricos, la energía del Eros que quedó atrapada desemboca en la ruptura del cascarón sumiso. La dignidad despierta, encendiendo el fuego de la pasión creativa, y nos permitimos estar vivas en la vida.</p>
-    <p>En la menopausia, el placer llega desde lo más sutil. Fusionarse con él nos hace unir las polaridades de lo carnal y lo sagrado como parte de lo mismo.</p>
-    <div class="art-divider"></div>
     <ul>
-      <li>El sonido es una vibración que expresa más de lo que la palabra pueda contener.</li>
-      <li>Dar sonido a lo silenciado, a lo domesticado, haciendo visibles los mandatos sociales que hemos confundido como nuestros.</li>
+      <li>El rugido viaja grandes distancias; es una vibración que expresa más de lo que la palabra pueda contener.</li>
+      <li>Dar sonido a lo silenciado, haciendo visibles los mandatos sociales que hemos confundido como nuestros.</li>
       <li>El rugir permite la emoción sin filtros o decoros.</li>
       <li>El rugido abre la puerta al enojo sagrado, recuperando nuestra fuerza vital y dignidad.</li>
       <li>La oscuridad de la cueva nutre la fuerza propulsora que nos regresa al mundo exterior para encarnar nuestra autenticidad.</li>
     </ul>
   </div>
-  <div class="art-nav">
-    <div>
-      <span class="art-nav-label">Artículo anterior</span>
-      <div class="art-nav-title" onclick="showPage('blog-4',null)">← El Síntoma como Sincronía</div>
-    </div>
-    <div style="text-align:right;">
-      <span class="art-nav-label">Volver al Journal</span>
-      <div class="art-nav-title" onclick="showPage('main','blog')">Ver todos los artículos →</div>
-    </div>
-  </div>
-</div><!-- /blog-5 -->
+  <div class="art-nav"><div><span class="art-nav-label">Artículo anterior</span><div class="art-nav-title" onclick="showPage('blog-4',null)">← El Síntoma como Sincronía</div></div><div style="text-align:right;"><span class="art-nav-label">Volver al Journal</span><div class="art-nav-title" onclick="showPage('main','blog')">Ver todos los artículos →</div></div></div>
+</div>
 
 
-<!-- ============================================================
-     SCRIPTS
-     ============================================================ -->
+<!-- ============================================================ SCRIPTS ============================================================ -->
 <script>
   const pages = ['main','nosotras','blog-1','blog-2','blog-3','blog-4','blog-5'];
 
@@ -1040,6 +779,18 @@
       }, 120);
     }
   }
+
+  // Popup retiro
+  function openPopup() {
+    document.getElementById('popupRetiro').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closePopup() {
+    document.getElementById('popupRetiro').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  window.openPopup = openPopup;
+  window.closePopup = closePopup;
 
   // Nav scroll
   const nav = document.getElementById('navbar');
