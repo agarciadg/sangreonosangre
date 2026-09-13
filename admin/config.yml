@@ -1,0 +1,22 @@
+backend:
+  name: github
+  repo: agarciadg/sangreonosangre
+  branch: main
+
+media_folder: "imagenes"
+public_folder: "/imagenes"
+
+collections:
+  - name: "articulos"
+    label: "Artículos del Journal"
+    folder: "_posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Título", name: "titulo", widget: "string" }
+      - { label: "Autora", name: "autora", widget: "select", options: ["Gabriela Carretta", "Andrea de Losada", "Sangre o no Sangre"] }
+      - { label: "Tag / Categoría", name: "tag", widget: "string" }
+      - { label: "Extracto", name: "extracto", widget: "text" }
+      - { label: "Imagen de portada", name: "imagen", widget: "image", required: false }
+      - { label: "Contenido", name: "body", widget: "markdown" }
+      - { label: "Fecha", name: "date", widget: "datetime" }
