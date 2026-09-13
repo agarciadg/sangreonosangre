@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -894,6 +893,122 @@ Ahí donde nadie te pide que seas útil...
   window.toggleTest = toggleTest;
 
   // ============================================================
+  // LEER ARTÍCULOS DE _posts/ EN GITHUB
+  // ============================================================
+  const REPO = 'agarciadg/sangreonosangre';
+  const BRANCH = 'main';
+
+  async function cargarPostsGitHub() {
+    try {
+      // Listar archivos en _posts/
+      const res = await fetch(`https://api.github.com/repos/${REPO}/contents/_posts?ref=${BRANCH}`);
+      if (!res.ok) return;
+      const archivos = await res.json();
+      if (!Array.isArray(archivos) || archivos.length === 0) return;
+
+      // Ordenar por nombre (fecha descendente)
+      const mds = archivos.filter(f => f.name.endsWith('.md')).reverse();
+
+      const grid = document.getElementById('blog-grid-dynamic');
+      grid.innerHTML = '';
+
+      for (const archivo of mds) {
+        const r = await fetch(archivo.download_url);
+        const texto = await r.text();
+        const post = parseFrontmatter(texto);
+        if (!post.titulo) continue;
+
+        const card = document.createElement('div');
+        card.className = 'blog-card';
+        card.style.cursor = 'pointer';
+        const img = post.imagen || 'https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true';
+        const extracto = (post.extracto || post.body.replace(/#+\s/g,'').substring(0,160)) + '...';
+        card.innerHTML = `
+          <div class="blog-thumb"><img src="${img}" alt="${post.titulo}" onerror="this.src='https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true'"></div>
+          <div class="blog-body">
+            <span class="blog-tag">${post.tag || 'Journal'}</span>
+            <h4>${post.titulo}</h4>
+            <p class="blog-excerpt">${extracto}</p>
+            <button class="blog-read">Leer artículo <span class="arr">→</span></button>
+          </div>
+        `;
+        card.addEventListener('click', () => abrirPostGitHub(post, img));
+        grid.appendChild(card);
+      }
+    } catch(e) {
+      console.log('Posts GitHub:', e);
+    }
+  }
+
+  function parseFrontmatter(texto) {
+    const match = texto.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+    if (!match) return { body: texto };
+    const fm = {};
+    match[1].split('\n').forEach(line => {
+      const i = line.indexOf(':');
+      if (i === -1) return;
+      const k = line.slice(0, i).trim();
+      let v = line.slice(i + 1).trim().replace(/^["']|["']$/g, '');
+      fm[k] = v;
+    });
+    fm.body = match[2].trim();
+    return fm;
+  }
+
+  function abrirPostGitHub(post, img) {
+    const container = document.getElementById('page-art-dynamic');
+    container.innerHTML = `
+      <div class="art-hero">
+        <div class="art-hero-bg" style="background-image:url('${img}');"></div>
+        <div class="art-hero-ov"></div>
+        <div class="art-hero-body">
+          <button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button>
+          <span class="art-tag">${post.tag || 'Journal'}</span>
+          <h1 class="art-title">${post.titulo}</h1>
+          ${post.subtitulo ? `<p class="art-subtitle">${post.subtitulo}</p>` : ''}
+        </div>
+      </div>
+      <div class="art-body">
+        ${post.autora ? `<p style="font-size:.8rem;color:var(--text-muted);margin-bottom:36px;font-style:italic;">${post.autora}${post.date ? ' · ' + new Date(post.date).toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'}) : ''}</p>` : ''}
+        ${markdownToHtml(post.body)}
+        <div class="art-divider"></div>
+      </div>
+      <div class="art-nav">
+        <div></div>
+        <div style="text-align:right;">
+          <span class="art-nav-label">Volver al Journal</span>
+          <div class="art-nav-title" onclick="showPage('main','blog')">Ver todos los artículos →</div>
+        </div>
+      </div>
+    `;
+    showPage('art-dynamic', null);
+  }
+
+  function markdownToHtml(md) {
+    if (!md) return '';
+    return md
+      .split('\n\n')
+      .filter(b => b.trim())
+      .map(b => {
+        b = b.trim();
+        if (/^#{1,2}\s/.test(b)) return `<h3>${b.replace(/^#+\s/,'')}</h3>`;
+        if (/^#{3,}\s/.test(b)) return `<h3>${b.replace(/^#+\s/,'')}</h3>`;
+        if (b.startsWith('> ')) return `<blockquote><p>${b.replace(/^>\s/gm,'')}</p></blockquote>`;
+        if (b.startsWith('- ') || b.startsWith('* ')) {
+          const items = b.split('\n').map(l => `<li>${l.replace(/^[-*]\s/,'')}</li>`).join('');
+          return `<ul>${items}</ul>`;
+        }
+        // inline: bold, italic
+        b = b.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+        b = b.replace(/\*(.+?)\*/g,'<em>$1</em>');
+        return `<p>${b}</p>`;
+      }).join('');
+  }
+
+  // Cargar posts al iniciar
+  cargarPostsGitHub();
+
+  // ============================================================
   // ADMIN — usuarios y contraseñas
   // ============================================================
   const USERS = {
@@ -1102,17 +1217,6 @@ Ahí donde nadie te pide que seas útil...
       btnEnviar.disabled = false;
     }
   });
-</script>
-  <script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    });
-  }
 </script>
 </body>
 </html>
