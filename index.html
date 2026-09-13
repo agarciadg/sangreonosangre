@@ -54,7 +54,54 @@
   .reveal.in-view { opacity:1; transform:translateY(0); }
 
   /* PAGE SWITCH */
-  #page-nosotras,#page-blog-1,#page-blog-2,#page-blog-3,#page-blog-4,#page-blog-5 { display:none; }
+  #page-nosotras,#page-blog-1,#page-blog-2,#page-blog-3,#page-blog-4,#page-blog-5,#page-admin { display:none; }
+
+  /* ADMIN */
+  .admin-wrap { max-width:860px; margin:0 auto; padding:120px 6% 80px; }
+  .admin-header { margin-bottom:56px; }
+  .admin-header h1 { font-family:'Playfair Display',serif; font-size:2.4rem; font-weight:400; color:var(--text-main); margin-bottom:10px; }
+  .admin-header p { color:var(--text-muted); font-size:.9rem; }
+  .admin-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); margin-bottom:40px; }
+  .admin-tab { padding:12px 26px; font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; font-weight:600; cursor:pointer; color:var(--text-muted); background:none; border:none; border-bottom:2px solid transparent; font-family:'Montserrat',sans-serif; transition:all .3s; }
+  .admin-tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+  .admin-panel { display:none; }
+  .admin-panel.active { display:block; }
+  .admin-form { display:flex; flex-direction:column; gap:22px; }
+  .af-field { display:flex; flex-direction:column; gap:8px; }
+  .af-field label { font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; color:var(--text-muted); font-weight:600; }
+  .af-field input, .af-field textarea, .af-field select {
+    background:var(--bg-alt); border:1px solid var(--border);
+    color:var(--text-main); font-family:'Montserrat',sans-serif; font-size:.92rem;
+    padding:12px 14px; outline:none; transition:border-color .3s; width:100%;
+  }
+  .af-field input:focus, .af-field textarea:focus, .af-field select:focus { border-color:var(--accent); }
+  .af-field textarea { resize:vertical; min-height:180px; line-height:1.7; }
+  .af-field select option { background:var(--bg-alt); }
+  .af-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .admin-msg { font-family:'Playfair Display',serif; font-style:italic; font-size:1rem; padding:14px 18px; margin-top:10px; }
+  .admin-msg.ok { color:var(--accent); border:1px solid rgba(212,181,149,.3); }
+  .admin-msg.err { color:#e07070; border:1px solid rgba(224,112,112,.3); }
+  .posts-list { display:flex; flex-direction:column; gap:16px; }
+  .post-item { background:var(--bg-alt); border:1px solid var(--border); padding:22px 24px; display:flex; justify-content:space-between; align-items:flex-start; gap:20px; }
+  .post-item-info h4 { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--text-main); margin-bottom:6px; }
+  .post-item-info p { font-size:.8rem; color:var(--text-muted); }
+  .post-item-info .post-tag { font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:600; display:block; margin-bottom:4px; }
+  .post-actions { display:flex; gap:10px; flex-shrink:0; }
+  .post-del { background:none; border:1px solid var(--border); color:var(--text-muted); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; padding:8px 14px; cursor:pointer; font-family:'Montserrat',sans-serif; transition:all .3s; }
+  .post-del:hover { border-color:#e07070; color:#e07070; }
+  .empty-state { text-align:center; padding:60px 0; color:var(--text-muted); font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; }
+
+  /* LOGIN */
+  .login-wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:40px 6%; }
+  .login-box { background:var(--bg-alt); border:1px solid var(--border); padding:56px 48px; width:100%; max-width:420px; text-align:center; }
+  .login-box h2 { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:400; color:var(--text-main); margin-bottom:8px; }
+  .login-box p { color:var(--text-muted); font-size:.88rem; margin-bottom:36px; }
+  .login-field { display:flex; flex-direction:column; gap:8px; margin-bottom:20px; text-align:left; }
+  .login-field label { font-size:.7rem; letter-spacing:.15em; text-transform:uppercase; color:var(--text-muted); font-weight:600; }
+  .login-field input { background:var(--bg-main); border:1px solid var(--border); color:var(--text-main); font-family:'Montserrat',sans-serif; font-size:.92rem; padding:12px 14px; outline:none; transition:border-color .3s; width:100%; }
+  .login-field input:focus { border-color:var(--accent); }
+  .login-err { color:#e07070; font-size:.82rem; margin-bottom:16px; display:none; }
+  @media(max-width:500px){ .login-box{padding:36px 24px;} .af-row{grid-template-columns:1fr;} }
 
   /* SECTION */
   section { padding:120px 6%; }
@@ -316,6 +363,114 @@
   </div>
 </div>
 
+<!-- ============================================================ PANEL ADMIN ============================================================ -->
+<div id="page-admin">
+
+  <!-- LOGIN -->
+  <div id="admin-login" class="login-wrap">
+    <div class="login-box">
+      <h2>Panel Editorial</h2>
+      <p>Sangre o no Sangre · Acceso privado</p>
+      <div class="login-field"><label>Usuaria</label><input type="text" id="loginUser" placeholder="nombre"></div>
+      <div class="login-field"><label>Contraseña</label><input type="password" id="loginPass" placeholder="••••••••"></div>
+      <p class="login-err" id="loginErr">Usuaria o contraseña incorrecta.</p>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="doLogin()">Entrar</button>
+      <div style="margin-top:22px;"><button class="back-btn" style="margin:0 auto;justify-content:center;" onclick="showPage('main',null)">← Volver al sitio</button></div>
+    </div>
+  </div>
+
+  <!-- PANEL -->
+  <div id="admin-panel" style="display:none;">
+    <div class="admin-wrap">
+      <div class="admin-header">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;">
+          <div>
+            <h1>Panel Editorial</h1>
+            <p>Bienvenida, <strong id="adminWelcome" style="color:var(--accent);"></strong> — aquí puedes publicar y gestionar los artículos del Journal.</p>
+          </div>
+          <div style="display:flex;gap:12px;">
+            <button class="back-btn" style="margin:0;" onclick="showPage('main','blog')">← Ver Journal</button>
+            <button class="btn btn-outline" style="font-size:.68rem;" onclick="doLogout()">Cerrar sesión</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchTab('nuevo')">✦ Nuevo artículo</button>
+        <button class="admin-tab" onclick="switchTab('publicados')">Artículos publicados</button>
+      </div>
+
+      <!-- TAB: NUEVO ARTÍCULO -->
+      <div class="admin-panel active" id="tab-nuevo">
+        <form class="admin-form" id="adminForm" onsubmit="publicarArticulo(event)">
+          <div class="af-row">
+            <div class="af-field">
+              <label>Título del artículo *</label>
+              <input type="text" id="art-titulo" placeholder="Ej: El cuerpo como territorio..." required>
+            </div>
+            <div class="af-field">
+              <label>Categoría / Tag *</label>
+              <input type="text" id="art-tag" placeholder="Ej: Cuerpo · Erotismo" required>
+            </div>
+          </div>
+          <div class="af-field">
+            <label>Subtítulo (opcional)</label>
+            <input type="text" id="art-subtitulo" placeholder="Ej: Reflexiones — Sangre o no Sangre">
+          </div>
+          <div class="af-field">
+            <label>Extracto (resumen corto para la tarjeta del Journal) *</label>
+            <textarea id="art-extracto" rows="3" placeholder="Máx. 200 caracteres — lo que se ve en la tarjeta antes de abrir el artículo..." required></textarea>
+          </div>
+          <div class="af-field">
+            <label>Contenido completo del artículo *</label>
+            <textarea id="art-contenido" style="min-height:320px;" placeholder="Escribe aquí el artículo completo. Separa los párrafos con una línea en blanco.
+
+Para citar usa: [cita]texto aquí[/cita]
+Para subtítulo usa: [h3]título de sección[/h3]
+
+Ejemplo:
+Hay un momento en la vida de una mujer...
+
+El cuerpo habla antes que la mente.
+
+[h3]La cueva interior[/h3]
+
+Ahí donde nadie te pide que seas útil...
+
+[cita]El síntoma no es un error del sistema.[/cita]" required></textarea>
+          </div>
+          <div class="af-row">
+            <div class="af-field">
+              <label>Autora</label>
+              <select id="art-autora">
+                <option value="Gabriela Carretta">Gabriela Carretta</option>
+                <option value="Andrea de Losada">Andrea de Losada</option>
+                <option value="Sangre o no Sangre">Sangre o no Sangre</option>
+              </select>
+            </div>
+            <div class="af-field">
+              <label>URL de imagen de portada (opcional)</label>
+              <input type="text" id="art-img" placeholder="https://github.com/agarciadg/.../foto.jpg?raw=true">
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
+            <button type="submit" class="btn btn-primary">Publicar artículo</button>
+            <button type="button" class="btn btn-outline" onclick="document.getElementById('adminForm').reset()">Limpiar</button>
+          </div>
+          <div class="admin-msg ok" id="adminOk" style="display:none;">✓ Artículo publicado — ya aparece en el Journal.</div>
+          <div class="admin-msg err" id="adminErr" style="display:none;">Hubo un error al guardar. Intenta de nuevo.</div>
+        </form>
+      </div>
+
+      <!-- TAB: PUBLICADOS -->
+      <div class="admin-panel" id="tab-publicados">
+        <div class="posts-list" id="postsList"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- ============================================================ PÁGINA PRINCIPAL ============================================================ -->
 <div id="page-main">
 
@@ -406,7 +561,9 @@
 <section id="blog" class="blog">
   <span class="section-label reveal">Journal</span>
   <h2 class="section-title reveal">Palabras que aún no se habían nombrado</h2>
-  <div class="blog-grid">
+  <!-- Artículos publicados desde el panel (se inyectan aquí) -->
+  <div class="blog-grid" id="blog-grid-dynamic" style="margin-top:56px;"></div>
+  <div class="blog-grid" style="margin-top:0px;">
     <div class="blog-card reveal"><div class="blog-thumb"><img src="https://github.com/agarciadg/sangreonosangre/blob/main/a8bd5c2cf919c85913535c5f9e07fd71.jpg?raw=true" alt="Insomnio"></div><div class="blog-body"><span class="blog-tag">Cuerpo · Menopausia</span><h4>Insomnio</h4><p class="blog-excerpt">Hay noches en las que el sueño simplemente decide escaparse. Empiezo a aceptar que el insomnio se está volviendo una cita conmigo. Tal vez no vino sólo a quitarme el sueño...</p><button class="blog-read" onclick="showPage('blog-1',null)">Leer artículo <span class="arr">→</span></button></div></div>
     <div class="blog-card reveal"><div class="blog-thumb"><img src="https://github.com/agarciadg/sangreonosangre/blob/main/d2877b3cb0a12a637cb6a545c48988ff.jpg?raw=true" alt="El Rugido"></div><div class="blog-body"><span class="blog-tag">Identidad · Transformación</span><h4>El Rugido de la Liberación</h4><p class="blog-excerpt">El sonido es una vibración que expresa más de lo que la palabra pueda contener. Desde el centro de la tripa hacia afuera, conectando con el instinto y dando sonido a lo silenciado...</p><button class="blog-read" onclick="showPage('blog-2',null)">Leer artículo <span class="arr">→</span></button></div></div>
     <div class="blog-card reveal"><div class="blog-thumb"><img src="https://github.com/agarciadg/sangreonosangre/blob/main/343fd0968a663bb911cdf4dc6f680344.jpg?raw=true" alt="Eros y Menopausia"></div><div class="blog-body"><span class="blog-tag">Erotismo · Deseo</span><h4>Eros y Menopausia: La llama que no se apaga</h4><p class="blog-excerpt">La verdadera naturaleza del Erotismo es la manera de recibir la vida a través de los sentidos. Esta energía vital no muere hasta que muere el cuerpo...</p><button class="blog-read" onclick="showPage('blog-3',null)">Leer artículo <span class="arr">→</span></button></div></div>
@@ -523,6 +680,7 @@
   <div class="footer-bottom">
     <span>© 2026 Sangre o no Sangre. Todos los derechos reservados.</span>
     <span>Tepoztlán, Morelos, México</span>
+    <a href="#" onclick="showPage('admin',null);return false;" style="color:var(--border);font-size:.7rem;letter-spacing:.05em;transition:color .3s;" onmouseover="this.style.color='var(--text-muted)'" onmouseout="this.style.color='var(--border)'">✦</a>
   </div>
 </footer>
 </div><!-- /page-main -->
@@ -681,7 +839,7 @@
 
 <!-- ============================================================ SCRIPTS ============================================================ -->
 <script>
-  const pages = ['main','nosotras','blog-1','blog-2','blog-3','blog-4','blog-5'];
+  const pages = ['main','nosotras','blog-1','blog-2','blog-3','blog-4','blog-5','admin'];
 
   function showPage(page, anchor) {
     pages.forEach(p => {
@@ -733,6 +891,183 @@
     btn.childNodes[0].textContent = isOpen ? 'Leer más ' : 'Leer menos ';
   }
   window.toggleTest = toggleTest;
+
+  // ============================================================
+  // ADMIN — usuarios y contraseñas
+  // ============================================================
+  const USERS = {
+    'gabriela': 'sangre2026gaba',
+    'andrea':   'sangre2026andrea'
+  };
+
+  let currentUser = null;
+  let userPosts = [];   // artículos en memoria de la sesión actual
+
+  // ---- Login ----
+  function doLogin() {
+    const u = document.getElementById('loginUser').value.trim().toLowerCase();
+    const p = document.getElementById('loginPass').value;
+    const err = document.getElementById('loginErr');
+    if (USERS[u] && USERS[u] === p) {
+      currentUser = u;
+      err.style.display = 'none';
+      document.getElementById('admin-login').style.display = 'none';
+      document.getElementById('admin-panel').style.display = 'block';
+      document.getElementById('adminWelcome').textContent = u === 'gabriela' ? 'Gabriela' : 'Andrea';
+      // Pre-seleccionar autora
+      document.getElementById('art-autora').value = u === 'gabriela' ? 'Gabriela Carretta' : 'Andrea de Losada';
+      renderPosts();
+    } else {
+      err.style.display = 'block';
+    }
+  }
+
+  function doLogout() {
+    currentUser = null;
+    document.getElementById('admin-login').style.display = 'flex';
+    document.getElementById('admin-panel').style.display = 'none';
+    document.getElementById('loginUser').value = '';
+    document.getElementById('loginPass').value = '';
+    showPage('main', null);
+  }
+
+  // Enter en login
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && document.getElementById('page-admin').style.display === 'block' && currentUser === null) doLogin();
+  });
+
+  // ---- Tabs ----
+  function switchTab(tab) {
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    event.target.classList.add('active');
+    if (tab === 'publicados') renderPosts();
+  }
+
+  // ---- Publicar artículo ----
+  function publicarArticulo(e) {
+    e.preventDefault();
+    const ok = document.getElementById('adminOk');
+    const err = document.getElementById('adminErr');
+    ok.style.display = 'none';
+    err.style.display = 'none';
+
+    const art = {
+      id: 'custom-' + Date.now(),
+      titulo: document.getElementById('art-titulo').value.trim(),
+      tag: document.getElementById('art-tag').value.trim(),
+      subtitulo: document.getElementById('art-subtitulo').value.trim(),
+      extracto: document.getElementById('art-extracto').value.trim(),
+      contenido: document.getElementById('art-contenido').value.trim(),
+      autora: document.getElementById('art-autora').value,
+      img: document.getElementById('art-img').value.trim() || 'https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true',
+      fecha: new Date().toLocaleDateString('es-MX', { year:'numeric', month:'long', day:'numeric' })
+    };
+
+    // Guardar en memoria
+    userPosts.unshift(art);
+    // Renderizar en el journal dinámico
+    renderDynamicJournal();
+    ok.style.display = 'block';
+    document.getElementById('adminForm').reset();
+    document.getElementById('art-autora').value = currentUser === 'gabriela' ? 'Gabriela Carretta' : 'Andrea de Losada';
+    setTimeout(() => ok.style.display = 'none', 4000);
+  }
+
+  // ---- Borrar artículo ----
+  function borrarPost(id) {
+    if (!confirm('¿Eliminar este artículo?')) return;
+    userPosts = userPosts.filter(p => p.id !== id);
+    renderDynamicJournal();
+    renderPosts();
+  }
+
+  // ---- Render lista de publicados ----
+  function renderPosts() {
+    const el = document.getElementById('postsList');
+    if (userPosts.length === 0) {
+      el.innerHTML = '<p class="empty-state">Aún no hay artículos publicados en esta sesión.</p>';
+      return;
+    }
+    el.innerHTML = userPosts.map(p => `
+      <div class="post-item">
+        <div class="post-item-info">
+          <span class="post-tag">${p.tag}</span>
+          <h4>${p.titulo}</h4>
+          <p>${p.autora} · ${p.fecha}</p>
+        </div>
+        <div class="post-actions">
+          <button class="post-del" onclick="borrarPost('${p.id}')">Eliminar</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ---- Parsear contenido con etiquetas simples ----
+  function parseContenido(txt) {
+    return txt
+      .split('\n\n')
+      .filter(b => b.trim())
+      .map(b => {
+        b = b.trim();
+        if (b.startsWith('[h3]')) return `<h3>${b.replace('[h3]','').replace('[/h3]','').trim()}</h3>`;
+        if (b.startsWith('[cita]')) return `<blockquote><p>${b.replace('[cita]','').replace('[/cita]','').trim()}</p></blockquote>`;
+        return `<p>${b}</p>`;
+      }).join('');
+  }
+
+  // ---- Inyectar artículos en el journal ----
+  function renderDynamicJournal() {
+    const grid = document.getElementById('blog-grid-dynamic');
+    if (!grid) return;
+    grid.innerHTML = userPosts.map(p => `
+      <div class="blog-card" style="cursor:pointer;" onclick="abrirArticuloDinamico('${p.id}')">
+        <div class="blog-thumb"><img src="${p.img}" alt="${p.titulo}" onerror="this.src='https://github.com/agarciadg/sangreonosangre/blob/main/7.png?raw=true'"></div>
+        <div class="blog-body">
+          <span class="blog-tag">${p.tag}</span>
+          <h4>${p.titulo}</h4>
+          <p class="blog-excerpt">${p.extracto.substring(0,160)}${p.extracto.length>160?'...':''}</p>
+          <button class="blog-read">Leer artículo <span class="arr">→</span></button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ---- Abrir artículo dinámico ----
+  function abrirArticuloDinamico(id) {
+    const p = userPosts.find(x => x.id === id);
+    if (!p) return;
+    const container = document.getElementById('page-art-dynamic');
+    container.innerHTML = `
+      <div class="art-hero">
+        <div class="art-hero-bg" style="background-image:url('${p.img}');"></div>
+        <div class="art-hero-ov"></div>
+        <div class="art-hero-body">
+          <button class="back-btn" onclick="showPage('main','blog')">← Volver al Journal</button>
+          <span class="art-tag">${p.tag}</span>
+          <h1 class="art-title">${p.titulo}</h1>
+          ${p.subtitulo ? `<p class="art-subtitle">${p.subtitulo}</p>` : ''}
+        </div>
+      </div>
+      <div class="art-body">
+        <p style="font-size:.8rem;color:var(--text-muted);margin-bottom:36px;font-style:italic;">${p.autora} · ${p.fecha}</p>
+        ${parseContenido(p.contenido)}
+        <div class="art-divider"></div>
+      </div>
+      <div class="art-nav">
+        <div></div>
+        <div style="text-align:right;">
+          <span class="art-nav-label">Volver al Journal</span>
+          <div class="art-nav-title" onclick="showPage('main','blog')">Ver todos los artículos →</div>
+        </div>
+      </div>
+    `;
+    showPage('art-dynamic', null);
+  }
+
+  // Agregar page-art-dynamic a la lista
+  pages.push('art-dynamic');
 
   // Formspree — envío AJAX para no redirigir
   const form = document.getElementById('cf');
