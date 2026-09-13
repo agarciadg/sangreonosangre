@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: agarciadg/sangreonosangre
+  name: git-gateway
   branch: main
 
 media_folder: "imagenes"
