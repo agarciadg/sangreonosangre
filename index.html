@@ -839,11 +839,13 @@ Ahí donde nadie te pide que seas útil...
 
 <!-- ============================================================ SCRIPTS ============================================================ -->
 <script>
-  const pages = ['main','nosotras','blog-1','blog-2','blog-3','blog-4','blog-5','admin'];
+  // showPage disponible globalmente desde el inicio
+  const pages = ['main','nosotras','blog-1','blog-2','blog-3','blog-4','blog-5','admin','art-dynamic'];
 
   function showPage(page, anchor) {
     pages.forEach(p => {
-      document.getElementById('page-' + p).style.display = (p === page) ? 'block' : 'none';
+      const el = document.getElementById('page-' + p);
+      if (el) el.style.display = (p === page) ? 'block' : 'none';
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (anchor) {
@@ -853,6 +855,7 @@ Ahí donde nadie te pide que seas útil...
       }, 120);
     }
   }
+  window.showPage = showPage;
 
   // Popup retiro
   function openPopup() {
@@ -1005,8 +1008,10 @@ Ahí donde nadie te pide que seas útil...
       }).join('');
   }
 
-  // Cargar posts al iniciar
-  cargarPostsGitHub();
+  // Cargar posts al iniciar — sin bloquear el resto
+  window.addEventListener('load', () => {
+    setTimeout(cargarPostsGitHub, 500);
+  });
 
   // ============================================================
   // ADMIN — usuarios y contraseñas
@@ -1182,9 +1187,7 @@ Ahí donde nadie te pide que seas útil...
     showPage('art-dynamic', null);
   }
 
-  // Agregar page-art-dynamic a la lista
-  pages.push('art-dynamic');
-
+  // Agregar page-art-dynamic a la lista (ya incluido arriba)
   // Formspree — envío AJAX para no redirigir
   const form = document.getElementById('cf');
   const btnEnviar = document.getElementById('cfBtn');
